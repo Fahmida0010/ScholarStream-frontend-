@@ -67,7 +67,7 @@ const TopScholarships = () => {
         const sorted = data.sort(
           (a, b) => new Date(b.scholarshipPostDate) - new Date(a.scholarshipPostDate)
         );
-        // Take only top 6
+    
         setScholarships(sorted.slice(0, 6));
       })
       .catch((err) => console.log(err));
