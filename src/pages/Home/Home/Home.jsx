@@ -1,14 +1,13 @@
-import React from 'react'
-import LoadingSpinner from '../../../components/Shared/LoadingSpinner/LoadingSpinner';
+import React from 'react';
 import Banner from '../Banner/Banner';
+import TopScholarships from '../TopScholarships/TopScholarships';
+
 
 const Home = () => {
   return (
     <div>
-        
- <h2 className="text">This is home</h2>
   <Banner></Banner>
-        
+      <TopScholarships></TopScholarships>
      </div>
      
   );
