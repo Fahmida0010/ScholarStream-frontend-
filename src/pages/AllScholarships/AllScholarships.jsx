@@ -7,6 +7,8 @@ const AllScholarships = () => {
   const [category, setCategory] = useState("");
   const [subject, setSubject] = useState("");
   const [location, setLocation] = useState("");
+    
+
 
   const fetchScholarships = () => {
     let url = `http://localhost:3000/scholarships?search=${search}&category=${category}&subject=${subject}&location=${location}`;
@@ -67,7 +69,7 @@ const AllScholarships = () => {
               <p><strong>Category:</strong> {sch.scholarshipCategory}</p>
               <p><strong>Location:</strong> {sch.universityCountry}</p>
               <p><strong>Application Fee:</strong> ${sch.applicationFees}</p>
-              <Link to={`/scholarship/${sch._id}`}>
+              <Link to={`/scholarships/${sch._id}`}>
                 <button className="btn btn-primary w-full mt-3">View Details</button>
               </Link>
             </div>

@@ -1,7 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import gradImage from '../../../assets/images/graduation.jpg';
+import { useNavigate } from 'react-router';
 
 const Banner = () => {
+ const [searchText, setSearchText] = useState('');
+  const navigate = useNavigate();
+
+  const handleSearch = () => {
+    // navigate to scholarships page with query
+    if (searchText.trim() !== '') {
+      navigate(`/scholarships?search=${searchText}`);
+    }
+  };
+
   return (
    <div className=" w-[85%] mx-auto">
   <div className="hero-content text-center flex-col
@@ -18,7 +29,24 @@ const Banner = () => {
       Explore verified scholarships from trusted institutions worldwide. Easily search, compare, and apply to the programs 
       that align with your academic goals and financial needs.
       </p>
-      <button className="btn btn-secondary">Search Scholarships</button>
+      {/* <button className="btn btn-secondary">Search Scholarships</button> */}
+        {/* Search Input */}
+          <div className="flex mt-4 gap-2">
+            <input
+              type="text"
+              placeholder="Search Scholarships..."
+              className="input input-bordered flex-grow"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleSearch()} // Enter key search
+            />
+            <button
+              className="btn btn-secondary"
+              onClick={handleSearch}
+            >
+              Search
+            </button>
+          </div>
     </div>
   </div>
 </div>

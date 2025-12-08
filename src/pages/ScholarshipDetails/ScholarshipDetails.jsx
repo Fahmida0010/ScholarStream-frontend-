@@ -1,19 +1,51 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import Reviews from "../Reviews/Reviews";
 
 const ScholarshipDetails = () => {
   const { id } = useParams();
   const [sch, setSch] = useState(null);
   const [reviews, setReviews] = useState([]);
+  const [newReview, setNewReview] = useState({
+    userName: "",
+    userImage: "",
+    ratingPoint: 5,
+    reviewComment: ""
+  });
 
+  const handleReviewSubmit = (e, scholarshipId) => {
+  e.preventDefault();
+
+  const reviewWithId = {
+    ...newReview,
+    scholarshipId: scholarshipId, 
+    reviewDate: new Date()
+  };
+
+  fetch("http://localhost:3000/reviews", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(reviewWithId)
+  })
+    .then(res => res.json())
+    .then(data => {
+      setReviews(prev => [reviewToSend, ...prev]); // instant update on UI
+      setNewReview({ userName: "", userImage: "", ratingPoint: 1, reviewComment: "" });
+    });
+};
+
+
+  // Fetch Scholarship Details & Reviews
   useEffect(() => {
-    fetch(`http://localhost:5000/scholarship/${id}`)
-      .then((res) => res.json())
-      .then((data) => setSch(data));
+    // Scholarship Details
+    fetch(`http://localhost:3000/scholarships/${id}`)
+      .then(res => res.json())
+      .then(data => setSch(data));
 
-    fetch(`http://localhost:5000/scholarship/${id}/reviews`)
-      .then((res) => res.json())
-      .then((data) => setReviews(data));
+    // Reviews for this scholarship only
+    fetch(`http://localhost:3000/scholarships/${id}/reviews`)
+      .then(res => res.json())
+      .then(data => setReviews(data));
   }, [id]);
 
   if (!sch) return <p className="text-center my-20">Loading...</p>;
@@ -41,23 +73,13 @@ const ScholarshipDetails = () => {
       </a>
 
       {/* Reviews Section */}
-      <div className="mt-10">
-        <h2 className="text-2xl font-bold mb-4">Reviews</h2>
-        {reviews.length === 0 && <p>No reviews yet.</p>}
-        {reviews.map((rev) => (
-          <div key={rev._id} className="border p-4 rounded-lg mb-4">
-            <div className="flex items-center gap-4 mb-2">
-              <img src={rev.reviewerImage} className="w-10 h-10 rounded-full" alt={rev.reviewerName} />
-              <div>
-                <p className="font-bold">{rev.reviewerName}</p>
-                <p className="text-sm text-gray-500">{new Date(rev.date).toLocaleDateString()}</p>
-              </div>
-            </div>
-            <p><strong>Rating:</strong> {rev.rating}/5</p>
-            <p>{rev.comment}</p>
-          </div>
-        ))}
-      </div>
+      <Reviews
+        reviews={reviews}
+        newReview={newReview}
+        setNewReview={setNewReview}
+        handleReviewSubmit={handleReviewSubmit}
+        scholarshipId={sch._id} 
+      />
     </div>
   );
 };

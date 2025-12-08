@@ -7,6 +7,12 @@ import Register from "../pages/Auth/Register/Register";
 import TopScholarships from "../pages/Home/TopScholarships/TopScholarships";
 import ScholarshipDetails from "../pages/ScholarshipDetails/ScholarshipDetails";
 import AllScholarships from "../pages/AllScholarships/AllScholarships";
+import AddScholarship from "../pages/Dashboard/Admin/AddScholarship";
+import ManageScholarships from "../pages/Dashboard/Admin/ManageScholarships";
+import ManageUsers from "../pages/Dashboard/Admin/ManageUsers";
+import Analytics from "../pages/Dashboard/Admin/Analytics";
+import Profile from "../pages/Dashboard/Profile/Profile";
+import DashboardLayout from "../Layouts/DashboardLayout";
 
  export const router = createBrowserRouter([
   {
@@ -26,7 +32,7 @@ import AllScholarships from "../pages/AllScholarships/AllScholarships";
   element: <TopScholarships />,
 },
 {
-  path: "/scholarship/:id",
+  path: "/scholarships/:id",
   element: <ScholarshipDetails/>,
 },
      {
@@ -45,4 +51,21 @@ import AllScholarships from "../pages/AllScholarships/AllScholarships";
     }
     ]
   },
+
+  {
+  path: "/dashboard",
+  element: <DashboardLayout />,
+  children: [
+    { path: "profile", element: <Profile /> },
+
+    // ADMIN
+    { path: "add-scholarship", element: <AddScholarship /> },
+    { path: "manage-scholarships", element: <ManageScholarships/> },
+    { path: "manage-users", element: <ManageUsers /> },
+    { path: "analytics", element: <Analytics /> },
+
+    // STUDENT (later)
+    // MODERATOR (later)
+  ],
+}
 ]);
