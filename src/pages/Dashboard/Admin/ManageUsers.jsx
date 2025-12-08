@@ -1,4 +1,102 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
+import Swal from "sweetalert2";
+
 const ManageUsers = () => {
-  return <h2 className="text-2xl font-bold">Manage Users (Admin)</h2>;
+  const [users, setUsers] = useState([]);
+  const [filterRole, setFilterRole] = useState("all");
+
+  const fetchUsers = async () => {
+    const res = await axios.get("http://localhost:5000/users");
+    setUsers(res.data);
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const handleRoleChange = async (id, newRole) => {
+    await axios.patch(`http://localhost:5000/users/role/${id}`, { role: newRole });
+    Swal.fire("Success!", `User promoted to ${newRole}`, "success");
+    fetchUsers();
+  };
+
+  const handleDeleteUser = async (id) => {
+    const confirm = await Swal.fire({
+      title: "Delete User?",
+      icon: "warning",
+      showCancelButton: true,
+    });
+
+    if (confirm.isConfirmed) {
+      await axios.delete(`http://localhost:5000/users/${id}`);
+      Swal.fire("Deleted!", "User removed.", "success");
+      fetchUsers();
+    }
+  };
+
+  const filtered = filterRole === "all"
+    ? users
+    : users.filter((u) => u.role === filterRole);
+
+  return (
+    <div>
+      <h1 className="text-2xl font-bold mb-4">Manage Users</h1>
+
+      <select
+        className="p-2 border rounded mb-4"
+        onChange={(e) => setFilterRole(e.target.value)}
+      >
+        <option value="all">All</option>
+        <option value="student">Student</option>
+        <option value="moderator">Moderator</option>
+        <option value="admin">Admin</option>
+      </select>
+
+      <table className="w-full bg-white shadow rounded-xl">
+        <thead>
+          <tr className="bg-gray-200">
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Promote</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {filtered.map((u) => (
+            <tr key={u._id} className="border-b">
+              <td className="p-3">{u.name}</td>
+              <td>{u.email}</td>
+              <td>{u.role}</td>
+
+              <td>
+                <select
+                  className="p-2 border rounded"
+                  onChange={(e) => handleRoleChange(u._id, e.target.value)}
+                >
+                  <option>Select</option>
+                  <option value="student">Student</option>
+                  <option value="moderator">Moderator</option>
+                  <option value="admin">Admin</option>
+                </select>
+              </td>
+
+              <td>
+                <button
+                  onClick={() => handleDeleteUser(u._id)}
+                  className="btn bg-red-600 text-white"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
 };
+
 export default ManageUsers;
