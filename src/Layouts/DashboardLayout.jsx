@@ -24,7 +24,7 @@ const DashboardLayout = () => {
         </ul>
 
         {/* ADMIN ONLY LINKS */}
-        {/* {user?.role === "admin" && ( */}
+        {user?.role === "admin" && (
           <>
             <h2 className="mt-6 mb-2 text-gray-500 text-sm">ADMIN PANEL</h2>
             <ul className="space-y-3">
@@ -66,10 +66,10 @@ const DashboardLayout = () => {
               </li>
             </ul>
           </>
-        {/* )} */}
+       )} 
 
         {/* MODERATOR ONLY LINKS */}
-        {/* {user?.role === "moderator" && ( */}
+        {user?.role === "moderator" && (
           <>
             <h2 className="mt-6 mb-2 text-gray-500 text-sm">MODERATOR PANEL</h2>
 
@@ -93,7 +93,7 @@ const DashboardLayout = () => {
               </li>
             </ul>
           </>
-        {/* )} */}
+       )} 
 
         {/* STUDENT ONLY LINKS */}
         {/* {user?.role === "student" && ( */}
@@ -120,7 +120,7 @@ const DashboardLayout = () => {
               </li>
             </ul>
           </>
-        {/* )} */}
+         {/* )}  */}
       </div>
 
       {/* Content Area */}

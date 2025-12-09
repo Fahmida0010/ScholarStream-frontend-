@@ -166,7 +166,7 @@ const MyApplications = () => {
         </tbody>
       </table>
 
-      {/* ----------------------- Review Modal ----------------------- */}
+       {/* ----------------------- Review Modal ----------------------- */}
       {isReviewModalOpen && (
         <div className="modal">
           <h3>Add Review for {currentAppForReview.universityName}</h3>
@@ -192,7 +192,7 @@ const MyApplications = () => {
           <button onClick={handleReviewSubmit}>Submit</button>
           <button onClick={() => setIsReviewModalOpen(false)}>Cancel</button>
         </div>
-      )}
+      )} 
     </div>
   );
 };

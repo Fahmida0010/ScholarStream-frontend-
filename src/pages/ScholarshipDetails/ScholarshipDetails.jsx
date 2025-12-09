@@ -69,7 +69,7 @@ const ScholarshipDetails = () => {
       <p><strong>Stipend / Coverage:</strong> {sch.stipend}</p>
 
       Apply Button
-      <Link to={`/payment-success/${sch._id}`}>
+      <Link to={`/checkout`}>
         <button className="btn btn-secondary mt-4 w-full">
           Apply for Scholarship</button>
       </Link>

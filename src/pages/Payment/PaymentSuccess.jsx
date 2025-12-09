@@ -7,7 +7,7 @@ const PaymentSuccess = () => {
   const sessionId = new URLSearchParams(window.location.search).get("session_id");
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/verify-payment/${sessionId}`)
+    axios.get(`http://localhost:3000/verify-payment/${sessionId}`)
       .then(res => setInfo(res.data))
       .catch(err => console.log(err));
   }, []);
@@ -21,7 +21,8 @@ const PaymentSuccess = () => {
       <p>University: {info.universityName}</p>
       <p>Amount Paid: ${info.amountPaid}</p>
 
-      <button onClick={() => window.location.href = "/my-applications"}>
+      <button className="btn bg-green-400"
+       onClick={() => window.location.href ="my-applications"}>
         Go to My Applications
       </button>
     </div>
