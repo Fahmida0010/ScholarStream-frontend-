@@ -48,23 +48,24 @@ const ManageScholarships = () => {
           {scholarships.map((scholar) => (
             <tr key={scholar._id} className="border-b">
               <td className="p-3">
-                <img src={scholar.image} alt="" className="w-16 rounded" />
+                <img src={scholar.universityImage} alt="" className="w-16 rounded" />
               </td>
               <td>{scholar.scholarshipName}</td>
               <td>{scholar.universityName}</td>
-              <td>{scholar.deadline}</td>
+              <td>{scholar.applicationDeadline}</td>
 
               <td className="flex gap-2">
                 <button
-                  onClick={() => window.location.href = `/dashboard/update-scholarship/${scholar._id}`}
-                  className="btn bg-yellow-500 text-white"
+   onClick={() => window.location.href
+     = `/dashboard/update-scholarship/${scholar._id}`}
+                  className="btn bg-sky-400 text-white"
                 >
                   Update
                 </button>
 
                 <button
                   onClick={() => handleDelete(scholar._id)}
-                  className="btn bg-red-600 text-white"
+                  className="btn bg-red-400 text-white"
                 >
                   Delete
                 </button>

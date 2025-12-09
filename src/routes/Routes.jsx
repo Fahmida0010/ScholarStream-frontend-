@@ -11,8 +11,10 @@ import AddScholarship from "../pages/Dashboard/Admin/AddScholarship";
 import ManageScholarships from "../pages/Dashboard/Admin/ManageScholarships";
 import ManageUsers from "../pages/Dashboard/Admin/ManageUsers";
 import Analytics from "../pages/Dashboard/Admin/Analytics";
-import Profile from "../pages/Dashboard/Profile/Profile";
 import DashboardLayout from "../Layouts/DashboardLayout";
+import Profile from "../pages/Dashboard/Profile/Profile";
+import UpdateScholarship from "../pages/Dashboard/Admin/UpdateScholarship";
+
 
  export const router = createBrowserRouter([
   {
@@ -56,11 +58,12 @@ import DashboardLayout from "../Layouts/DashboardLayout";
   path: "/dashboard",
   element: <DashboardLayout />,
   children: [
-    { path: "profile", element: <Profile /> },
+    { path: "/dashboard", element: <Profile/> },
 
     // ADMIN
     { path: "add-scholarship", element: <AddScholarship /> },
     { path: "manage-scholarships", element: <ManageScholarships/> },
+    { path: "update-scholarship/:id", element: <UpdateScholarship /> },
     { path: "manage-users", element: <ManageUsers /> },
     { path: "analytics", element: <Analytics /> },
 

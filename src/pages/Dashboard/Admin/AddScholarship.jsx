@@ -59,7 +59,8 @@ const AddScholarship = () => {
         <input type="date" name="deadline" className="input" required />
         <input name="userEmail" placeholder="Admin Email" className="input" required />
 
-        <button className="btn col-span-2 bg-blue-600 text-white" disabled={loading}>
+        <button className="btn col-span-2 bg-green-600
+         text-white" disabled={loading}>
           {loading ? "Adding..." : "Add Scholarship"}
         </button>
       </form>

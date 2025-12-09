@@ -1,4 +1,9 @@
+import React from 'react'
+
 const Profile = () => {
-  return <h2 className="text-2xl font-bold">My Profile</h2>;
+  return (
+    <div>Profile</div>
+  );
 };
+
 export default Profile;

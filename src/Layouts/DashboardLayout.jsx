@@ -3,7 +3,7 @@ import { FaUser, FaPlus, FaUsers, FaChartPie, FaSchool } from "react-icons/fa";
 import useAuth from "../hooks/useAuth";
 
 const DashboardLayout = () => {
-  const { user } = useAuth(); // user.role = "admin" | "moderator" | "student"
+  const { user } = useAuth(); 
 
   return (
     <div className="flex bg-gray-100 min-h-screen">
@@ -15,7 +15,7 @@ const DashboardLayout = () => {
         <ul className="space-y-3">
           <li>
             <NavLink
-              to="/dashboard/profile"
+              to="/dashboard"
               className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-200"
             >
               <FaUser /> My Profile
@@ -24,13 +24,13 @@ const DashboardLayout = () => {
         </ul>
 
         {/* ADMIN ONLY LINKS */}
-        {user?.role === "admin" && (
+        {/* {user?.role === "admin" && ( */}
           <>
             <h2 className="mt-6 mb-2 text-gray-500 text-sm">ADMIN PANEL</h2>
             <ul className="space-y-3">
 
               <li>
-                <NavLink
+           <NavLink
                   to="/dashboard/add-scholarship"
                   className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-200"
                 >
@@ -66,10 +66,10 @@ const DashboardLayout = () => {
               </li>
             </ul>
           </>
-        )}
+        {/* )} */}
 
         {/* MODERATOR ONLY LINKS */}
-        {user?.role === "moderator" && (
+        {/* {user?.role === "moderator" && ( */}
           <>
             <h2 className="mt-6 mb-2 text-gray-500 text-sm">MODERATOR PANEL</h2>
 
@@ -79,7 +79,7 @@ const DashboardLayout = () => {
                   to="/dashboard/manage-scholarships"
                   className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-200"
                 >
-                  <FaSchool /> Manage Scholarships
+                  <FaSchool /> Manage Applications
                 </NavLink>
               </li>
 
@@ -88,15 +88,15 @@ const DashboardLayout = () => {
                   to="/dashboard/manage-users"
                   className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-200"
                 >
-                  <FaUsers /> Manage Users
+                  <FaUsers /> All Reviews 
                 </NavLink>
               </li>
             </ul>
           </>
-        )}
+        {/* )} */}
 
         {/* STUDENT ONLY LINKS */}
-        {user?.role === "student" && (
+        {/* {user?.role === "student" && ( */}
           <>
             <h2 className="mt-6 mb-2 text-gray-500 text-sm">STUDENT PANEL</h2>
 
@@ -106,7 +106,7 @@ const DashboardLayout = () => {
                   to="/dashboard/my-applied"
                   className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-200"
                 >
-                  🎓 My Applied Scholarships
+                  🎓 My Application
                 </NavLink>
               </li>
 
@@ -120,7 +120,7 @@ const DashboardLayout = () => {
               </li>
             </ul>
           </>
-        )}
+        {/* )} */}
       </div>
 
       {/* Content Area */}

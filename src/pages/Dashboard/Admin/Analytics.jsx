@@ -9,7 +9,7 @@ const Analytics = () => {
   const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/analytics").then(res => {
+    axios.get("http://localhost:3000/analytics").then(res => {
       setStats(res.data);
       setChartData(res.data.chartData);
     });
@@ -21,25 +21,25 @@ const Analytics = () => {
 
       {/* Stats */}
       <div className="grid grid-cols-3 gap-5 mb-10">
-        <div className="p-5 bg-white shadow rounded">
-          <h2 className="text-xl font-bold">Total Users</h2>
+        <div className="p-5 bg-yellow-200 shadow rounded">
+          <h2 className="text-xl text-green-500 font-bold">Total Users</h2>
           <p className="text-3xl">{stats.totalUsers}</p>
         </div>
 
-        <div className="p-5 bg-white shadow rounded">
-          <h2 className="text-xl font-bold">Total Scholarships</h2>
+        <div className="p-5 bg-indigo-200 shadow rounded">
+          <h2 className="text-xl text-green-500 font-bold">Total Scholarships</h2>
           <p className="text-3xl">{stats.totalScholarships}</p>
         </div>
 
-        <div className="p-5 bg-white shadow rounded">
-          <h2 className="text-xl font-bold">Total Fees Collected</h2>
+        <div className="p-5 bg-red-200 shadow rounded">
+          <h2 className="text-xl text-green-500 font-bold">Total Fees Collected</h2>
           <p className="text-3xl">${stats.totalFees}</p>
         </div>
       </div>
 
       {/* Bar Chart */}
-      <div className="bg-white p-6 shadow rounded">
-        <h2 className="text-xl font-bold mb-4">Applications Per University</h2>
+      <div className="bg-pink-200 p-6 shadow rounded">
+        <h2 className="text-2xl font-bold mb-4">Applications Per University</h2>
 
         <ResponsiveContainer width="100%" height={350}>
           <BarChart data={chartData}>

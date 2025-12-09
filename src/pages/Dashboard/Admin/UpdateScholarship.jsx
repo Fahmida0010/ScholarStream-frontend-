@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import axios from "axios";
 import Swal from "sweetalert2";
 
@@ -8,7 +8,7 @@ const UpdateScholarship = () => {
   const [sch, setSch] = useState(null);
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/scholarships/${id}`).then((res) => setSch(res.data));
+    axios.get(`http://localhost:3000/scholarships/${id}`).then((res) => setSch(res.data));
   }, [id]);
 
   const handleUpdate = async (e) => {
@@ -31,7 +31,7 @@ const UpdateScholarship = () => {
       deadline: form.deadline.value,
     };
 
-    const res = await axios.put(`http://localhost:5000/scholarships/${id}`, updated);
+    const res = await axios.put(`http://localhost:3000/scholarships/${id}`, updated);
 
     if (res.data.modifiedCount) {
       Swal.fire("Updated!", "Scholarship Updated Successfully!", "success");

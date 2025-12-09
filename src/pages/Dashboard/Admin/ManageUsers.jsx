@@ -7,7 +7,7 @@ const ManageUsers = () => {
   const [filterRole, setFilterRole] = useState("all");
 
   const fetchUsers = async () => {
-    const res = await axios.get("http://localhost:5000/users");
+    const res = await axios.get("http://localhost:3000/users");
     setUsers(res.data);
   };
 
@@ -16,7 +16,7 @@ const ManageUsers = () => {
   }, []);
 
   const handleRoleChange = async (id, newRole) => {
-    await axios.patch(`http://localhost:5000/users/role/${id}`, { role: newRole });
+    await axios.patch(`http://localhost:3000/users/role/${id}`, { role: newRole });
     Swal.fire("Success!", `User promoted to ${newRole}`, "success");
     fetchUsers();
   };
@@ -29,7 +29,7 @@ const ManageUsers = () => {
     });
 
     if (confirm.isConfirmed) {
-      await axios.delete(`http://localhost:5000/users/${id}`);
+      await axios.delete(`http://localhost:3000/users/${id}`);
       Swal.fire("Deleted!", "User removed.", "success");
       fetchUsers();
     }
@@ -53,9 +53,9 @@ const ManageUsers = () => {
         <option value="admin">Admin</option>
       </select>
 
-      <table className="w-full bg-white shadow rounded-xl">
+      <table className="w-full bg-green-100 shadow rounded-xl text-left">
         <thead>
-          <tr className="bg-gray-200">
+          <tr className="bg-gray-300">
             <th>Name</th>
             <th>Email</th>
             <th>Role</th>
@@ -73,7 +73,7 @@ const ManageUsers = () => {
 
               <td>
                 <select
-                  className="p-2 border rounded"
+                  className="p-2 border rounded bg-green-400"
                   onChange={(e) => handleRoleChange(u._id, e.target.value)}
                 >
                   <option>Select</option>
