@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import Reviews from "../Reviews/Reviews";
 
 const ScholarshipDetails = () => {
+   
   const { id } = useParams();
   const [sch, setSch] = useState(null);
   const [reviews, setReviews] = useState([]);
@@ -67,15 +68,16 @@ const ScholarshipDetails = () => {
       <p><strong>Description:</strong> {sch.description}</p>
       <p><strong>Stipend / Coverage:</strong> {sch.stipend}</p>
 
-      {/* Apply Button */}
-      <a href={`/checkout/${sch._id}`}>
-        <button className="btn btn-secondary mt-4 w-full">Apply for Scholarship</button>
-      </a>
+      Apply Button
+      <Link to={`/payment-success/${sch._id}`}>
+        <button className="btn btn-secondary mt-4 w-full">
+          Apply for Scholarship</button>
+      </Link>
 
       {/* Reviews Section */}
       <Reviews
         reviews={reviews}
-        newReview={newReview}
+        newReview={newReview} 
         setNewReview={setNewReview}
         handleReviewSubmit={handleReviewSubmit}
         scholarshipId={sch._id} 

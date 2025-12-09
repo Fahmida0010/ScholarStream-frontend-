@@ -4,11 +4,13 @@ import TopScholarships from '../TopScholarships/TopScholarships';
 import SuccessStories from './SuccessStories';
 import FAQ from './FAQ';
 
+
 const Home = () => {
   return (
     <div>
   <Banner></Banner>
       <TopScholarships></TopScholarships>
+      {/* <Reviews></Reviews> */}
     <SuccessStories></SuccessStories>
    <FAQ></FAQ>
 

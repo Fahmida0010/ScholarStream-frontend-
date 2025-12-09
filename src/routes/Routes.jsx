@@ -14,6 +14,12 @@ import Analytics from "../pages/Dashboard/Admin/Analytics";
 import DashboardLayout from "../Layouts/DashboardLayout";
 import Profile from "../pages/Dashboard/Profile/Profile";
 import UpdateScholarship from "../pages/Dashboard/Admin/UpdateScholarship";
+import ManageApplications from "../pages/Dashboard/Moderator/ManageApplications";
+import AllReviews from "../pages/Dashboard/Moderator/AllReviews";
+import PaymentSuccess from "../pages/Payment/PaymentSuccess";
+import MyApplications from "../pages/Dashboard/Student/MyApplications";
+
+
 
 
  export const router = createBrowserRouter([
@@ -37,6 +43,8 @@ import UpdateScholarship from "../pages/Dashboard/Admin/UpdateScholarship";
   path: "/scholarships/:id",
   element: <ScholarshipDetails/>,
 },
+ { path:"/payment-success/:id", 
+  element:<PaymentSuccess/>},
      {
         path:'/',
         Component: AuthLayout,
@@ -67,8 +75,13 @@ import UpdateScholarship from "../pages/Dashboard/Admin/UpdateScholarship";
     { path: "manage-users", element: <ManageUsers /> },
     { path: "analytics", element: <Analytics /> },
 
-    // STUDENT (later)
+  
     // MODERATOR (later)
-  ],
+    { path :"manage-applications", element: <ManageApplications/>},
+     { path :"all-reviews", element: <AllReviews/>},
+
+     // STUDENT (later)
+   {path:"my-applications", element:<MyApplications/>}
+  ], 
 }
 ]);

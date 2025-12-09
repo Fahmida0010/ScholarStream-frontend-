@@ -76,7 +76,7 @@ const DashboardLayout = () => {
             <ul className="space-y-3">
               <li>
                 <NavLink
-                  to="/dashboard/manage-scholarships"
+                  to="/dashboard/manage-applications"
                   className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-200"
                 >
                   <FaSchool /> Manage Applications
@@ -85,7 +85,7 @@ const DashboardLayout = () => {
 
               <li>
                 <NavLink
-                  to="/dashboard/manage-users"
+                  to="/dashboard/all-reviews"
                   className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-200"
                 >
                   <FaUsers /> All Reviews 
@@ -103,7 +103,7 @@ const DashboardLayout = () => {
             <ul className="space-y-3">
               <li>
                 <NavLink
-                  to="/dashboard/my-applied"
+                  to="/dashboard/my-applications"
                   className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-200"
                 >
                   🎓 My Application
