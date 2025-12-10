@@ -1,6 +1,7 @@
 // ManageApplications.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import LoadingSpinner from "../../../components/Shared/LoadingSpinner/LoadingSpinner";
 
 const ManageApplications = () => {
   const [applications, setApplications] = useState([]);
