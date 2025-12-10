@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import LoadingSpinner from "../../../components/Shared/LoadingSpinner/LoadingSpinner";
 
 const API = "http://localhost:5000"; // backend base URL
 
@@ -110,7 +111,8 @@ const MyApplications = () => {
   // UI STARTS
   // =========================
 
-  if (loading) return <p>Loading applications...</p>;
+  if (loading) return <LoadingSpinner/>
+  //<p>Loading applications...</p>;
 
   return (
     <div className="my-applications">

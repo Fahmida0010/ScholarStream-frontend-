@@ -4,12 +4,11 @@ import useRole from '../../../hooks/useRole'
 
 const Profile = () => {
   const { user } = useAuth()
-  //const[role, isRoleLoading] = useRole()
     const {role, isRoleLoading} = useRole()
-   console.log(role, isRoleLoading)
+  console.log(role, isRoleLoading)
 
   return (
-    <div className='flex justify-center items-center min-h-screen'>
+    <div className='flex justify-center items-center '>
       <div className='bg-white shadow-lg
        rounded-2xl md:w-4/5 lg:w-3/5'>
         <img

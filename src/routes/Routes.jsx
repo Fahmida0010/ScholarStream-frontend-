@@ -20,6 +20,7 @@ import MyApplications from "../pages/Dashboard/Student/MyApplications";
 import Checkout from "../pages/Payment/Checkout";
 import PaymentFailed from "../pages/Payment/PaymentFailed";
 import PaymentSuccess from "../pages/Payment/PaymentSuccess";
+import MyReviews from "../pages/Dashboard/Student/MyReviews";
 
 
 
@@ -84,7 +85,8 @@ export const router = createBrowserRouter([
       { path: "all-reviews", element: <AllReviews /> },
 
       // STUDENT (later)
-      { path: "my-applications", element: <MyApplications /> }
+      { path: "my-applications", element: <MyApplications /> },
+       { path: "my-reviews", element: <MyReviews /> }
     ],
   }
 ]);
