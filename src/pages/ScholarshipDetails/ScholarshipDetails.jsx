@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 import Reviews from "../Reviews/Reviews";
+ import LoadingSpinner from "../../components/Shared/LoadingSpinner/LoadingSpinner";
+
 
 const ScholarshipDetails = () => {
    
@@ -30,7 +32,7 @@ const ScholarshipDetails = () => {
   })
     .then(res => res.json())
     .then(data => {
-      setReviews(prev => [reviewToSend, ...prev]); // instant update on UI
+      setReviews(prev => [reviewWithId, ...prev]); // instant update on UI
       setNewReview({ userName: "", userImage: "", ratingPoint: 1, reviewComment: "" });
     });
 };
@@ -49,7 +51,8 @@ const ScholarshipDetails = () => {
       .then(data => setReviews(data));
   }, [id]);
 
-  if (!sch) return <p className="text-center my-20">Loading...</p>;
+  //if (!sch) return <p className="text-center my-20">Loading...</p>;
+ if (!sch) return <LoadingSpinner/>;
 
   return (
     <div className="w-[85%] mx-auto my-10">
@@ -68,7 +71,7 @@ const ScholarshipDetails = () => {
       <p><strong>Description:</strong> {sch.description}</p>
       <p><strong>Stipend / Coverage:</strong> {sch.stipend}</p>
 
-      Apply Button
+     {/* Apply Button */}
       <Link to={`/checkout`}>
         <button className="btn btn-secondary mt-4 w-full">
           Apply for Scholarship</button>

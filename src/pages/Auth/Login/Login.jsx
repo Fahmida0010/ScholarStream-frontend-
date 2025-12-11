@@ -1,8 +1,8 @@
 import React from 'react';
+import { useForm } from 'react-hook-form';
 import useAuth from '../../../hooks/useAuth';
 import { Link, useLocation, useNavigate } from 'react-router';
 import SocialLogin from '../SocialLogin/SocialLogin';
-import { useForm } from 'react-hook-form';
 
 const Login = () => {
   const { register, handleSubmit, 
@@ -63,9 +63,9 @@ const Login = () => {
             <a className="link link-hover">Forgot password?</a>
           </div>
 
-          <button className="btn btn-neutral mt-4">Login</button>
+          <button className="btn bg-pink-400 mt-4">Login</button>
         </fieldset>
-      <p>New to ScholarStream <Link 
+      <p>New to scholarStream <Link 
        state={location.state}    
        className='text-blue-500 underline' to ="/register">Register</Link></p>
       </form>
@@ -75,3 +75,4 @@ const Login = () => {
 };
 
 export default Login;
+

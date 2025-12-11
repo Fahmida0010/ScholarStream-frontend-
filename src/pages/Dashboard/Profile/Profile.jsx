@@ -4,15 +4,15 @@ import useRole from '../../../hooks/useRole'
 
 const Profile = () => {
   const { user } = useAuth()
+  //const[role, isRoleLoading] = useRole()
     const {role, isRoleLoading} = useRole()
-  console.log(role, isRoleLoading)
+  console.log(role)
 
   return (
-    <div className='flex justify-center items-center '>
-      <div className='bg-white shadow-lg
-       rounded-2xl md:w-4/5 lg:w-3/5'>
+    <div className='flex justify-center items-center h-screen'>
+      <div className='bg-white shadow-lg rounded-2xl md:w-4/5 lg:w-3/5'>
         <img
-          alt='building'
+          alt='cover photo'
           src={building}
           className='w-full mb-4 rounded-t-lg h-56'
         />
@@ -26,7 +26,7 @@ const Profile = () => {
           </a>
 
           <p className='p-2 px-4 text-xs text-white
-           bg-lime-500 rounded-full'>
+           bg-indigo-500 rounded-full'>
             {role}
           </p>
           <p className='mt-2 text-xl font-medium text-gray-800 '>
@@ -42,14 +42,15 @@ const Profile = () => {
               </p>
               <p className='flex flex-col'>
                 Email
-                <span className='font-bold text-gray-600 '>{user?.email}</span>
+                <span className='font-bold text-gray-600
+             '>{user?.email}</span>
               </p>
 
               <div>
-                <button className='bg-lime-500  px-10 py-1 rounded-lg text-white cursor-pointer hover:bg-lime-800 block mb-1'>
+                <button className='bg-indigo-500  px-10 py-1 rounded-lg text-white cursor-pointer hover:bg-lime-800 block mb-1'>
                   Update Profile
                 </button>
-                <button className='bg-lime-500 px-7 py-1 rounded-lg text-white cursor-pointer hover:bg-lime-800'>
+                <button className='bg-indigo-500 px-7 py-1 rounded-lg text-white cursor-pointer hover:bg-lime-800'>
                   Change Password
                 </button>
               </div>

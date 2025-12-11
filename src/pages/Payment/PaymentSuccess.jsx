@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import LoadingSpinner from "../../components/Shared/LoadingSpinner/LoadingSpinner";
 
 const PaymentSuccess = () => {
   const [info, setInfo] = useState(null);
@@ -12,7 +13,7 @@ const PaymentSuccess = () => {
       .catch(err => console.log(err));
   }, []);
 
-  if (!info) return <p>Loading...</p>;
+  if (!info) return <LoadingSpinner/>;
 
   return (
     <div>

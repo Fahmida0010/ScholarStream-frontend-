@@ -21,6 +21,9 @@ import Checkout from "../pages/Payment/Checkout";
 import PaymentFailed from "../pages/Payment/PaymentFailed";
 import PaymentSuccess from "../pages/Payment/PaymentSuccess";
 import MyReviews from "../pages/Dashboard/Student/MyReviews";
+import ApplicationDetails from "../pages/Dashboard/Modal/ApplicationDetails";
+import EditApplication from "../pages/Dashboard/Modal/EditApplication";
+import AddReview from "../pages/Dashboard/Modal/AddReview";
 
 
 
@@ -85,8 +88,25 @@ export const router = createBrowserRouter([
       { path: "all-reviews", element: <AllReviews /> },
 
       // STUDENT (later)
-      { path: "my-applications", element: <MyApplications /> },
-       { path: "my-reviews", element: <MyReviews /> }
+      { path: "my-applications", 
+      element: <MyApplications/>,
+      children : [
+        {
+  path: "add-review/:id",
+  element: <AddReview />,
+},
+       { path: "my-reviews",
+     element: <MyReviews /> }
+       ],
+      },
+       {
+  path: "application-details/:id",
+  element: <ApplicationDetails/>,
+},
+{
+  path: "edit-application/:id",
+  element: <EditApplication />,
+}
     ],
   }
 ]);

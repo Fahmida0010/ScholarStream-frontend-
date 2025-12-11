@@ -87,9 +87,13 @@
 
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
+import LoadingSpinner from "../../components/Shared/LoadingSpinner/LoadingSpinner";
+import useAuth from "../../hooks/useAuth";
+
 
 const AllScholarships = () => {
   const [scholarships, setScholarships] = useState([]);
+  const {loading} = useAuth()
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
   const [subject, setSubject] = useState("");
@@ -97,6 +101,7 @@ const AllScholarships = () => {
   const [sort, setSort] = useState(""); // new state for sort
   const [page, setPage] = useState(1); // current page
   const [totalPages, setTotalPages] = useState(1); // total pages
+  
 
   const fetchScholarships = () => {
     let url = `http://localhost:3000/scholarships?search=${search}&category=${category}&subject=${subject}&location=${location}&sort=${sort}&page=${page}`;
@@ -123,8 +128,9 @@ const AllScholarships = () => {
       setPage(newPage);
     }
   };
-  
 
+   
+   if(loading) return <LoadingSpinner/>
   return (
     <div className="w-[90%] mx-auto my-16">
       <h2 className="text-3xl font-bold text-center mb-10">All Scholarships</h2>
@@ -162,9 +168,10 @@ const AllScholarships = () => {
 
       {/* Sort */}
       <div className="flex justify-end mb-4">
-        <select className="select select-bordered w-60" value={sort} onChange={handleSortChange}>
-          <option value="date_desc">Desc</option>
-          <option value="date_asc">Asc</option>
+        <select className="select select-bordered 
+        w-60" value={sort} onChange={handleSortChange}>
+          <option value="fee_desc">High to Low</option>
+          <option value="fee_asc">Low to High</option>
         </select>
       </div>
 
@@ -187,13 +194,19 @@ const AllScholarships = () => {
           </div>
         ))}
       </div>
-
       {/* Pagination */}
-      <div className="flex justify-center mt-8 gap-4">
-        {/* <button className="btn" onClick={() => handlePageChange(page - 1)} disabled={page === 1}>Prev</button> */}
-        <span className="btn btn-disabled">{page}</span>
-        <button className="btn" onClick={() => handlePageChange(page + 1)} disabled={page === totalPages}>Next</button>
-      </div>
+<div className="flex justify-center mt-8 gap-2">
+  {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
+    <button
+      key={num}
+      className={`btn ${num === page ? "btn-primary" : "btn-outline"}`}
+      onClick={() => handlePageChange(num)}
+    >
+      {num}
+    </button>
+  ))}
+</div>
+
     </div>
   );
 };

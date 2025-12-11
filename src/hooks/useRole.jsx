@@ -1,35 +1,24 @@
-import { useEffect, useState } from "react";
-import useAuth from "./useAuth";
-import useAxiosSecure from "./useAxiosSecure";
+import useAuth from './useAuth';
+import useAxiosSecure from './useAxiosSecure';
+import { useQuery } from '@tanstack/react-query';
+
 
 const useRole = () => {
-  const axiosSecure = useAxiosSecure();
-  const { user } = useAuth();
+ const {user, loading} = useAuth()
+const axiosSecure = useAxiosSecure()
 
-  const [role, setRole] = useState(null);
-  const [isRoleLoading, setIsRoleLoading] = useState(true);
+const {data :role, isLoading: isRoleLoading} = useQuery({
+    enabled: !loading  && !!user?.email, 
+ queryKey: ['role', user?.email],
+ queryFn : async() => {
+const {data} = await axiosSecure.get(`/user/role/${user?.email}`);
+return data.role;
 
-  useEffect(() => {
-    if (!user?.email) return;   // user আসার আগে call হবে না
+ },
+})
 
-    const fetchRole = async () => {
-      try {
-        setIsRoleLoading(true);
+ return{role, isRoleLoading } 
+}
 
-        const { data } = await axiosSecure.get(`/users/role/${user.email}`);
 
-        setRole(data?.role); // backend থেকে role set
-      } catch (error) {
-        console.log("Role fetch error:", error);
-      } finally {
-        setIsRoleLoading(false);
-      }
-    };
-
-    fetchRole();
-  }, [user?.email, axiosSecure]);
-
-  return { role, isRoleLoading };
-};
-
-export default useRole;
+export default useRole;    
