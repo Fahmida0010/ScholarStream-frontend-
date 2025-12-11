@@ -1,16 +1,62 @@
-# React + Vite
+# ScholarStream – Scholarship Management Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A Full-Stack MERN Application to connect students with global scholarship opportunities.  
+Students can browse and apply for scholarships, moderators can manage applications, and admins oversee the platform.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## React Compiler
+##  Project Purpose
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+ScholarStream simplifies the process of finding scholarships by centralizing all opportunities in one platform.  
+It allows:
 
-## Expanding the ESLint configuration
+ Students to search, filter, and apply for scholarships.  
+ Moderators to manage applications and provide feedback.  
+ Admins to manage users, scholarships, and view analytics.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+
+##  Live URL
+
+ **Client:** _your-client-live-link_  
+**Server:** _your-server-live-link_
+
+
+
+##  Key Features
+
+ **Authentication & Authorization**  
+   Email/Password + Google Social Login  
+   Role-based access: Student, Moderator, Admin  
+   JWT for secure API calls  
+
+ **Scholarship Management**  
+   Browse, search, filter, and sort scholarships  
+   View scholarship details  
+   Apply with payment via Stripe  
+
+ **Dashboards**  
+  **Admin:** Add/manage scholarships, manage users, view analytics  
+  - **Moderator:** Review applications, give feedback, moderate reviews  
+   **Student:** Apply to scholarships, track applications, write reviews  
+
+  **Payment System**  
+   Stripe integration  
+    Payment success/failure handling  
+    Application status updated automatically  
+
+ **UI/UX**  
+    Fully responsive  
+    Modern, clean design  
+   Framer Motion animations  
+   Loading spinners and 404 page  
+
+
+
+## NPM Packages Used
+
+### Frontend
+ react, react-router-dom, axios, firebase, react-hook-form, framer-motion, sweetalert2, react-icons, daisyui, tailwindcss, @stripe/stripe-js  
+
+### Backend
+ express, cors, dotenv, mongoose, jsonwebtoken, stripe
