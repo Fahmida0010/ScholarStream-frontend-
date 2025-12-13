@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import axios from "axios";
+import Swal from "sweetalert2";
+import Button from "../../../components/Shared/Button/Button";
 
 const API = "http://localhost:3000";
 
@@ -12,7 +14,7 @@ const EditApplication = () => {
     universityName: "",
     universityAddress: "",
     subjectCategory: "",
-    applicationFees: ""
+    applicationFees: "",
   });
 
   useEffect(() => {
@@ -24,7 +26,12 @@ const EditApplication = () => {
       const res = await axios.get(`${API}/myapplications/${id}`);
       setForm(res.data);
     } catch (err) {
-      console.log("Error:", err);
+      console.log("Error loading application:", err);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Failed to load application data!",
+      });
     }
   };
 
@@ -36,12 +43,22 @@ const EditApplication = () => {
     e.preventDefault();
 
     try {
-      await axios.put(`${API}/applications/${id}`, form);
+      const res = await axios.put(`${API}/myapplications/${id}`, form);
 
-      alert("Application updated successfully!");
-      navigate("/dashboard/my-applications");
+      Swal.fire({
+        icon: "success",
+        title: "Updated!",
+        text: "Application updated successfully!",
+      }).then(() => {
+        navigate("/dashboard/my-applications");
+      });
     } catch (err) {
-      alert("Failed to update");
+      console.log("Update Error:", err);
+      Swal.fire({
+        icon: "error",
+        title: "Failed!",
+        text: "Failed to update application.",
+      });
     }
   };
 
@@ -97,12 +114,12 @@ const EditApplication = () => {
           />
         </div>
 
-        <button
+        <Button
           type="submit"
-          className="mt-4 w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700"
+          className=""
         >
           Update Application
-        </button>
+        </Button>
       </form>
     </div>
   );

@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import LoadingSpinner from "../../../components/Shared/LoadingSpinner/LoadingSpinner";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import axios from "axios";
+import Button from "../../../components/Shared/Button/Button";
 
 const AddScholarship = () => {
   const [loading, setLoading] = useState(false);
@@ -96,9 +97,9 @@ const AddScholarship = () => {
         <input type="date" name="deadline" className="input" required />
         <input name="userEmail" placeholder="Admin Email" className="input" required />
 
-        <button className="btn bg-green-600 text-white col-span-2">
+        <Button className="">
           Add Scholarship
-        </button>
+        </Button>
       </form>
     </div>
   );

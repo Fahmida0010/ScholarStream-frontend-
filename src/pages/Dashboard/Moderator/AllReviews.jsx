@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import LoadingSpinner from "../../../components/Shared/LoadingSpinner/LoadingSpinner";
 import Swal from "sweetalert2";
+import Button from "../../../components/Shared/Button/Button";
 
 const AllReviews = () => {
   const axiosSecure = useAxiosSecure();
@@ -96,12 +97,12 @@ const handleDelete = (id) => {
               {new Date(review.reviewDate).toLocaleDateString()}
             </p>
 
-            <button
+            <Button
               onClick={() => handleDelete(review._id)}
-              className="mt-3 bg-red-500 text-white px-5 py-1 rounded-lg hover:bg-red-700"
+              className="bg-red-500 hover:bg-red-700"
             >
               Delete
-            </button>
+            </Button>
           </div>
         ))}
       </div>

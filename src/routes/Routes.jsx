@@ -24,6 +24,9 @@ import MyReviews from "../pages/Dashboard/Student/MyReviews";
 import ApplicationDetails from "../pages/Dashboard/Modal/ApplicationDetails";
 import EditApplication from "../pages/Dashboard/Modal/EditApplication";
 import AddReview from "../pages/Dashboard/Modal/AddReview";
+import Feedback from "../pages/Dashboard/Modal/Feedback";
+import ErrorPage from "../components/Shared/ErrorPage/ErrorPage";
+import UpdateReviews from "../pages/Dashboard/Modal/UpdateReviews";
 
 
 
@@ -42,6 +45,10 @@ export const router = createBrowserRouter([
         element: <AllScholarships />,
       },
       {
+        path: '*',
+        element: <ErrorPage />
+      },
+      {
         path: "/top-scholarships",
         element: <TopScholarships />,
       },
@@ -49,7 +56,11 @@ export const router = createBrowserRouter([
         path: "/scholarships/:id",
         element: <ScholarshipDetails />,
       },
-      { path: "/checkout", element: <Checkout /> },
+       { path: "/checkout", element: <Checkout /> },
+      {
+        path: "/checkout/:id",
+        element: <Checkout />,
+      },
       { path: "/payment-success", element: <PaymentSuccess /> },
       { path: "/payment-failed", element: <PaymentFailed /> },
       {
@@ -83,30 +94,39 @@ export const router = createBrowserRouter([
       { path: "analytics", element: <Analytics /> },
 
 
-      // MODERATOR (later)
+      // MODERATOR 
       { path: "manage-applications", element: <ManageApplications /> },
       { path: "all-reviews", element: <AllReviews /> },
 
-      // STUDENT (later)
-      { path: "my-applications", 
-      element: <MyApplications/>,
-      children : [
-        {
-  path: "add-review/:id",
-  element: <AddReview />,
-},
-       { path: "my-reviews",
-     element: <MyReviews /> }
-       ],
+      // STUDENT 
+      {
+        path: "my-applications",
+        element: <MyApplications />
+      },
+      {
+        path: "add-review/:id",
+        element: <AddReview />
+      },
+      {
+        path: "my-reviews",
+        element: <MyReviews />
       },
        {
-  path: "application-details/:id",
-  element: <ApplicationDetails/>,
-},
-{
-  path: "edit-application/:id",
-  element: <EditApplication />,
-}
+        path: "update-reviews",
+        element: <UpdateReviews />
+      },
+      {
+        path: "application-details/:id",
+        element: <ApplicationDetails />,
+      },
+      {
+        path: "feedback/:id",
+        element: <Feedback />,
+      },
+      {
+        path: "edit-application/:id",
+        element: <EditApplication />,
+      }
     ],
   }
 ]);

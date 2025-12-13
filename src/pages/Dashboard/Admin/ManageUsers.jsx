@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import Button from "../../../components/Shared/Button/Button";
 
 const ManageUsers = () => {
   const [users, setUsers] = useState([]);
@@ -84,12 +85,12 @@ const ManageUsers = () => {
               </td>
 
               <td>
-                <button
+                <Button
                   onClick={() => handleDeleteUser(u._id)}
-                  className="btn bg-red-600 text-white"
+                  className="btn bg-red-500 text-white"
                 >
                   Delete
-                </button>
+                </Button>
               </td>
             </tr>
           ))}

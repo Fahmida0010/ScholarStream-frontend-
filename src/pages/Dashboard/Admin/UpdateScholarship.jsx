@@ -2,13 +2,15 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
 import Swal from "sweetalert2";
+import LoadingSpinner from "../../../components/Shared/LoadingSpinner/LoadingSpinner";
+import Button from "../../../components/Shared/Button/Button";
 
 const UpdateScholarship = () => {
   const { id } = useParams();
   const [sch, setSch] = useState(null);
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/scholarships/${id}`).then((res) => setSch(res.data));
+    axios.get(`http://localhost:3000/manage-scholarship/${id}`).then((res) => setSch(res.data));
   }, [id]);
 
   const handleUpdate = async (e) => {
@@ -31,14 +33,15 @@ const UpdateScholarship = () => {
       deadline: form.deadline.value,
     };
 
-    const res = await axios.put(`http://localhost:3000/scholarships/${id}`, updated);
+    const res = await axios.put(`http://localhost:3000/manage-scholarship/${id}`, updated);
 
     if (res.data.modifiedCount) {
       Swal.fire("Updated!", "Scholarship Updated Successfully!", "success");
     }
   };
 
-  if (!sch) return <h1>Loading...</h1>;
+  if (!sch) return <LoadingSpinner/>
+  
 
   return (
     <div>
@@ -59,7 +62,7 @@ const UpdateScholarship = () => {
         <input name="serviceCharge" defaultValue={sch.serviceCharge} className="input" />
         <input type="date" name="deadline" defaultValue={sch.deadline} className="input" />
 
-        <button className="btn col-span-2 bg-blue-600 text-white">Update</button>
+        <Button className="">Update</Button>
       </form>
     </div>
   );

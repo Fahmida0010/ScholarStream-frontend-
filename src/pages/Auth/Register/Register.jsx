@@ -5,6 +5,7 @@ import SocialLogin from '../SocialLogin/SocialLogin';
 import axios from 'axios';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { useForm } from 'react-hook-form';
+import Button from '../../../components/Shared/Button/Button';
 
 const Register = () => {
 
@@ -55,8 +56,8 @@ const Register = () => {
 
   return (
     <div className="card bg-base-100 w-full mx-auto max-w-sm shadow-2xl">
-      <h3 className="text-3xl text-center mt-4">Welcome to Zap Shift</h3>
-      <p className='font-bold mt-6 text-center'>Please Register</p>
+      <h3 className="text-3xl font-bold text-center text-green-400 mt-6">Welcome to ScholarStream</h3>
+  
 
       <form className="card-body" onSubmit={handleSubmit(handleRegistration)}>
         <fieldset className="fieldset">
@@ -100,7 +101,8 @@ const Register = () => {
             <a className="link link-hover">Forgot password?</a>
           </div>
 
-          <button className="btn btn-neutral mt-4">Register</button>
+          <Button className="btn bg-pink-400 mt-4">
+            Register</Button>
         </fieldset>
 
         <p>

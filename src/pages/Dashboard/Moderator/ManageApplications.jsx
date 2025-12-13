@@ -1,162 +1,124 @@
-// ManageApplications.jsx
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import axios from "axios";
-import LoadingSpinner from "../../../components/Shared/LoadingSpinner/LoadingSpinner";
+import Button from "../../../components/Shared/Button/Button";
+
+const API = "http://localhost:3000";
 
 const ManageApplications = () => {
   const [applications, setApplications] = useState([]);
-  const [selectedApp, setSelectedApp] = useState(null);
-  const [feedbackText, setFeedbackText] = useState("");
-  const [showModal, setShowModal] = useState(false);
-  const [showFeedbackModal, setShowFeedbackModal] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  // Fetch all applications
-  const fetchApplications = async () => {
-    try {
-      const res = await axios.get("http://localhost:3000/applications");
-      setApplications(res.data);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetchApplications();
+    axios
+      .get(`${API}/applications`)
+      .then((res) => {
+        setApplications(res.data);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
   }, []);
 
-  // Update application status
-  const handleStatusUpdate = async (id, status) => {
-    try {
-      await axios.put(`http://localhost:3000/applications/${id}`, { applicationStatus: status });
-      fetchApplications();
-    } catch (err) {
-      console.error(err);
+  const updateStatus = async (id, newStatus) => {
+    const res = await axios.patch(`${API}/manage-application/${id}`, {
+      status: newStatus,
+    });
+
+    if (res.data.modifiedCount > 0) {
+      setApplications((prev) =>
+        prev.map((app) =>
+          app._id === id ? { ...app, status: newStatus } : app
+        )
+      );
     }
   };
 
-  // Submit feedback
-  const handleFeedbackSubmit = async (id) => {
-    try {
-      await axios.put(`http://localhost:3000/applications/${id}`, { feedback: feedbackText });
-      setFeedbackText("");
-      setShowFeedbackModal(false);
-      fetchApplications();
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  // Reject/Delete application
-  const handleReject = async (id) => {
-    if (!window.confirm("Are you sure you want to reject this application?")) return;
-    try {
-      await axios.delete(`http://localhost:3000/applications/${id}`);
-      fetchApplications();
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  if (loading) return <p className="text-center mt-10">Loading...</p>;
 
   return (
-    <div className="p-6">
-      <h2 className="text-2xl font-bold mb-6">Manage Applications</h2>
-      
-      <table className="w-full table-auto border border-collapse">
-        <thead>
-          <tr className="bg-gray-200 text-center">
-            <th className="border px-2 py-1">Applicant Name</th>
-            <th className="border px-2 py-1">Email</th>
-            <th className="border px-2 py-1">University</th>
-            <th className="border px-2 py-1">Feedback</th>
-            <th className="border px-2 py-1">Status</th>
-            <th className="border px-2 py-1">Payment</th>
-            <th className="border px-2 py-1">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {applications.map(app => (
-            <tr key={app._id} className="text-center">
-              <td className="border px-2 py-1">{app.userName}</td>
-              <td className="border px-2 py-1">{app.userEmail}</td>
-              <td className="border px-2 py-1">{app.universityName}</td>
-              <td className="border px-2 py-1">{app.feedback || "No feedback"}</td>
-              <td className="border px-2 py-1">{app.applicationStatus}</td>
-              <td className="border px-2 py-1">{app.paymentStatus}</td>
-              <td className="border px-2 py-1 space-x-1">
-                <button
-                  className="bg-blue-500 text-white px-2 py-1 rounded"
-                  onClick={() => { setSelectedApp(app); setShowModal(true); }}
-                >
-                  Details
-                </button>
-                <button
-                  className="bg-yellow-500 text-white px-2 py-1 rounded"
-                  onClick={() => { setSelectedApp(app); setFeedbackText(app.feedback || ""); setShowFeedbackModal(true); }}
-                >
-                  Feedback
-                </button>
-                <button
-                  className="bg-green-500 text-white px-2 py-1 rounded"
-                  onClick={() => handleStatusUpdate(app._id, "processing")}
-                >
-                  Processing
-                </button>
-                <button
-                  className="bg-purple-500 text-white px-2 py-1 rounded"
-                  onClick={() => handleStatusUpdate(app._id, "completed")}
-                >
-                  Completed
-                </button>
-                <button
-                  className="bg-red-500 text-white px-2 py-1 rounded"
-                  onClick={() => handleReject(app._id)}
-                >
-                  Reject
-                </button>
-              </td>
+    <div className="p-4 max-w-7xl mx-auto">
+      <h2 className="text-2xl font-bold mb-4">Manage Applications</h2>
+
+      <div className="overflow-x-auto">
+        <table className="w-full border">
+          <thead className="bg-gray-200">
+            <tr className="text-left text-sm">
+              <th className="p-2">Name</th>
+              <th className="p-2">Applicant Email</th>
+              <th className="p-2">University</th>
+              <th className="p-2">Status</th>
+              <th className="p-2">Payment</th>
+              <th className="p-2">Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
 
-      {/* Details Modal */}
-      {showModal && selectedApp && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white rounded p-6 w-1/2">
-            <h3 className="text-xl font-bold mb-4">{selectedApp.userName} - {selectedApp.universityName}</h3>
-            <p><strong>Email:</strong> {selectedApp.userEmail}</p>
-            <p><strong>Degree:</strong> {selectedApp.degree}</p>
-            <p><strong>Category:</strong> {selectedApp.scholarshipCategory}</p>
-            <p><strong>Application Fees:</strong> ${selectedApp.applicationFees}</p>
-            <p><strong>Service Charge:</strong> ${selectedApp.serviceCharge}</p>
-            <p><strong>Status:</strong> {selectedApp.applicationStatus}</p>
-            <p><strong>Payment:</strong> {selectedApp.paymentStatus}</p>
-            <p><strong>Feedback:</strong> {selectedApp.feedback || "No feedback"}</p>
-            <div className="flex justify-end mt-4">
-              <button className="bg-gray-500 text-white px-4 py-1 rounded" onClick={() => setShowModal(false)}>Close</button>
-            </div>
-          </div>
-        </div>
-      )}
+          <tbody>
+            {applications.map((app) => (
+              <tr key={app._id} className="border-t text-sm">
+                <td className="p-2">{app.userName}</td>
 
-      {/* Feedback Modal */}
-      {showFeedbackModal && selectedApp && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white rounded p-6 w-1/2">
-            <h3 className="text-xl font-bold mb-4">Feedback for {selectedApp.userName}</h3>
-            <textarea
-              className="w-full border p-2 rounded mb-4"
-              value={feedbackText}
-              onChange={(e) => setFeedbackText(e.target.value)}
-              placeholder="Write feedback..."
-            />
-            <div className="flex justify-end space-x-2">
-              <button className="bg-gray-500 text-white px-4 py-1 rounded" onClick={() => setShowFeedbackModal(false)}>Close</button>
-              <button className="bg-blue-500 text-white px-4 py-1 rounded" onClick={() => handleFeedbackSubmit(selectedApp._id)}>Submit</button>
-            </div>
-          </div>
-        </div>
-      )}
+                <td className="p-2">{app.userEmail}</td>
+
+                <td className="p-2">{app.universityName}</td>
+
+                <td className="p-2 capitalize">{app.status}</td>
+
+                {/* ⭐ PAYMENT STATUS (ONLY DISPLAY) */}
+                <td className="p-2">
+                  {app.paymentStatus === "paid" ? (
+                    <span className="text-green-600 font-semibold">Paid</span>
+                  ) : (
+                    <span className="text-red-600 font-semibold">Unpaid</span>
+                  )}
+                </td>
+
+                <td className="p-2 flex flex-col sm:flex-row gap-2">
+
+                  {/* DETAILS */}
+                  <Button
+                    onClick={() =>
+                      navigate(`/dashboard/application-details/${app._id}`)
+                    }
+                    className=""
+                  >
+                    Details
+                  </Button>
+
+                  {/* FEEDBACK */}
+                  <Button
+                    onClick={() => navigate(`/dashboard/feedback/${app._id}`)}
+                    className="bg-green-600"
+                  >
+                    Feedback
+                  </Button>
+
+                  {/* STATUS DROPDOWN */}
+                  <select
+                    className="border p-1 rounded w-28 capitalize"
+                    value={app.status}
+                    onChange={(e) => updateStatus(app._id, e.target.value)}
+                  >
+                    <option value="processing">Processing</option>
+                    <option value="completed">Completed</option>
+                  </select>
+
+                  {/* CANCEL */}
+                  <Button
+                    onClick={() => updateStatus(app._id, "rejected")}
+                    className="bg-red-600 text-white px-3 py-1 rounded w-28"
+                  >
+                    Cancel
+                  </Button>
+
+                </td>
+              </tr>
+            ))}
+          </tbody>
+
+        </table>
+      </div>
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import React from "react";
+import Button from "../../components/Shared/Button/Button";
 
 const Reviews = ({
   reviews,
@@ -15,7 +16,7 @@ const Reviews = ({
       {/* {reviews.length === 0 && <p>No reviews yet for this scholarship.</p>} */}
 
       {reviews.map((rev) => (
-        <div key={rev.id || rev._id} className="border p-4 rounded-lg mb-4">
+        <div key={rev.id || rev._id} className="border border-pink-400 p-4 rounded-lg mb-4">
           <div className="flex items-center gap-4 mb-2">
             <img
               src={rev.userImage}
@@ -40,7 +41,7 @@ const Reviews = ({
       {/* Add Review Form */}
       <form
         onSubmit={(e) => handleReviewSubmit(e, scholarshipId)}
-        className="mt-6 border p-4 rounded-lg"
+        className="mt-6 border-2 border-pink-600 p-4 rounded-lg"
       >
         <h3 className="font-bold mb-2">Add Your Review</h3>
 
@@ -91,9 +92,9 @@ const Reviews = ({
           required
         ></textarea>
 
-        <button type="submit" className="btn btn-primary w-full">
+        <Button type="submit" className="btn btn-primary w-full">
           Submit Review
-        </button>
+        </Button>
       </form>
     </div>
   );

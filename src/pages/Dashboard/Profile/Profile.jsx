@@ -1,9 +1,11 @@
 import useAuth from '../../../hooks/useAuth'
 import building from '../../../assets/images/building.jpg'
 import useRole from '../../../hooks/useRole'
+import Button from '../../../components/Shared/Button/Button'
 
 const Profile = () => {
   const { user } = useAuth()
+  console.log(user)
   //const[role, isRoleLoading] = useRole()
     const {role, isRoleLoading} = useRole()
   console.log(role)
@@ -47,12 +49,12 @@ const Profile = () => {
               </p>
 
               <div>
-                <button className='bg-indigo-500  px-10 py-1 rounded-lg text-white cursor-pointer hover:bg-lime-800 block mb-1'>
+                <Button className='bg-indigo-500'>
                   Update Profile
-                </button>
-                <button className='bg-indigo-500 px-7 py-1 rounded-lg text-white cursor-pointer hover:bg-lime-800'>
+                </Button>
+                <Button className='bg-indigo-500'>
                   Change Password
-                </button>
+                </Button>
               </div>
             </div>
           </div>
@@ -62,4 +64,4 @@ const Profile = () => {
   )
 }
 
-export default Profile
+export default Profile;

@@ -1,13 +1,26 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import Button from "../../../components/Shared/Button/Button";
 
 const ManageScholarships = () => {
   const [scholarships, setScholarships] = useState([]);
 
   const fetchData = async () => {
-    const res = await axios.get("http://localhost:3000/scholarships");
-    setScholarships(res.data);
+    try {
+      const res = await axios.get("http://localhost:3000/scholarships");
+
+      console.log("Response from API:", res.data);
+
+      if (Array.isArray(res.data.scholarships)) {
+        setScholarships(res.data.scholarships);
+      } else {
+        setScholarships([]);
+      }
+    } catch (error) {
+      console.log("API Error:", error);
+      setScholarships([]);
+    }
   };
 
   useEffect(() => {
@@ -23,7 +36,7 @@ const ManageScholarships = () => {
     });
 
     if (confirm.isConfirmed) {
-      await axios.delete(`http://localhost:3000/scholarships/${id}`);
+      await axios.delete(`http://localhost:3000/manage-scholarship/${id}`);
       Swal.fire("Deleted!", "Scholarship removed!", "success");
       fetchData();
     }
@@ -45,33 +58,36 @@ const ManageScholarships = () => {
         </thead>
 
         <tbody>
-          {scholarships.map((scholar) => (
-            <tr key={scholar._id} className="border-b">
-              <td className="p-3">
-                <img src={scholar.universityImage} alt="" className="w-16 rounded" />
-              </td>
-              <td>{scholar.scholarshipName}</td>
-              <td>{scholar.universityName}</td>
-              <td>{scholar.applicationDeadline}</td>
+          {Array.isArray(scholarships) &&
+            scholarships.map((scholar) => (
+              <tr key={scholar._id} className="border-b">
+                <td className="p-3">
+                  <img src={scholar.universityImage} alt=""
+                    className="w-16 rounded" />
+                </td>
+                <td>{scholar.scholarshipName}</td>
+                <td>{scholar.universityName}</td>
+                <td>{scholar.applicationDeadline}</td>
 
-              <td className="flex gap-2">
-                <button
-   onClick={() => window.location.href
-     = `/dashboard/update-scholarship/${scholar._id}`}
-                  className="btn bg-sky-400 text-white"
-                >
-                  Update
-                </button>
+                <td className="flex gap-2">
+                  <Button
+                    onClick={() =>
+                      (window.location.href = `/dashboard/update-scholarship/${scholar._id}`)
+                    }
+                    className="bg-sky-400"
+                  >
+                    Update
+                  </Button>
 
-                <button
-                  onClick={() => handleDelete(scholar._id)}
-                  className="btn bg-red-400 text-white"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
+                  <Button
+                    onClick={() => handleDelete(scholar._id)}
+                    className="bg-red-500"
+                  >
+                    Delete
+                  </Button>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>

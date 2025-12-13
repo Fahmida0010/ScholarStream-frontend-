@@ -1,5 +1,6 @@
 
 import { useNavigate } from 'react-router'
+import Button from '../Button/Button'
 
 const ErrorPage = () => {
   const navigate = useNavigate()
@@ -25,14 +26,15 @@ const ErrorPage = () => {
             </svg>
           </p>
           <h1 className='mt-3 text-2xl font-semibold text-gray-800  md:text-3xl'>
-            Something Went Wrong!
+            Something Went Wrong! <br/>
+      <span className='text-3xl text-red-500'>404</span> 
           </h1>
           <p className='mt-4 text-gray-500 '>Here are some helpful links:</p>
 
           <div className='flex items-center w-full mt-6 gap-x-3 shrink-0 sm:w-auto'>
-            <button
+            <Button
               onClick={() => navigate(-1)}
-              className='flex items-center justify-center w-1/2 px-5 py-1 text-sm text-gray-700 transition-colors duration-200 bg-white border rounded-lg gap-x-2 sm:w-auto   hover:bg-gray-100 '
+     className=''
             >
               <svg
                 xmlns='http://www.w3.org/2000/svg'
@@ -49,10 +51,16 @@ const ErrorPage = () => {
                 />
               </svg>
 
-              <span>Go back</span>
-            </button>
+              Go back
+            </Button>
 
-            <Button label={'Take Me Home'} onClick={() => navigate('/')} />
+            <Button
+  onClick={() => navigate('/')}
+  className=''
+>
+  Take Me Home
+</Button>
+
           </div>
         </div>
       </div>

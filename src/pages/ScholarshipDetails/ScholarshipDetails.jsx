@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 import Reviews from "../Reviews/Reviews";
- import LoadingSpinner from "../../components/Shared/LoadingSpinner/LoadingSpinner";
+import LoadingSpinner from "../../components/Shared/LoadingSpinner/LoadingSpinner";
+
+
 
 
 const ScholarshipDetails = () => {
-   
   const { id } = useParams();
   const [sch, setSch] = useState(null);
   const [reviews, setReviews] = useState([]);
@@ -32,13 +33,13 @@ const ScholarshipDetails = () => {
   })
     .then(res => res.json())
     .then(data => {
-      setReviews(prev => [reviewWithId, ...prev]); // instant update on UI
+      setReviews(prev => [reviewWithId, ...prev]); 
       setNewReview({ userName: "", userImage: "", ratingPoint: 1, reviewComment: "" });
     });
 };
 
 
-  // Fetch Scholarship Details & Reviews
+  
   useEffect(() => {
     // Scholarship Details
     fetch(`http://localhost:3000/scholarships/${id}`)
@@ -51,7 +52,7 @@ const ScholarshipDetails = () => {
       .then(data => setReviews(data));
   }, [id]);
 
-  //if (!sch) return <p className="text-center my-20">Loading...</p>;
+
  if (!sch) return <LoadingSpinner/>;
 
   return (
@@ -72,8 +73,8 @@ const ScholarshipDetails = () => {
       <p><strong>Stipend / Coverage:</strong> {sch.stipend}</p>
 
      {/* Apply Button */}
-      <Link to={`/checkout`}>
-        <button className="btn btn-secondary mt-4 w-full">
+      <Link to={`/checkout/${id}`}>
+        <button className="btn btn-secondary mt-4 w-1/2">
           Apply for Scholarship</button>
       </Link>
 
