@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
 import LoadingSpinner from "../../../components/Shared/LoadingSpinner/LoadingSpinner";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
-const API = "http://localhost:3000";
+const API =import.meta.env.VITE_API_URL
 
 const ApplicationDetails = () => {
   const { id } = useParams();
   const [application, setApplication] = useState(null);
+ const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
     loadDetails();
@@ -15,7 +17,7 @@ const ApplicationDetails = () => {
 
   const loadDetails = async () => {
     try {
-      const res = await axios.get(`${API}/myapplications/${id}`);
+      const res = await axiosSecure(`${API}/myapplications/${id}`);
       console.log(res.data)
       setApplication(res.data);
     } catch (err) {
@@ -34,7 +36,7 @@ const ApplicationDetails = () => {
 
       <div className="bg-white shadow-lg rounded-xl p-6 space-y-3">
         <p><b>University:</b> {application.universityName}</p>
-        <p><b>Address:</b> {application.universityAddress}</p>
+        <p><b>Address:</b> {application.country}</p>
         <p><b>Category:</b> {application.subjectCategory}</p>
         <p><b>Fees:</b> ${application.applicationFees}</p>
         <p><b>Status:</b> {application.applicationStatus}</p>

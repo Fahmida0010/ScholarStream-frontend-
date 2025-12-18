@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router";
+import LoadingSpinner from "../../../components/Shared/LoadingSpinner/LoadingSpinner";
+import Button from "../../../components/Shared/Button/Button";
 
 const UpdateReviews = () => {
-  const { id } = useParams(); // review ID from URL
+  const { id } = useParams(); 
   const navigate = useNavigate();
   const [review, setReview] = useState(null);
 
   useEffect(() => {
     const fetchReview = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/reviews/${id}`);
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/reviews/${id}`);
         setReview(res.data);
       } catch (err) {
         console.log(err);
@@ -21,17 +23,17 @@ const UpdateReviews = () => {
 
   const handleUpdate = async () => {
     try {
-      await axios.put(`http://localhost:3000/reviews/${id}`, {
+      await axios.put(`${import.meta.env.VITE_API_URL}/myreviews/${id}`, {
         reviewComment: review.reviewComment,
         ratingPoint: review.ratingPoint,
       });
-      navigate("/my-reviews"); // go back after update
+      navigate("/my-reviews"); 
     } catch (err) {
       console.log(err);
     }
   };
 
-  if (!review) return <p>Loading...</p>;
+  if (!review) return <LoadingSpinner/>
 
   return (
     <div className="p-6 max-w-md mx-auto">
@@ -58,13 +60,14 @@ const UpdateReviews = () => {
         }
       />
 
-      <div className="flex justify-end gap-2">
-        <button onClick={handleUpdate} className="btn btn-success">
+      <div className=" justify-end gap-2">
+        <Button onClick={handleUpdate} className="btn bg-green-500 ">
           Update
-        </button>
-        <button onClick={() => navigate("/my-reviews")} className="btn btn-ghost">
+        </Button>
+        <Button onClick={() => navigate("/my-reviews")}
+         className="btn btn-ghost">
           Cancel
-        </button>
+        </Button>
       </div>
     </div>
   );

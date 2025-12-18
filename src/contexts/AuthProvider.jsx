@@ -21,7 +21,7 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-
+  //console.log(user)
 
   const registerUser = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password)
@@ -41,7 +41,8 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
     return signOut(auth);
   }
-  const updateUserProfile = () => {
+  const updateUserProfile = (profile) => {
+    console.log(profile)
     return updateProfile(auth.currentUser, profile)
   }
 

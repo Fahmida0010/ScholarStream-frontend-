@@ -11,12 +11,12 @@ import human from "../../../assets/images/human scholar.jpg";
 
 const SuccessStories = () => {
   return (
-    <section className="mt-24 bg-gray-200 py-16 rounded-xl px-6">
-      <motion.h2
+    <section className="mt-2  bg-gray-200 py-16 rounded-xl px-6">
+      <motion.h2 
         initial={{ opacity: 0, y: -30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="text-3xl text-center font-bold text-green-700 mb-10"
+        className="text-3xl text-center max-w-[90%] font-bold text-green-700 mb-10"
       >
         Success Stories
       </motion.h2>

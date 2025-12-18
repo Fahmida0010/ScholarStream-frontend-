@@ -1,35 +1,26 @@
-
 import { useState } from "react";
 import Swal from "sweetalert2";
 import LoadingSpinner from "../../../components/Shared/LoadingSpinner/LoadingSpinner";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import axios from "axios";
 import Button from "../../../components/Shared/Button/Button";
+import { imageUpload } from "../../../utils";
 
 const AddScholarship = () => {
   const [loading, setLoading] = useState(false);
+  const [preview, setPreview] = useState(null);
   const axiosSecure = useAxiosSecure();
 
   const handleAddScholarship = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    //setLoading(true);
 
     const form = e.target;
     const imageFile = form.image.files[0];
-
+  console.log(form)
     try {
-      // 1️⃣ Upload image to imgbb (same method as Register page)
-      const formData = new FormData();
-      formData.append("image", imageFile);
+      // SAME RULE AS AddPlantForm
+      const imageUrl = await imageUpload(imageFile);
 
-      const image_API_URL = `https://api.imgbb.com/1/upload?key=${
-        import.meta.env.VITE_image_host_key
-      }`;
-
-      const imgRes = await axios.post(image_API_URL, formData);
-      const imageUrl = imgRes.data.data.url;
-
-      // 2️⃣ Prepare scholarship data
       const scholarshipData = {
         scholarshipName: form.scholarshipName.value,
         universityName: form.universityName.value,
@@ -47,13 +38,14 @@ const AddScholarship = () => {
         postDate: new Date(),
         userEmail: form.userEmail.value,
       };
-
-      // 3️⃣ Save to your backend
+  console.log(scholarshipData)
+  
       const res = await axiosSecure.post("/scholarships", scholarshipData);
 
       if (res.data.insertedId) {
         Swal.fire("Success!", "Scholarship Added Successfully!", "success");
         form.reset();
+        setPreview(null);
       }
     } catch (err) {
       console.error(err);
@@ -76,16 +68,30 @@ const AddScholarship = () => {
         <input name="scholarshipName" placeholder="Scholarship Name" className="input" required />
         <input name="universityName" placeholder="University Name" className="input" required />
 
-        {/* Image Upload - same as Register */}
+        {/* IMAGE (same behavior, just cleaner) */}
         <input
           type="file"
           name="image"
           className="file-input"
           accept="image/*"
           required
+          onChange={(e) => {
+            const file = e.target.files[0];
+            if (file) {
+              setPreview(URL.createObjectURL(file));
+            }
+          }}
         />
 
-        <input name="country" placeholder="Country" className="input" required />
+        {preview && (
+          <img
+            src={preview}
+            alt="Preview"
+            className="w-32 h-32 object-cover rounded-lg border"
+          />
+        )}
+
+        <input name="country" placeholder="location" className="input" required />
         <input name="city" placeholder="City" className="input" required />
         <input name="worldRank" placeholder="World Rank" className="input" required />
         <input name="subjectCategory" placeholder="Subject Category" className="input" required />
@@ -97,12 +103,11 @@ const AddScholarship = () => {
         <input type="date" name="deadline" className="input" required />
         <input name="userEmail" placeholder="Admin Email" className="input" required />
 
-        <Button className="">
-          Add Scholarship
-        </Button>
+        <Button>Add Scholarship</Button>
       </form>
     </div>
   );
 };
 
 export default AddScholarship;
+

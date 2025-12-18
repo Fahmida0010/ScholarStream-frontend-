@@ -27,7 +27,7 @@ const FAQ = () => {
   ];
 
   return (
-    <section className="mt-24 py-10">
+    <section className="py-10 px-10 rounded-2xl bg-purple-200">
       <motion.h2
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}

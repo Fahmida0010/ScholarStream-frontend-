@@ -9,7 +9,7 @@ const PaymentSuccess = () => {
   const sessionId = new URLSearchParams(window.location.search).get("session_id");
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/verify-payment/${sessionId}`)
+    axios.get(`${import.meta.env.VITE_API_URL}/verify-payment/${sessionId}`)
       .then(res => setInfo(res.data))
       .catch(err => console.log(err));
   }, []);

@@ -9,7 +9,7 @@ const AllReviews = () => {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Load all reviews
+  
   useEffect(() => {
     axiosSecure
       .get("/reviews")

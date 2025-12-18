@@ -1,158 +1,120 @@
-// import { useEffect, useState } from "react";
-// import { useParams } from "react-router";
-// import LoadingSpinner from "../../components/Shared/LoadingSpinner/LoadingSpinner";
-// import axios from "axios";
-// import Button from "../../components/Shared/Button/Button";
-
-// const Checkout = ({isOpen, payments}) => {
-//   const { id } = useParams();
-//   const [sch, setSch] = useState(null);
-  
-
-//   useEffect(() => {
-//     fetch(`http://localhost:3000/checkout/${id}`)
-//       .then((res) => res.json())
-//       .then((data) => setSch(data))
-//       .catch((err) => console.error(err));
-//   }, [id]);
-
-//   if (!sch) return <LoadingSpinner />;
-
-  
-//   const handlePayment = async () => {
-//     try {
-//       const paymentInfo = {
-//         scholarshipId: sch._id,
-//         scholarshipName: sch.scholarshipName,
-//         universityName: sch.universityName,
-//         applicationFees: sch.applicationFees,
-//         userId :user._id,
-//         student: {
-//           scholarshipName,
-//           universityName,
-//           amountPaid,
-//           userId
-//         },
-//       };
-
-//       const result = await axios.post(
-//         `${import.meta.env.VITE_API_URL}/create-checkout-session`,
-//         paymentInfo
-//       );
-
-//       if (result.data?.url) {
-//         window.location.replace(result.data.url);
-//       }
-//     } catch (err) {
-//       console.error(err);
-//       alert("Payment failed. Please try again.");
-//     }
-//   };
-
-//   return (
-//     <div className="w-[85%] mx-auto my-10">
-//       <h1 className="text-4xl font-bold mb-6">Checkout</h1>
-
-//       <p><strong>Scholarship:</strong> {sch.scholarshipName}</p>
-//       <p><strong>University:</strong> {sch.universityName}</p>
-//       <p><strong>Application Fees:</strong> ${sch.applicationFees}</p>
-//  <div className="flex justify-between m-4 space-x-3">
-//       <Button
-//         onClick={handlePayment}
-//         className=""
-//       >
-//         Pay
-//       </Button>
-//         <Button 
-//         onClick={handlePayment}
-//         className="bg-red-500"
-//       >
-//         Cancel
-//       </Button>
-// </div>
-//     </div>
-//   );
-// };
-
-// export default Checkout;
-
-import { useEffect, useState } from "react";
-import { Link, Navigate, useParams } from "react-router";
 import axios from "axios";
-import LoadingSpinner from "../../components/Shared/LoadingSpinner/LoadingSpinner";
+import { useEffect, useState } from "react";
+import { useParams, Link } from "react-router";
 import Button from "../../components/Shared/Button/Button";
+import LoadingSpinner from "../../components/Shared/LoadingSpinner/LoadingSpinner";
+import ErrorPage from "../../components/Shared/ErrorPage/ErrorPage";
+import useAuth from "../../hooks/useAuth";
 
-const Checkout = ({}) => {
-  const { id } = useParams();
-  const [sch, setSch] = useState(null);
+const Checkout = () => {
+  const {id } = useParams(); 
+  const{user} = useAuth();
 
+  const [scholarship, setScholarship] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // FETCH SCHOLARSHIP BY ID
   useEffect(() => {
-    fetch(`http://localhost:3000/checkout/${id}`)
-      .then((res) => res.json())
-      .then((data) => setSch(data))
-      .catch((err) => console.error(err));
+    const fetchScholarship = async () => {
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/scholarships/${id}`);
+        setScholarship(res.data);
+      } catch (err) {
+        console.error(err);
+        setError("Failed to load scholarship data");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchScholarship();
   }, [id]);
 
-  if (!sch) return <LoadingSpinner />;
-
-
-
+    // HANDLE PAYMENT
   const handlePayment = async () => {
+    if (!scholarship) return;
+
+    setLoading(true);
+    setError(null);
+
     try {
       const paymentInfo = {
-        scholarshipName: sch.scholarshipName,
-        universityName: sch.universityName,
-        applicationFees: sch.applicationFees,
-        userId: "user._id", 
+        scholarshipId: id,
+        scholarshipName: scholarship.scholarshipName,
+        universityName: scholarship.universityName,
+        applicationFees: scholarship.applicationFees,
+        address: scholarship.country,
+        subjectCategory:scholarship.subjectCategory,
+        //userId:user.id,
+        userEmail:user?.email,
+        userName :user?.displayName
+
       };
 
       const res = await axios.post(
-        "http://localhost:3000/create-checkout-session",
+        `${import.meta.env.VITE_API_URL}/create-checkout-session`,
         paymentInfo
       );
 
-      if (res.data?.url) {
-        window.location.href = res.data.url;
-      }
-    } catch (error) {
-      console.error(error);
-      alert("Payment failed");
+      // redirect to Stripe checkout page
+      window.location.href = res.data.url;
+    } catch (err) {
+      console.error(err);
+      setError("Payment initialization failed.");
+    } finally {
+      setLoading(false);
     }
   };
 
+  if (loading) return <LoadingSpinner/>;
+  if (error) return <ErrorPage/>;
 
   return (
-    <div className="w-[90%] mx-auto my-10">
-      <h1 className="text-4xl font-bold mb-6">Checkout</h1>
+    <div className="max-w-md mx-auto p-6  rounded-lg shadow-lg mt-10">
+    
+
+      <h2 className="text-2xl font-bold mb-4">Checkout</h2>
+
+      <img
+        src={scholarship.image}
+        alt={scholarship.universityName}
+        className="w-full h-48 object-cover rounded-lg mb-4"
+      />
 
       <p>
-        <strong>Scholarship:</strong> {sch.scholarshipName}
+        <strong>Scholarship:</strong> {scholarship.scholarshipName}
       </p>
       <p>
-        <strong>University:</strong> {sch.universityName}
+        <strong>University:</strong> {scholarship.universityName}
+      </p>
+        <p>
+        <strong>Subject Category:</strong> {scholarship.subjectCategory}
+      </p>
+        <p>
+        <strong>Address:</strong> {scholarship.country}
       </p>
       <p>
-        <strong>Application Fees:</strong> ${sch.applicationFees}
+        <strong>Application Fees:</strong> ${scholarship.applicationFees}
       </p>
-  
-    <div className="p-4 justify-center  mt-4">
+
+      <div className =" justify-between">
         <Button
+        className="btn bg-pink-500 text-white w-full mt-4 max-w-1/2"
         onClick={handlePayment}
-        type="button"
-        className="max-w-1/2 "
+        disabled={loading}
       >
-        Pay
+        {loading ? "Processing..." : "Pay Now"}
       </Button>
-
-       <Link to="/payment-failed">
+        <Link to="/payment-failed">
         <Button
-        type="button"
-        className="bg-red-500 max-w-1/2 "
-      >
+       type="button"
+        className="bg-red-500 max-w-1/2 btn mt-3"
+       >
       Cancel 
-      </Button>
-       </Link>
-    </div>
+     </Button>
+      </Link>
+      </div>
     </div>
   );
 };

@@ -8,22 +8,23 @@ const Profile = () => {
   console.log(user)
   //const[role, isRoleLoading] = useRole()
     const {role, isRoleLoading} = useRole()
-  console.log(role)
+  //console.log(role)
 
   return (
     <div className='flex justify-center items-center h-screen'>
-      <div className='bg-white shadow-lg rounded-2xl md:w-4/5 lg:w-3/5'>
+      <div className='bg-red-200 shadow-lg rounded-2xl md:w-4/5 lg:w-3/5'>
         <img
           alt='cover photo'
           src={building}
-          className='w-full mb-4 rounded-t-lg h-56'
+          className='w-full mb-4 rounded-t-lg h-100'
         />
         <div className='flex flex-col items-center justify-center p-4 -mt-16'>
           <a href='#' className='relative block'>
             <img
               alt='profile'
               src={user?.photoURL}
-              className='mx-auto object-cover rounded-full h-24 w-24  border-2 border-white '
+              className='mx-auto object-cover rounded-full h-24 w-24 
+               border-2 border-white '
             />
           </a>
 

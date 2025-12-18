@@ -23,8 +23,8 @@ const DashboardLayout = () => {
   return (
     <div className="flex bg-gray-100 min-h-screen">
       {/* Sidebar */}
-      <div className="w-64 bg-white shadow-xl p-5">
-        <h1 className="text-2xl font-bold mb-6 text-center">Dashboard</h1>
+      <div className="w-64  bg-gray-300 shadow-xl p-7">
+        <h1 className="text-2xl font-bold mb-6 text-left">Dashboard</h1>
 
         {/* COMMON LINKS */}
         <ul className="space-y-3">

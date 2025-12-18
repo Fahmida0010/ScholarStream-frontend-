@@ -3,13 +3,15 @@ import axios from "axios";
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer
 } from "recharts";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const Analytics = () => {
+  const axiosSecure= useAxiosSecure()
   const [stats, setStats] = useState({});
   const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3000/analytics").then(res => {
+    axiosSecure(`${import.meta.env.VITE_API_URL}/analytics`).then(res => {
       setStats(res.data);
       setChartData(res.data.chartData);
     });
@@ -47,7 +49,7 @@ const Analytics = () => {
             <XAxis dataKey="university" />
             <YAxis />
             <Tooltip />
-            <Bar dataKey="applications" fill="#4F46E5" />
+            <Bar dataKey="applications" fill="#4F46E5"/>
           </BarChart>
         </ResponsiveContainer>
       </div>

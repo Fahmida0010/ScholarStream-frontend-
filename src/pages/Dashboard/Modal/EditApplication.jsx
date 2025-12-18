@@ -4,7 +4,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import Button from "../../../components/Shared/Button/Button";
 
-const API = "http://localhost:3000";
+const API =import.meta.env.VITE_API_URL
 
 const EditApplication = () => {
   const { id } = useParams();

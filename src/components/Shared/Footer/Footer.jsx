@@ -9,8 +9,8 @@ const Footer = () => {
    <footer className="footer footer-horizontal
     footer-center bg-amber-200 p-10 mb-4">
   <aside>
-        <div className ="mb-1">
-             <Logo></Logo>
+        <div className ="mb-1 items-center">
+         <Logo></Logo>
      </div>
    
     <p className="font-bold"> 

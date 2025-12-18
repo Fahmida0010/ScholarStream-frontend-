@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
 import Button from "../../../components/Shared/Button/Button";
+import Swal from "sweetalert2";
+import LoadingSpinner from "../../../components/Shared/LoadingSpinner/LoadingSpinner";
 
-const API = "http://localhost:3000";
+const API = import.meta.env.VITE_API_URL;
 
 const Feedback = () => {
   const { id } = useParams();
@@ -17,15 +19,34 @@ const Feedback = () => {
   }, [id]);
 
   const handleSubmit = async () => {
-    await axios.post(`${API}/feedback/${id}`, {
-      feedbackText: feedback,
-      adminEmail: "admin@example.com",
-    });
+    try {
+      await axios.post(`${API}/feedback/${id}`, {
+        feedbackText: feedback,
+        adminEmail: "admin@example.com",
+      });
 
-    alert("Feedback submitted successfully!");
+      // Swal alert
+      Swal.fire({
+        icon: "success",
+        title: "Feedback Submitted",
+        text: "Your feedback has been sent successfully!",
+        confirmButtonColor: "#10B981", // green
+      });
+
+      // Clear textarea
+      setFeedback("");
+    } catch (err) {
+      console.error(err);
+      Swal.fire({
+        icon: "error",
+        title: "Submission Failed",
+        text: "Something went wrong. Please try again.",
+        confirmButtonColor: "#EF4444", // red
+      });
+    }
   };
 
-  if (!application) return <p className="text-center mt-10">Loading...</p>;
+  if (!application) return <LoadingSpinner/>;
 
   return (
     <div className="max-w-xl mx-auto mt-10 p-4 border rounded">

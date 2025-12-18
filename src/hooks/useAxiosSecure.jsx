@@ -18,7 +18,7 @@ const useAxiosSecure = () => {
       // Add request interceptor
       const requestInterceptor = axiosInstance.interceptors.request.use(
         config => {
-          config.headers.Authorization = `Bearer ${user.accessToken}`
+          config.headers.Authorization = `Bearer ${user?.accessToken}`
           return config
         }
       )
