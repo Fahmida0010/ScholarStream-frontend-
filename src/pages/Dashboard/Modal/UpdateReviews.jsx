@@ -106,6 +106,13 @@ const UpdateReviews = () => {
         </div>
 
         <div className="flex justify-end gap-3 pt-4">
+            <Button
+            onClick={handleUpdate}
+            className="bg-green-600 hover:bg-green-700 text-white px-6 py-2"
+            disabled={loading}
+          >
+            {loading ? "Updating..." : "Update Review"}
+          </Button>
           <Button
             onClick={handleCancel}
             className="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2"
@@ -113,13 +120,7 @@ const UpdateReviews = () => {
           >
             Cancel
           </Button>
-          <Button
-            onClick={handleUpdate}
-            className="bg-green-600 hover:bg-green-700 text-white px-6 py-2"
-            disabled={loading}
-          >
-            {loading ? "Updating..." : "Update Review"}
-          </Button>
+        
         </div>
       </div>
     </div>

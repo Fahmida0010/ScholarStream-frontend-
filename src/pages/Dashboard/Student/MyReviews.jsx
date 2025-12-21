@@ -85,7 +85,7 @@ const MyReviews = () => {
                 <td className="p-3">{review.reviewComment}</td>
                 <td className="p-3 text-center text-amber-500 font-semibold">⭐ {review.ratingPoint}</td>
                 <td className="p-3 text-center">
-                  {review.createdAt? format(new Date(review.createdAt), "dd/MM/yyyy") : "-"}
+          {review.createdAt? format(new Date(review.createdAt), "dd/MM/yyyy") : "-"}
                 </td>
                 <td className="p-3 text-center space-x-2">
                   <Button

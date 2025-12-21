@@ -21,12 +21,14 @@ const MyApplications = () => {
     axiosSecure
       .get(`${API}/myapplications?email=${user.email}`)
       .then((res) => {
-        console.log("Applications fetched:", res.data);
+        // console.log("Applications fetched:", res.data);
+
         setApplications(res.data);
       })
       .catch((err) => console.error("Fetch error:", err));
   }, [user]);
 
+  console.log(applications)
   // ================= DELETE APPLICATION (CORRECTED) =================
   const handleDelete = async (id) => {
     const result = await Swal.fire({
@@ -106,8 +108,12 @@ const MyApplications = () => {
             </tr>
           </thead>
           <tbody>
-            {applications.map((app) => (
-              <tr key={app._id} className="border-b hover:bg-gray-100">
+            {applications.map((app) => {
+              if (!app._id) 
+                return "no data found"
+              console.log(app)
+              return  <tr key={app._id} className="border-b hover:bg-gray-100">
+            
                 <td className="p-3 text-purple-500 font-bold">{app.universityName}</td>
                 <td className="p-3">{app.address}</td>
                 <td className="p-3">{app.subjectCategory}</td>
@@ -134,14 +140,14 @@ const MyApplications = () => {
                     <>
                       <Button
                         onClick={() =>
-                          navigate(`/dashboard/edit-application/${app.scholarshipId}`)
+                          navigate(`/dashboard/edit-application/${app._id}`)
                         }
                         className="bg-yellow-500"
                       >
-                        Edit
+                        Edit 
                       </Button>
                       <Button
-                        onClick={() => handleDelete(app.scholarshipId)}
+                        onClick={() => handleDelete(app._id)}
                         className="bg-red-500"
                       >
                         Delete
@@ -174,7 +180,9 @@ const MyApplications = () => {
                   )}
                 </td>
               </tr>
-            ))}
+            }
+        
+           )}
           </tbody>
         </table>
       </div>
@@ -211,7 +219,7 @@ const MyApplications = () => {
               {/* Fixed: Mobile e Details o scholarshipId diye pathano holo */}
               <Button
                 onClick={() =>
-                  navigate(`/dashboard/application-details/${app.scholarshipId}`)
+                  navigate(`/dashboard/application-details/${app._id}`)
                 }
                 className="w-full bg-blue-500"
               >
@@ -222,7 +230,7 @@ const MyApplications = () => {
                 <>
                   <Button
                     onClick={() =>
-                      navigate(`/dashboard/edit-application/${app.scholarshipId}`)
+                      navigate(`/dashboard/edit-application/${app._id}`)
                     }
                     className="w-full bg-yellow-500"
                   >
