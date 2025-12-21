@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import axios from "axios";
 import LoadingSpinner from "../../../components/Shared/LoadingSpinner/LoadingSpinner";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
@@ -17,7 +16,7 @@ const ApplicationDetails = () => {
 
   const loadDetails = async () => {
     try {
-      const res = await axiosSecure(`${API}/myapplications/${id}`);
+      const res = await axiosSecure(`${API}/application/${id}`);
       console.log(res.data)
       setApplication(res.data);
     } catch (err) {
@@ -25,7 +24,7 @@ const ApplicationDetails = () => {
     }
   };
 
-  if (!application)
+ if (!application)
     return <LoadingSpinner/>;
 
   return (

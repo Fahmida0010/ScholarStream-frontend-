@@ -103,7 +103,7 @@ const ManageUsers = () => {
       </div>
 
       {/* ================= DESKTOP TABLE VIEW ================= */}
-      <div className="hidden md:block overflow-x-auto">
+      <div className="hidden md:block overflow-x-auto p-6">
         <table className="w-full bg-green-100 shadow rounded-xl text-left">
           <thead>
             <tr className="bg-gray-300">
@@ -139,7 +139,7 @@ const ManageUsers = () => {
                 <td>
                   <Button
                     onClick={() => handleDeleteUser(u._id)}
-                    className="bg-red-500 text-white"
+                    className="bg-red-500 text-white m-3"
                   >
                     Delete
                   </Button>

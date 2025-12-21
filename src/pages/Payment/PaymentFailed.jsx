@@ -15,11 +15,11 @@ const PaymentFailed = () => {
   }, []);
 
   return (
-    <div className="p-12 text-center ">
-      <h1 className="text-red-500 font-bold">❌ Payment Failed</h1>
+    <div className="p-12 text-center m-4 ">
+      <h1 className="text-red-500 font-bold text-3xl mb-2">❌ Payment Failed</h1>
   
-       <p>Scholarship: {info?.scholarshipName}</p> 
-      <p className="pb-4 text-red-400 font-semibold">Error: Payment was not completed</p>
+       <p className = "mb-2 text-xl">Scholarship: {info?.scholarshipName}</p> 
+      <p className="pb-4 text-red-400 text-xl font-semibold">Error: Payment was not completed</p>
 
       <Button className="btn max-w-1/2"
        onClick={() => window.location.href = "/dashboard"}>
@@ -30,3 +30,4 @@ const PaymentFailed = () => {
 };
 
 export default PaymentFailed;
+

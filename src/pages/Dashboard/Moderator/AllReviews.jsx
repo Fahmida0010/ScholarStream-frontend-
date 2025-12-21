@@ -3,6 +3,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import LoadingSpinner from "../../../components/Shared/LoadingSpinner/LoadingSpinner";
 import Swal from "sweetalert2";
 import Button from "../../../components/Shared/Button/Button";
+import { format } from "date-fns";
 
 const AllReviews = () => {
   const axiosSecure = useAxiosSecure();
@@ -60,7 +61,7 @@ const handleDelete = (id) => {
   if (loading) {
     return <LoadingSpinner/>;
   }
-
+ console.log(reviews)
   return (
     <div>
       <h1 className="text-2xl font-bold mb-5">All Student Reviews</h1>
@@ -77,6 +78,7 @@ const handleDelete = (id) => {
             key={review._id}
             className="bg-white p-5 shadow-md rounded-lg border"
           >
+            {console.log(review.userImage)}
             <div className="flex items-center gap-3 mb-3">
               <img
                 src={review.userImage}
@@ -88,13 +90,15 @@ const handleDelete = (id) => {
                 <p className="text-gray-500 text-sm">{review.userEmail}</p>
               </div>
             </div>
-
-            <p className="text-gray-700 mb-2">{review.reviewComment}</p>
+     <p className="text-pink-700 mb-2 font-semibold">{review.universityName}</p>
+       <p className="text-indigo-700 font-bold mb-2">{review.scholarshipName}</p>
+            <p className="text-green-600 mb-2">{review.reviewComment}</p>
 
             <p className="text-yellow-500 mb-1">⭐ {review.ratingPoint} / 5</p>
 
             <p className="text-gray-400 text-sm">
-              {new Date(review.reviewDate).toLocaleDateString()}
+              {/* {new Date(review.reviewDate).toLocaleDateString()} */}
+                 {review.createdAt ? format(new Date(review.createdAt), "dd/MM/yyyy") : "-"}
             </p>
 
             <Button

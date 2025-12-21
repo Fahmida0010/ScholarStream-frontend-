@@ -52,7 +52,7 @@ const TopScholarships = () => {
               </p>
 
               <p>
-                <strong>Country:</strong> {sch.country}
+                <strong>Location:</strong> {sch.country}
               </p>
 
               <p>

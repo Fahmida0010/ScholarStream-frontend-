@@ -5,20 +5,21 @@ import Button from "../../components/Shared/Button/Button";
 import LoadingSpinner from "../../components/Shared/LoadingSpinner/LoadingSpinner";
 import ErrorPage from "../../components/Shared/ErrorPage/ErrorPage";
 import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Checkout = () => {
   const {id } = useParams(); 
   const{user} = useAuth();
-
+ const axiosSecure = useAxiosSecure()
   const [scholarship, setScholarship] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // FETCH SCHOLARSHIP BY ID
+
   useEffect(() => {
     const fetchScholarship = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/scholarships/${id}`);
+        const res = await axiosSecure.get(`${import.meta.env.VITE_API_URL}/scholarships/${id}`);
         setScholarship(res.data);
       } catch (err) {
         console.error(err);
@@ -33,7 +34,6 @@ const Checkout = () => {
 
     // HANDLE PAYMENT
   const handlePayment = async () => {
-    if (!scholarship) return;
 
     setLoading(true);
     setError(null);
@@ -71,17 +71,10 @@ const Checkout = () => {
   if (error) return <ErrorPage/>;
 
   return (
-    <div className="max-w-md mx-auto p-6  rounded-lg shadow-lg mt-10">
+    <div className="p-14  text-left mt-10">
     
 
       <h2 className="text-2xl font-bold mb-4">Checkout</h2>
-
-      <img
-        src={scholarship.image}
-        alt={scholarship.universityName}
-        className="w-full h-48 object-cover rounded-lg mb-4"
-      />
-
       <p>
         <strong>Scholarship:</strong> {scholarship.scholarshipName}
       </p>
@@ -98,22 +91,14 @@ const Checkout = () => {
         <strong>Application Fees:</strong> ${scholarship.applicationFees}
       </p>
 
-      <div className =" justify-between">
+      <div className = "p-6">
         <Button
-        className="btn bg-pink-500 text-white w-full mt-4 max-w-1/2"
+        className="btn  max-w-1/2 mb-2"
         onClick={handlePayment}
         disabled={loading}
       >
         {loading ? "Processing..." : "Pay Now"}
       </Button>
-        <Link to="/payment-failed">
-        <Button
-       type="button"
-        className="bg-red-500 max-w-1/2 btn mt-3"
-       >
-      Cancel 
-     </Button>
-      </Link>
       </div>
     </div>
   );

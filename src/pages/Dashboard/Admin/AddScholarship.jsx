@@ -12,11 +12,11 @@ const AddScholarship = () => {
 
   const handleAddScholarship = async (e) => {
     e.preventDefault();
-    //setLoading(true);
+    setLoading(true);
 
     const form = e.target;
     const imageFile = form.image.files[0];
-  console.log(form)
+  // console.log(form)
     try {
       // SAME RULE AS AddPlantForm
       const imageUrl = await imageUpload(imageFile);

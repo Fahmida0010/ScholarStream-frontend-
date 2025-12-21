@@ -1,74 +1,71 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router";
-import axios from "axios";
-import Button from "../../../components/Shared/Button/Button";
-import Swal from "sweetalert2";
-import LoadingSpinner from "../../../components/Shared/LoadingSpinner/LoadingSpinner";
-
-const API = import.meta.env.VITE_API_URL;
+import { useParams, useNavigate } from "react-router";
+import { useState } from "react";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Swal from "sweetalert2"; 
 
 const Feedback = () => {
   const { id } = useParams();
-  const [application, setApplication] = useState(null);
-  const [feedback, setFeedback] = useState("");
+  const navigate = useNavigate();
+  const axiosSecure = useAxiosSecure();
 
-  useEffect(() => {
-    axios.get(`${API}/manage-application/${id}`).then((res) => {
-      setApplication(res.data);
-    });
-  }, [id]);
+  const [feedbackText, setFeedbackText] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
     try {
-      await axios.post(`${API}/feedback/${id}`, {
-        feedbackText: feedback,
-        adminEmail: "admin@example.com",
+      const res = await axiosSecure.post(`/feedback/${id}`, {
+        feedbackText,
+        adminEmail: "admin@email.com", 
       });
 
-      // Swal alert
-      Swal.fire({
-        icon: "success",
-        title: "Feedback Submitted",
-        text: "Your feedback has been sent successfully!",
-        confirmButtonColor: "#10B981", // green
-      });
-
-      // Clear textarea
-      setFeedback("");
+      if (res.data.modifiedCount > 0) {
+        Swal.fire({
+          icon: "success",
+          title: "Feedback Submitted",
+          text: "Feedback has been successfully submitted.",
+          confirmButtonColor: "#3085d6",
+        }).then(() => {
+          navigate(-1); 
+        });
+      }
     } catch (err) {
       console.error(err);
       Swal.fire({
         icon: "error",
-        title: "Submission Failed",
+        title: "Oops!",
         text: "Something went wrong. Please try again.",
-        confirmButtonColor: "#EF4444", // red
+        confirmButtonColor: "#d33",
       });
+    } finally {
+      setLoading(false);
     }
   };
 
-  if (!application) return <LoadingSpinner/>;
-
   return (
-    <div className="max-w-xl mx-auto mt-10 p-4 border rounded">
+    <div className="max-w-xl mx-auto bg-white p-6 rounded shadow">
       <h2 className="text-xl font-bold mb-4">Give Feedback</h2>
 
-      <p className="mb-3">
-        <strong>Applicant:</strong> {application.applicantName}
-      </p>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <textarea
+          className="w-full border p-2 rounded"
+          rows="5"
+          placeholder="Write feedback..."
+          value={feedbackText}
+          onChange={(e) => setFeedbackText(e.target.value)}
+          required
+        />
 
-      <textarea
-        className="w-full border p-2 rounded h-32"
-        placeholder="Write feedback..."
-        value={feedback}
-        onChange={(e) => setFeedback(e.target.value)}
-      />
-
-      <Button
-        onClick={handleSubmit}
-        className="bg-green-600 text-white px-4 py-2 mt-4 rounded"
-      >
-        Submit
-      </Button>
+        <button
+          type="submit"
+          disabled={loading}
+          className="btn btn-primary w-full"
+        >
+          {loading ? "Submitting..." : "Submit Feedback"}
+        </button>
+      </form>
     </div>
   );
 };

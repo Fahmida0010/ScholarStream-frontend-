@@ -30,6 +30,8 @@ import Feedback from "../pages/Dashboard/Modal/Feedback";
 import EditApplication from "../pages/Dashboard/Modal/EditApplication";
 import Register from "../pages/Auth/Register/Register";
 import Login from "../pages/Auth/Login/Login";
+import ManageDetails from "../pages/Dashboard/Modal/ManageDetails";
+import UpdateProfile from "../pages/Dashboard/UpdateProfile";
 
 
 
@@ -128,15 +130,31 @@ export const router = createBrowserRouter([
           </ModeratorRoute>
         ),
       },
+         {
+        path: "manage-details/:id",
+        element: (
+          <ModeratorRoute>
+            <ManageDetails/>
+          </ModeratorRoute>
+        ),
+      },
+     {
+        path: "feedback/:id",
+        element: (
+          <ModeratorRoute>
+            <Feedback/>
+          </ModeratorRoute>
+        ),
+      },
 
       // STUDENT ROUTES
       { path: "my-applications", element: <MyApplications /> },
       { path: "add-review/:id", element: <AddReview /> },
       { path: "my-reviews", element: <MyReviews /> },
       { path: "update-reviews/:id", element: <UpdateReviews/> },
-      { path: "application-details/:id", element: <ApplicationDetails /> },
-      { path: "feedback/:id", element: <Feedback /> },
+       { path: "application-details/:id", element: <ApplicationDetails /> },
       { path: "edit-application/:id", element: <EditApplication/> },
+      {path: "update-profile", element: <UpdateProfile />,}
     ],
   },
 ]);

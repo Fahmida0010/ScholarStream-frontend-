@@ -1,29 +1,51 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router";
+import { Link, useParams } from "react-router-dom"; 
 import LoadingSpinner from "../../components/Shared/LoadingSpinner/LoadingSpinner";
+import { format } from "date-fns";
+import Button from "../../components/Shared/Button/Button";
 
 const ScholarshipDetails = () => {
   const { id } = useParams();
-
   const [sch, setSch] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [loadingReviews, setLoadingReviews] = useState(true);
 
   useEffect(() => {
-    // Fetch scholarship details
-    fetch(`${import.meta.env.VITE_API_URL}/scholarships/${id}`)
-      .then((res) => res.json())
-      .then((data) => setSch(data));
+    const fetchScholarship = async () => {
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/scholarships/${id}`);
+        const data = await res.json();
+        setSch(data);
+      } catch (err) {
+        console.error("Failed to fetch scholarship:", err);
+      }
+    };
 
-    // Fetch reviews for this scholarship
-    fetch(`${import.meta.env.VITE_API_URL}/scholarships/${id}/reviews`)
-      .then((res) => res.json())
-      .then((data) => {
-        setReviews(data);
-        setLoadingReviews(false);
-      })
-      .catch(() => setLoadingReviews(false));
+    fetchScholarship();
   }, [id]);
+
+  // Fetch ALL reviews for this university (after scholarship is loaded)
+  useEffect(() => {
+    if (!sch?.universityName) return; // wait until universityName is available
+
+    const fetchUniversityReviews = async () => {
+      setLoadingReviews(true);
+      try {
+        // নতুন endpoint: universityName দিয়ে সব রিভিউ
+        const res = await fetch(
+          `${import.meta.env.VITE_API_URL}/reviews/university/${encodeURIComponent(sch.universityName)}`
+        );
+        const data = await res.json();
+        setReviews(data);
+      } catch (err) {
+        console.error("Failed to fetch university reviews:", err);
+      } finally {
+        setLoadingReviews(false);
+      }
+    };
+
+    fetchUniversityReviews();
+  }, [sch?.universityName]); // dependency: only when universityName is ready
 
   if (!sch) return <LoadingSpinner />;
 
@@ -31,77 +53,92 @@ const ScholarshipDetails = () => {
     <div className="w-[85%] mx-auto my-10">
       {/* Scholarship Details */}
       <h1 className="text-4xl font-bold mb-6">{sch.scholarshipName}</h1>
+      <h3 className="text-2xl font-bold text-sky-600 mb-4">
+         {sch.universityName}
+      </h3>
 
       <img
-        src={sch.image}
-        alt="Scholarship"
+        src={sch.image || "/placeholder-university.jpg"}
+        alt={sch.universityName}
         className="w-full max-h-96 object-cover rounded-lg mb-6"
       />
 
-      <p>
-        <strong>University World Rank:</strong> {sch.worldRank}
-      </p>
-      <p>
-        <strong>Location:</strong>{sch.country}
-      </p>
-        <p>
-        <strong>Subject Category:</strong> {sch.subjectCategory}
-      </p>
-      <p>
-        <strong>Deadline:</strong> {sch.deadline}
-      </p>
-      <p>
-        <strong>Application Fees:</strong> ${sch.applicationFees}
-      </p>
-      {sch.stipend && (
-        <p>
-          <strong>Stipend / Coverage:</strong> {sch.stipend}
-        </p>
-      )}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <p><strong className="text-green-500">University World Rank:</strong> {sch.worldRank}</p>
+        <p><strong className="text-green-500">Location:</strong> {sch.country}</p>
+        <p><strong className="text-green-500">Subject Category:</strong> {sch.subjectCategory}</p>
+        <p><strong className="text-green-500">Deadline:</strong> {new Date(sch.deadline).toLocaleDateString()}</p>
+        <p><strong className="text-green-500">Application Fees:</strong> ${sch.applicationFees}</p>
+         <p><strong className="text-green-500">Description:</strong>{sch.description}</p>
+        {sch.stipend && <p><strong className="text-green-500">Stipend:</strong> {sch.stipend}</p>}
+      </div>
 
-      {/* Apply Button */}
       <Link to={`/checkout/${sch._id}`}>
-        <button className="btn btn-secondary mt-5 w-1/2">
+        <Button className="btn btn-secondary mt-5 w-full md:w-1/2">
           Apply for Scholarship
-        </button>
+        </Button>
       </Link>
 
-      {/* Reviews Section */}
-      <div className="mt-10">
-        <h2 className="text-3xl font-semibold mb-4">Reviews</h2>
+      {/* Reviews Section - All reviews for this University */}
+      <div className="mt-12">
+        <h2 className="text-3xl font-semibold text-purple-500 mb-6">
+          All Reviews for {sch.universityName} ({reviews.length})
+        </h2>
 
         {loadingReviews ? (
           <LoadingSpinner />
         ) : reviews.length === 0 ? (
-          <p className="text-gray-500">No reviews yet for this scholarship.</p>
+          <div className="text-center py-10 text-gray-500">
+            <p className="text-xl">No reviews yet for this university.</p>
+          </div>
         ) : (
-          reviews.map((reviews) => (
-            <div
-              key={reviews._id}
-              className="border rounded-lg p-4 mb-4 shadow-sm flex gap-4"
-            >
-              <img
-                src={reviews.userImage || "/default-user.png"}
-                alt={reviews.userName}
-                className="w-16 h-16 rounded-full object-cover"
-              />
-              <div>
-                <div className="flex justify-between items-center mb-1">
-                  <h3 className="font-semibold">{reviews.userName}</h3>
-                  <span className="text-gray-400 text-sm">
-                    {new Date(reviews.reviewDate).toLocaleDateString()}
-                  </span>
+          <div className="space-y-6">
+            {reviews.map((review) => (
+              <div
+                key={review._id}
+                className="rounded-lg p-6 shadow-md bg-gray-200
+                 flex gap-5 hover:shadow-lg transition"
+              >
+                <img
+                  src={review.userImage || "/default-user.png"}
+                  alt={review.userName}
+         className="w-16 h-16 rounded-full object-cover border-2
+          border-gray-200"
+                />
+                <div className="flex-1">
+                  <div className="flex justify-between items-start mb-2">
+                    <div>
+                      <h3 className="font-bold text-lg text-green-500">{review.userName}</h3>
+         <p className="font-bold ">{review.userEmail}</p>
+               <p className="text-lg font-bold text-blue-600">
+                    {review.scholarshipName}
+                      </p>
+          <p className="text-pink-700 font-semibold leading-relaxed">
+                    {review.reviewComment}
+                  </p>
+                    </div>
+                    <span className="text-bold text-red-500">
+                        {review.createdAt? format(new Date(review.createdAt), "dd/MM/yyyy") : "-"}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center mb-2">
+                    <span className="text-yellow-500 text-3xl">
+                      {"★".repeat(review.ratingPoint)}
+                    </span>
+                    <span className="text-yellow-500 text-xl">
+                      {"☆".repeat(5 - review.ratingPoint)}
+                    </span>
+                    <span className="ml-2 text-sm text-gray-600">
+                      {review.ratingPoint}/5
+                    </span>
+                  </div>
+
+                
                 </div>
-                <p className="text-yellow-500 mb-1">
-                  {"★".repeat(reviews.ratingPoint)}{" "}
-                  <span className="text-gray-400">
-                    {"☆".repeat(5 - reviews.ratingPoint)}
-                  </span>
-                </p>
-                <p>{reviews.reviewComment}</p>
               </div>
-            </div>
-          ))
+            ))}
+          </div>
         )}
       </div>
     </div>
@@ -109,3 +146,4 @@ const ScholarshipDetails = () => {
 };
 
 export default ScholarshipDetails;
+

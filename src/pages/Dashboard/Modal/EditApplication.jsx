@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router";
-import axios from "axios";
+import { useParams, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import Button from "../../../components/Shared/Button/Button";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
-const API =import.meta.env.VITE_API_URL
+const API = import.meta.env.VITE_API_URL;
 
 const EditApplication = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const axiosSecure = useAxiosSecure();
 
   const [form, setForm] = useState({
     universityName: "",
@@ -19,108 +19,89 @@ const EditApplication = () => {
 
   useEffect(() => {
     loadApplication();
-  }, []);
+  }, [id]);
 
   const loadApplication = async () => {
     try {
-      const res = await axios.get(`${API}/myapplications/${id}`);
+      const res = await axiosSecure.get(`${API}/application/${id}`);
       setForm(res.data);
     } catch (err) {
-      console.log("Error loading application:", err);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Failed to load application data!",
-      });
+      Swal.fire("Error", "Failed to load data", "error");
     }
   };
 
+  // Single onChange for all inputs
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleUpdate = async (e) => {
-    e.preventDefault();
+  // Button e direct onClick diye update
+  const handleUpdate = async () => {
+    const { _id, ...dataToSend } = form;
+    dataToSend.applicationFees = Number(dataToSend.applicationFees);
 
     try {
-      const res = await axios.put(`${API}/myapplications/${id}`, form);
-
-      Swal.fire({
-        icon: "success",
-        title: "Updated!",
-        text: "Application updated successfully!",
-      }).then(() => {
+      await axiosSecure.put(`${API}/myapplications/${id}`, dataToSend);
+      Swal.fire("Success!", "Application updated!", "success").then(() => {
         navigate("/dashboard/my-applications");
       });
     } catch (err) {
-      console.log("Update Error:", err);
-      Swal.fire({
-        icon: "error",
-        title: "Failed!",
-        text: "Failed to update application.",
-      });
+      Swal.fire("Failed!", "Could not update application.", "error");
     }
   };
 
   return (
     <div className="max-w-3xl mx-auto px-6 py-10">
-      <h2 className="text-3xl font-bold mb-6 text-yellow-600">Update Application</h2>
+      <h2 className="text-3xl font-bold mb-6 text-yellow-600">
+        Update Application
+      </h2>
 
-      <form
-        onSubmit={handleUpdate}
-        className="bg-white shadow-lg rounded-xl p-6 space-y-4"
-      >
-        <div>
-          <label>University Name</label>
-          <input
-            type="text"
-            name="universityName"
-            value={form.universityName}
-            onChange={handleChange}
-            className="w-full border rounded p-2"
-          />
-        </div>
+      <div className="bg-white shadow-lg rounded-xl p-6 space-y-6">
+        <input
+          type="text"
+          name="universityName"
+          value={form.universityName || ""}
+          onChange={handleChange}
+          placeholder="University Name"
+          className="w-full border rounded-lg p-3"
+        />
 
-        <div>
-          <label>Address</label>
-          <input
-            type="text"
-            name="universityAddress"
-            value={form.universityAddress}
-            onChange={handleChange}
-            className="w-full border rounded p-2"
-          />
-        </div>
+        <input
+          type="text"
+          name="universityAddress"
+          value={form.universityAddress || ""}
+          onChange={handleChange}
+          placeholder="University Address"
+          className="w-full border rounded-lg p-3"
+        />
 
-        <div>
-          <label>Subject Category</label>
-          <input
-            type="text"
-            name="subjectCategory"
-            value={form.subjectCategory}
-            onChange={handleChange}
-            className="w-full border rounded p-2"
-          />
-        </div>
+        <input
+          type="text"
+          name="subjectCategory"
+          value={form.subjectCategory || ""}
+          onChange={handleChange}
+          placeholder="Subject Category"
+          className="w-full border rounded-lg p-3"
+        />
 
-        <div>
-          <label>Application Fees</label>
-          <input
-            type="number"
-            name="applicationFees"
-            value={form.applicationFees}
-            onChange={handleChange}
-            className="w-full border rounded p-2"
-          />
-        </div>
+        <input
+          type="number"
+          name="applicationFees"
+          value={form.applicationFees || ""}
+          onChange={handleChange}
+          placeholder="Application Fees"
+          className="w-full border rounded-lg p-3"
+        />
 
-        <Button
-          type="submit"
-          className=""
+        {/* Button e onClick diye direct update */}
+        <button
+          onClick={handleUpdate}
+          className="w-full bg-yellow-600 text-white font-bold py-3 rounded-lg hover:bg-yellow-700 transition"
         >
           Update Application
-        </Button>
-      </form>
+        </button>
+      </div>
     </div>
   );
 };

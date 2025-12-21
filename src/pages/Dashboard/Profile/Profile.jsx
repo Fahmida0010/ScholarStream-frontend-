@@ -2,13 +2,13 @@ import useAuth from '../../../hooks/useAuth'
 import building from '../../../assets/images/building.jpg'
 import useRole from '../../../hooks/useRole'
 import Button from '../../../components/Shared/Button/Button'
+import { useNavigate } from 'react-router'
+
 
 const Profile = () => {
   const { user } = useAuth()
-  console.log(user)
-  //const[role, isRoleLoading] = useRole()
-    const {role, isRoleLoading} = useRole()
-  //console.log(role)
+    const {role} = useRole()
+ const navigate = useNavigate();
 
   return (
     <div className='flex justify-center items-center h-screen'>
@@ -49,11 +49,15 @@ const Profile = () => {
              '>{user?.email}</span>
               </p>
 
-              <div>
-                <Button className='bg-indigo-500'>
-                  Update Profile
-                </Button>
-                <Button className='bg-indigo-500'>
+              <div className =" p-4 mb-2">
+              
+                <Button
+      className="mb-1"
+      onClick={() => navigate("/dashboard/update-profile")}
+    >
+      Update Profile
+    </Button>         
+              <Button className=''>
                   Change Password
                 </Button>
               </div>
