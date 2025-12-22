@@ -43,7 +43,7 @@ const MyReviews = () => {
 
     try {
       await axiosSecure .delete(`${import.meta.env.VITE_API_URL}/myreviews/${id}`);
-      loadReviews(); // reload data
+      loadReviews(); 
       Swal.fire({
         icon: "success",
         title: "Deleted!",
@@ -116,7 +116,7 @@ const MyReviews = () => {
             <p className="text-gray-800 line-clamp-3">{review.reviewComment}</p>
             <div className="flex justify-between text-sm">
               <span className="text-amber-500 font-semibold">⭐ {review.ratingPoint}</span>
-              <span>{review.reviewDate ? format(new Date(review.reviewDate), "dd/MM/yyyy") : "-"}</span>
+              <span>{review.createdAt ? format(new Date(review.createdAt), "dd/MM/yyyy") : "-"}</span>
             </div>
             <div className="flex gap-2 pt-2">
               <Button

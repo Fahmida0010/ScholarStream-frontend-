@@ -14,14 +14,13 @@ const MyApplications = () => {
   const { user, loading } = useAuth();
   const axiosSecure = useAxiosSecure();
 
-  // ================= GET APPLICATIONS =================
+  // GET APPLICATIONS
   useEffect(() => {
     if (!user?.email) return;
 
     axiosSecure
       .get(`${API}/myapplications?email=${user.email}`)
       .then((res) => {
-        // console.log("Applications fetched:", res.data);
 
         setApplications(res.data);
       })
@@ -29,7 +28,7 @@ const MyApplications = () => {
   }, [user]);
 
   console.log(applications)
-  // ================= DELETE APPLICATION (CORRECTED) =================
+  //  DELETE APPLICATION 
   const handleDelete = async (id) => {
     const result = await Swal.fire({
       title: "Are you sure?",
@@ -47,7 +46,7 @@ const MyApplications = () => {
     try {
       await axiosSecure.delete(`${API}/myapplications/${id}`);
 
-      // Remove from UI
+
       setApplications((prev) =>
         prev.filter((app) => app._id !== id)
       );
@@ -187,7 +186,7 @@ const MyApplications = () => {
         </table>
       </div>
 
-      {/* ================= MOBILE ================= */}
+      {/* MOBILE */}
       <div className="md:hidden space-y-4">
         {applications.map((app) => (
           <div
@@ -216,7 +215,7 @@ const MyApplications = () => {
             </p>
 
             <div className="flex flex-wrap gap-2 pt-2">
-              {/* Fixed: Mobile e Details o scholarshipId diye pathano holo */}
+            
               <Button
                 onClick={() =>
                   navigate(`/dashboard/application-details/${app._id}`)

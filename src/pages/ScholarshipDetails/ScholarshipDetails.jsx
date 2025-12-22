@@ -24,14 +24,14 @@ const ScholarshipDetails = () => {
     fetchScholarship();
   }, [id]);
 
-  // Fetch ALL reviews for this university (after scholarship is loaded)
+
   useEffect(() => {
-    if (!sch?.universityName) return; // wait until universityName is available
+    if (!sch?.universityName) return; 
 
     const fetchUniversityReviews = async () => {
       setLoadingReviews(true);
       try {
-        // নতুন endpoint: universityName দিয়ে সব রিভিউ
+      
         const res = await fetch(
           `${import.meta.env.VITE_API_URL}/reviews/university/${encodeURIComponent(sch.universityName)}`
         );
@@ -45,7 +45,7 @@ const ScholarshipDetails = () => {
     };
 
     fetchUniversityReviews();
-  }, [sch?.universityName]); // dependency: only when universityName is ready
+  }, [sch?.universityName]); 
 
   if (!sch) return <LoadingSpinner />;
 
