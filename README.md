@@ -3,6 +3,14 @@
 A Full-Stack MERN Application to connect students with global scholarship opportunities.  
 Students can browse and apply for scholarships, moderators can manage applications, and admins oversee the platform.
 
+##  Live URL
+
+ **Client:** https://cheerful-beijinho-1ae898.netlify.app
+**Server:** https://scholar-stream-backend-two.vercel.app
+ Admin_email: tasni@gmail.com
+ Admin_Password: Tasni25@#
+ Moderator_Email: diana@gmail.com
+ Moderator_Password: Diana25@#
 
 
 ##  Project Purpose
@@ -13,14 +21,6 @@ It allows:
  Students to search, filter, and apply for scholarships.  
  Moderators to manage applications and provide feedback.  
  Admins to manage users, scholarships, and view analytics.
-
-
-
-##  Live URL
-
- **Client:** _your-client-live-link_  
-**Server:** _your-server-live-link_
-
 
 
 ##  Key Features
