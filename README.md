@@ -60,4 +60,4 @@ It allows:
  react, react-router-dom, axios, firebase, react-hook-form, framer-motion, sweetalert2, react-icons, daisyui, tailwindcss, @stripe/stripe-js  
 
 ### Backend
- express, cors, dotenv, mongoose, jsonwebtoken, stripe
+ express, cors, dotenv, mongodb, jsonwebtoken, stripe
