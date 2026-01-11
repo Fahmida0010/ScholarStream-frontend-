@@ -7,6 +7,7 @@ Students can browse and apply for scholarships, moderators can manage applicatio
 
  **Client:** https://cheerful-beijinho-1ae898.netlify.app
 **Server:** https://scholar-stream-backend-two.vercel.app
+ Backend Repository Link : https://github.com/Fahmida0010/scholarStream-backend.git
  Admin_email: tasni@gmail.com
  Admin_Password: Tasni25@#
  Moderator_Email: diana@gmail.com
