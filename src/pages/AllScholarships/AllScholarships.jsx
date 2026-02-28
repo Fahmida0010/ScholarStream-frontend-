@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import LoadingSpinner from "../../components/Shared/LoadingSpinner/LoadingSpinner";
 import useAuth from "../../hooks/useAuth";
 import Button from "../../components/Shared/Button/Button";
 
@@ -62,7 +61,50 @@ const AllScholarships = () => {
     setPage(1);
   };
 
-  if (loading || dataLoading) return <LoadingSpinner />;
+  // Skeleton Loading UI
+  if (loading || dataLoading) {
+    return (
+      <div className="w-[90%] mx-auto my-16">
+        <div className="skeleton h-10 w-64 mx-auto mb-12 rounded"></div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <div className="flex md:col-span-2 lg:col-span-2">
+            <div className="skeleton h-12 flex-grow rounded-r-none"></div>
+            <div className="skeleton h-12 w-28 rounded-l-none"></div>
+          </div>
+          <div className="skeleton h-12 rounded"></div>
+          <div className="skeleton h-12 rounded"></div>
+          <div className="skeleton h-12 rounded md:col-span-2 lg:col-span-1"></div>
+        </div>
+
+        <div className="flex justify-end mb-8">
+          <div className="skeleton h-12 w-60 rounded"></div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {[...Array(8)].map((_, index) => (
+            <div key={index} className="card bg-base-100 shadow-xl p-4 rounded-2xl">
+              <div className="skeleton h-40 w-full rounded-lg"></div>
+              <div className="card-body p-4">
+                <div className="skeleton h-7 w-4/5 rounded mb-3"></div>
+                <div className="skeleton h-5 w-3/4 rounded mb-2"></div>
+                <div className="skeleton h-5 w-full rounded mb-2"></div>
+                <div className="skeleton h-5 w-2/3 rounded mb-2"></div>
+                <div className="skeleton h-5 w-1/2 rounded mb-4"></div>
+                <div className="skeleton h-10 w-full rounded"></div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="flex justify-center mt-10 gap-2">
+          {[...Array(5)].map((_, i) => (
+            <div key={i} className="skeleton h-10 w-10 rounded"></div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-[90%] mx-auto my-16">
@@ -71,7 +113,7 @@ const AllScholarships = () => {
       </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        {/* Main Search Bar with Button */}
+        {/* Main Search Bar */}
         <div className="flex md:col-span-2 lg:col-span-2">
           <input
             type="text"
@@ -109,7 +151,7 @@ const AllScholarships = () => {
           onKeyDown={handleKeyPress}
         />
 
-        {/* Category Dropdown - Desktop এ ৪র্থ কলামে, Mobile এ নিচে যাবে */}
+        {/* Category Dropdown */}
         <select
           className="select select-bordered md:col-span-2 lg:col-span-1"
           value={category}
@@ -143,9 +185,9 @@ const AllScholarships = () => {
           No scholarships found.
         </p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {scholarships.map((sch) => (
-            <div key={sch._id} className="card bg-blue-100 shadow-xl p-4">
+            <div key={sch._id} className="card bg-blue-100 shadow-xl p-4 rounded-2xl">
               <figure>
                 <img
                   src={sch.image}

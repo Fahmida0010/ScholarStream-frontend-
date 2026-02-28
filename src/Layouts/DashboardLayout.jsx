@@ -1,4 +1,5 @@
-import { NavLink, Outlet } from "react-router";
+import { NavLink, Outlet } from "react-router-dom";
+import { FaCog } from "react-icons/fa";
 import {
   FaUser,
   FaPlus,
@@ -9,21 +10,61 @@ import {
 } from "react-icons/fa";
 import useRole from "../hooks/useRole";
 import useAuth from "../hooks/useAuth";
-import LoadingSpinner from "../components/Shared/LoadingSpinner/LoadingSpinner";
 import { VscFeedback } from "react-icons/vsc";
 
 const DashboardLayout = () => {
-  const { user } = useAuth(); 
+  const { user } = useAuth();
   const { role, isRoleLoading } = useRole();
 
+  // Skeleton Loading UI (when role is being fetched)
   if (isRoleLoading) {
-    return <LoadingSpinner/>;
+    return (
+      <div className="flex bg-gray-100 min-h-screen">
+        {/* Sidebar Skeleton */}
+        <div className="w-64 bg-gray-300 shadow-xl p-7">
+          {/* Dashboard Title Skeleton */}
+          <div className="skeleton h-8 w-48 rounded mb-8"></div>
+
+          {/* Common Links Skeleton */}
+          <div className="space-y-4 mb-10">
+            <div className="skeleton h-10 w-full rounded"></div>
+          </div>
+
+          {/* Panel Skeleton (covers Admin/Moderator/Student) */}
+          <div className="mt-6">
+            <div className="skeleton h-5 w-40 rounded mb-4"></div>
+            <div className="space-y-4">
+              <div className="skeleton h-10 w-full rounded"></div>
+              <div className="skeleton h-10 w-full rounded"></div>
+              <div className="skeleton h-10 w-full rounded"></div>
+              <div className="skeleton h-10 w-full rounded"></div>
+            </div>
+          </div>
+        </div>
+
+        {/* Main Content Skeleton */}
+        <div className="flex-1 p-10">
+          {/* Page Title / Welcome Area Skeleton */}
+          <div className="skeleton h-12 w-80 rounded mb-10"></div>
+
+          {/* Content Placeholder Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[...Array(6)].map((_, index) => (
+              <div
+                key={index}
+                className="skeleton h-64 w-full rounded-2xl shadow-md"
+              ></div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
     <div className="flex bg-gray-100 min-h-screen">
       {/* Sidebar */}
-      <div className="w-64  bg-gray-300 shadow-xl p-7">
+      <div className="w-64 bg-gray-300 shadow-xl p-7">
         <h1 className="text-2xl font-bold mb-6 text-left">Dashboard</h1>
 
         {/* COMMON LINKS */}
@@ -36,6 +77,14 @@ const DashboardLayout = () => {
               <FaUser /> My Profile
             </NavLink>
           </li>
+          <li>
+  <NavLink
+    to="/dashboard/settings"
+    className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-200"
+  >
+    <FaCog /> Settings
+  </NavLink>
+</li>
         </ul>
 
         {/* ADMIN ONLY */}
@@ -118,7 +167,7 @@ const DashboardLayout = () => {
                   to="/dashboard/my-applications"
                   className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-200"
                 >
-                  <FaUserGraduate/> My Application
+                  <FaUserGraduate /> My Application
                 </NavLink>
               </li>
 
@@ -127,7 +176,7 @@ const DashboardLayout = () => {
                   to="/dashboard/my-reviews"
                   className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-200"
                 >
-                  <VscFeedback/> My Reviews
+                  <VscFeedback /> My Reviews
                 </NavLink>
               </li>
             </ul>

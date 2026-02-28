@@ -3,6 +3,10 @@ import Banner from '../Banner/Banner';
 import TopScholarships from '../TopScholarships/TopScholarships';
 import SuccessStories from './SuccessStories';
 import FAQ from './FAQ';
+import Services from './Services';
+import Partners from './Partners';
+import Statistics from './Statistics';
+import HowItWorks from './HowItWorks';
 
 
  const Home = () => {
@@ -10,9 +14,13 @@ import FAQ from './FAQ';
       <div className="home-container mx-auto px-4">
   <Banner></Banner>
       <TopScholarships></TopScholarships>
+      <Statistics></Statistics>
+       <Partners></Partners>
     <SuccessStories></SuccessStories>
-   <FAQ></FAQ>
-
+   <Services></Services>
+   <HowItWorks></HowItWorks>
+  <FAQ></FAQ>
+ 
      </div>
      
   );

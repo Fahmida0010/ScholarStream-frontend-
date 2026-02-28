@@ -3,7 +3,6 @@ import useAuth from '../../../hooks/useAuth';
 import { Link, useLocation, useNavigate } from 'react-router';
 import SocialLogin from '../SocialLogin/SocialLogin';
 import axios from 'axios';
-import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { useForm } from 'react-hook-form';
 import Button from '../../../components/Shared/Button/Button';
 
@@ -11,7 +10,7 @@ const Register = () => {
   const { registerUser, updateUserProfile } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
-  const axiosSecure = useAxiosSecure();
+
 
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [firebaseError, setFirebaseError] = useState('');
@@ -40,11 +39,11 @@ const Register = () => {
  console.log(data .name)
  
       //  Update Firebase profile AFTER successful image upload
-      await updateUserProfile({ displayName: data.name, photoURL });
+      await updateUserProfile(data.name, photoURL);
 
       //  Save user to database
       const userInfo = { email: data.email, displayName: data.name, photoURL };
-      await axiosSecure.post('/users', userInfo);
+      await axios.post(`${import.meta.env.VITE_API_URL}/users`, userInfo);
 
       navigate(location.state || '/');
     } catch (error) {
@@ -110,3 +109,4 @@ const Register = () => {
 };
 
 export default Register;
+

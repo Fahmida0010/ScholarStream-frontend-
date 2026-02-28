@@ -2,6 +2,7 @@ import { useContext } from "react";
 
 import { updateProfile, updateEmail } from "firebase/auth";
 import { AuthContext } from "../contexts/AuthContext/AuthContext";
+import { auth } from "../firebase/firebase.init";
 
 
 const useAuth = () => {

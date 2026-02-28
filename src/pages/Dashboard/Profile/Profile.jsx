@@ -56,10 +56,15 @@ const Profile = () => {
       onClick={() => navigate("/dashboard/update-profile")}
     >
       Update Profile
-    </Button>         
-              <Button className=''>
+    </Button>     
+    <Button
+  onClick={() => navigate("/dashboard/update-password")}
+>
+  Change Password
+</Button>    
+              {/* <Button className=''>
                   Change Password
-                </Button>
+                </Button> */}
               </div>
             </div>
           </div>

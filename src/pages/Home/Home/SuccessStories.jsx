@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
-
 import manstu from "../../../assets/images/manstu.jpg";
 import girls from "../../../assets/images/girls.jpg";
 import stuman from "../../../assets/images/stuman.jpg";
@@ -8,82 +7,72 @@ import girl from "../../../assets/images/girl.jpg";
 import library from "../../../assets/images/library.jpg";
 import human from "../../../assets/images/human scholar.jpg";
 
-
 const SuccessStories = () => {
+  const [isPaused, setIsPaused] = useState(false);
+
+  const cards = [
+    { img: library,  name: "Tahia Akter",    desc: "Received 70% scholarship in Hungary." },
+    { img: human,    name: "Sanjida Akter",  desc: "Successfully got into New Zealand with a MEXT scholarship." },
+    { img: manstu,   name: "Fahim Ahmed",    desc: "Got a full scholarship in USA with complete guidance." },
+    { img: girls,    name: "Sadia Karim",    desc: "Achieved a 75% waiver at University of Toronto." },
+    { img: stuman,   name: "Mahir Hasan",    desc: "Received 50% scholarship in Australia." },
+    { img: girl,     name: "Raisa Noor",     desc: "Successfully got into Japan with a MEXT scholarship." },
+  ];
+
+  const scrollDistance = -1960;
+
   return (
-    <section className="mt-2  bg-gray-200 py-16 rounded-xl px-6">
-      <motion.h2 
+    <section className=" bg-gray-100 py-12 md:py-16 
+    rounded-xl  sm:px-6 lg:px-8">
+      {/* Heading */}
+      <motion.h2
         initial={{ opacity: 0, y: -30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="text-3xl text-center max-w-[90%] font-bold text-green-700 mb-10"
+        transition={{ duration: 0.7 }}
+        className="text-3xl md:text-4xl text-center font-bold text-green-500 py-5 px-8 rounded-xl mx-auto mb-10 md:mb-12"
       >
         Success Stories
       </motion.h2>
 
-      <div className="relative max-w-4xl mx-auto  overflow-hidden">
+      {/* Marquee wrapper – pause on hover/touch */}
+      <div
+        className="relative overflow-hidden will-change-transform cursor-pointer"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+        onTouchStart={() => setIsPaused(true)}
+        onTouchEnd={() => setIsPaused(false)}
+      >
         <motion.div
-          className="flex gap-6"
-          initial={{ x: 0 }}
-          animate={{ x: ["0%", "-100%", "0%"] }}
+          className="flex gap-6 md:gap-8 min-w-max"
+          animate={isPaused ? false : { x: [0, scrollDistance, 0] }}
           transition={{
+            duration: 50,               // slower = smoother & more readable
+            ease: "linear",
             repeat: Infinity,
-            duration: 18,
-            ease: "linear"
           }}
         >
-            {/* CARD 1 */}
-          <div className="min-w-[300px] bg-blue-200 shadow p-6 rounded-xl">
-            <img src={library} className="h-48 w-full object-cover rounded-xl mb-4" />
-            <h3 className="text-xl font-semibold mb-2">Tahia Akter</h3>
-            <p className="text-gray-700">
-              Received <b>70% scholarship</b> in Hungery.
-            </p>
-          </div>
-
-          {/* CARD 2*/}
-          <div className="min-w-[300px] bg-red-200 shadow p-6 rounded-xl">
-            <img src={human} className="h-48 w-full object-cover rounded-xl mb-4" />
-            <h3 className="text-xl font-semibold mb-2">Sanjida Akter</h3>
-            <p className="text-gray-700">
-              Successfully got into New Zealand with a <b>MEXT scholarship</b>.
-            </p>
-          </div>
-          {/* CARD 3 */}
-          <div className="min-w-[300px] bg-indigo-200 shadow p-6 rounded-xl">
-            <img src={manstu} className="h-48 w-full object-cover rounded-xl mb-4" />
-            <h3 className="text-xl font-semibold mb-2">Fahim Ahmed</h3>
-            <p className="text-gray-700">
-              Got a <b>full scholarship</b> in USA with complete guidance.
-            </p>
-          </div>
-
-          {/* CARD 4 */}
-          <div className="min-w-[300px] bg-red-200 shadow p-6 rounded-xl">
-            <img src={girls} className="h-48 w-full object-cover rounded-xl mb-4" />
-            <h3 className="text-xl font-semibold mb-2">Sadia Karim</h3>
-            <p className="text-gray-700">
-              Achieved a <b>75% waiver</b> at University of Toronto.
-            </p>
-          </div>
-
-          {/* CARD 5 */}
-          <div className="min-w-[300px] bg-sky-200 shadow p-6 rounded-xl">
-            <img src={stuman} className="h-48 w-full object-cover rounded-xl mb-4" />
-            <h3 className="text-xl font-semibold mb-2">Mahir Hasan</h3>
-            <p className="text-gray-700">
-              Received <b>50% scholarship</b> in Australia.
-            </p>
-          </div>
-
-          {/* CARD 6*/}
-          <div className="min-w-[300px] bg-pink-200 shadow p-6 rounded-xl">
-            <img src={girl} className="h-48 w-full object-cover rounded-xl mb-4" />
-            <h3 className="text-xl font-semibold mb-2">Raisa Noor</h3>
-            <p className="text-gray-700">
-              Successfully got into Japan with a <b>MEXT scholarship</b>.
-            </p>
-          </div>
+          {/* Double the cards for seamless loop */}
+          {cards.concat(cards).map((card, idx) => (
+            <div
+              key={idx}
+              className="min-w-[300px] w-[300px] h-[440px] bg-white rounded-2xl shadow-lg overflow-hidden flex-shrink-0 flex flex-col transition-all duration-300 hover:shadow-xl hover:scale-[1.02]"
+            >
+              <img
+                src={card.img}
+                alt={`${card.name} - success story`}
+                className="h-64 w-full object-cover"
+                loading="lazy"
+              />
+              <div className="p-5 md:p-6 flex flex-col flex-1">
+                <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-3 line-clamp-2">
+                  {card.name}
+                </h3>
+                <p className="text-gray-600 text-base md:text-lg leading-relaxed flex-1">
+                  {card.desc}
+                </p>
+              </div>
+            </div>
+          ))}
         </motion.div>
       </div>
     </section>

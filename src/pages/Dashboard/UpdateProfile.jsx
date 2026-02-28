@@ -78,7 +78,7 @@ const UpdateProfile = () => {
 
       toast.success('Profile Updated Successfully!', { id: toastId });
 
-      navigate('/dashboard/profile');
+      navigate('/dashboard');
 
     } catch (err) {
       console.error(err);

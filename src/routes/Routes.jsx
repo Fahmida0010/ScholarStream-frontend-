@@ -32,6 +32,14 @@ import Register from "../pages/Auth/Register/Register";
 import Login from "../pages/Auth/Login/Login";
 import ManageDetails from "../pages/Dashboard/Modal/ManageDetails";
 import UpdateProfile from "../pages/Dashboard/UpdateProfile";
+import Blog from "../pages/Blog/Blog";
+import About from "../pages/About/About";
+import UpdatePassword from "../pages/Dashboard/UpdatePassword";
+import Setting from "../pages/Dashboard/Settings/Setting";
+import HelpSupport from "../pages/Support/HelpSupport";
+import PrivacyPolicy from "../pages/Legal/PrivacyPolicy";
+import TermsConditions from "../pages/Legal/TermsConditions";
+
 
 
 
@@ -42,14 +50,27 @@ export const router = createBrowserRouter([
     children: [
       { index: true, Component: Home },
       { path: "/all-scholarships", element: <AllScholarships /> },
+      { path: "/about", Component: About },
+      { path: "/blog", Component: Blog },
       { path: "*", element: <ErrorPage /> },
       { path: "/top-scholarships", element: <TopScholarships /> },
       { path: "/scholarships/:id", element: <ScholarshipDetails /> },
       { path: "/checkout", element: <Checkout /> },
       { path: "/checkout/:id", element: <Checkout /> },
-      { path: "/payment-success", element: <PaymentSuccess/> },
-      { path: "/payment-failed", element: <PaymentFailed/> },
-
+      { path: "/payment-success", element: <PaymentSuccess /> },
+      { path: "/payment-failed", element: <PaymentFailed /> },
+       {
+        path: "/support",
+        element: <HelpSupport />,
+      },
+      {
+        path: "/privacy-policy",
+        element: <PrivacyPolicy />,
+      },
+      {
+        path: "/terms-conditions",
+        element: <TermsConditions />,
+      },
       {
         path: "/",
         Component: AuthLayout,
@@ -69,7 +90,7 @@ export const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
-      { path: "/dashboard", element: <Profile/> },
+      { path: "/dashboard", element: <Profile /> },
 
       // ADMIN ROUTES
       {
@@ -126,23 +147,23 @@ export const router = createBrowserRouter([
         path: "all-reviews",
         element: (
           <ModeratorRoute>
-            <AllReviews/>
+            <AllReviews />
           </ModeratorRoute>
         ),
       },
-         {
+      {
         path: "manage-details/:id",
         element: (
           <ModeratorRoute>
-            <ManageDetails/>
+            <ManageDetails />
           </ModeratorRoute>
         ),
       },
-     {
+      {
         path: "feedback/:id",
         element: (
           <ModeratorRoute>
-            <Feedback/>
+            <Feedback />
           </ModeratorRoute>
         ),
       },
@@ -151,10 +172,13 @@ export const router = createBrowserRouter([
       { path: "my-applications", element: <MyApplications /> },
       { path: "add-review/:id", element: <AddReview /> },
       { path: "my-reviews", element: <MyReviews /> },
-      { path: "update-reviews/:id", element: <UpdateReviews/> },
-       { path: "application-details/:id", element: <ApplicationDetails /> },
-      { path: "edit-application/:id", element: <EditApplication/> },
-      {path: "update-profile", element: <UpdateProfile />,}
+      { path: "update-reviews/:id", element: <UpdateReviews /> },
+      { path: "application-details/:id", element: <ApplicationDetails /> },
+      { path: "edit-application/:id", element: <EditApplication /> },
+      { path: "update-profile", element: <UpdateProfile />, },
+      { path: "update-password", element: <UpdatePassword />, },
+      { path: "settings", element: <Setting />, },
+       
     ],
   },
 ]);

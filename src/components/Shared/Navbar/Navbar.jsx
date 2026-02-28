@@ -1,108 +1,176 @@
-import React from 'react';
-import useAuth from '../../../hooks/useAuth';
-import { Link, NavLink } from 'react-router'; 
-import Logo from '../../Logo/Logo';
-import Button from '../Button/Button';
+import React, { useState, useEffect } from "react";
+import { Link, NavLink } from "react-router";
+import useAuth from "../../../hooks/useAuth";
+import Logo from "../../Logo/Logo";
+import Button from "../Button/Button";
+import { FaChevronDown, FaMoon, FaSun } from "react-icons/fa";
 
 const Navbar = () => {
-    // Destructure user and logOut function from the hook
-    const { user, logOut } = useAuth() || {};
+  const { user, logOut } = useAuth() || {};
+  const [blogOpen, setBlogOpen] = useState(false);
 
-    const handleLogOut = () => {
-        logOut()
-            .then(() => {
-                console.log("User logged out successfully");
-            })
-            .catch(error => {
-                console.error("Logout error:", error);
-            });
-    };
-    const links = (
-        <>
+  // DARK MODE STATE
+  const [darkMode, setDarkMode] = useState(false);
+
+  // Load initial theme from localStorage
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+      document.documentElement.classList.add("dark");
+      setDarkMode(true);
+    } else {
+      document.documentElement.classList.remove("dark");
+      setDarkMode(false);
+    }
+  }, []);
+
+  // Toggle theme
+  const handleThemeToggle = () => {
+    if (darkMode) {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    } else {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    }
+    setDarkMode(!darkMode);
+  };
+
+  const blogItems = [
+    { name: "Featured Articles", link: "/blog?category=featured" },
+    { name: "Guidelines & Tips", link: "/blog?category=tips" },
+  ];
+
+  const handleLogOut = () => {
+    logOut()
+      .then(() => console.log("User logged out"))
+      .catch((err) => console.error("Logout error:", err));
+  };
+
+  const handleItemClick = () => setBlogOpen(false);
+
+  return (
+    <div className="navbar bg-base-100 dark:bg-gray-900 shadow-md px-4 lg:px-10 sticky top-0 z-50 transition-colors duration-300">
+
+      {/* LEFT */}
+      <div className="navbar-start">
+        {/* Mobile Hamburger */}
+        <div className="dropdown">
+          <div tabIndex={0} className="btn btn-ghost lg:hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6"
+                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                    d="M4 6h16M4 12h8m-8 6h16"/>
+            </svg>
+          </div>
+
+          <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 dark:bg-gray-800 rounded-box w-52">
             <li><NavLink to="/">Home</NavLink></li>
             <li><NavLink to="/all-scholarships">All Scholarships</NavLink></li>
-        </>
-    );
-
-    return (
-        <div className="navbar bg-base-100 shadow-sm">
-            <div className="navbar-start">
-                {/* Mobile/Hamburger Menu */}
-                <div className="dropdown">
-                    <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> 
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /> 
-                        </svg>
-                    </div>
-                    <ul
-                        tabIndex={0}
-                        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                        {links}
-                        {/* Mobile Dashboard and Logout link for logged-in user */}
-                        {user && (
-                            <>
-                                <li><NavLink to="/dashboard">Dashboard</NavLink></li>
-                                <li><Button onClick={handleLogOut}>Log Out</Button></li>
-                            </>
-                        )}
-                        {/* Mobile Login link for logged-out user */}
-                        {!user && (
-                            <li><Link to="/login">Login</Link></li>
-                        )}
-                    </ul>
-                </div>
-                {/* Logo Section */}
-                <span className="btn btn-ghost text-xl">
-                    <Logo />
-                </span>
-            </div>
-
-            {/* Desktop Navigation Links */}
-            <div className="navbar-center hidden lg:flex">
-                <ul className="menu menu-horizontal px-1">
-                    {links}
-                    {/* Desktop Dashboard Link - shown only if logged in */}
-                    {user && <li><NavLink to="/dashboard">Dashboard</NavLink></li>}
+    
+            {/* Blog Dropdown */}
+            <li>
+              <div
+                className="flex items-center justify-between cursor-pointer"
+                onClick={() => setBlogOpen(!blogOpen)}
+              >
+                <span>Blog</span>
+                <FaChevronDown className={`ml-2 transition-transform ${blogOpen ? "rotate-180" : ""}`} />
+              </div>
+              {blogOpen && (
+                <ul className="p-2 bg-base-100 dark:bg-gray-800 shadow rounded-box mt-2">
+                  {blogItems.map((item, idx) => (
+                    <li key={idx}>
+                      <Link to={item.link} onClick={handleItemClick}>{item.name}</Link>
+                    </li>
+                  ))}
                 </ul>
-            </div>
+              )}
+            </li>
 
-            {/* User Profile/Login Section */}
-            <div className="navbar-end">
-                {user ? (
-                    <div className="dropdown dropdown-end">
-                        <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                            <div className="w-10 rounded-full border border-amber-300">
-                                {/* User profile image, use a fallback if user.photoURL is null */}
-                                <img 
-                                    alt={user.displayName} 
-                                    src={user.photoURL} 
-                                />
-                            </div>
-                        </div>
-                        <ul tabIndex={0} className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                            <li>
-                                {/* Show User Name/Email for context */}
-                                <span className="justify-between font-bold text-gray-700">
-                                    {user.displayName || user.email || 'User Profile'}
-                                </span>
-                            </li>
-                            {/* Dashboard Link in Dropdown - You might want to keep this only on the main nav or here, not both */}
-                            <li><Link to="/dashboard">Dashboard</Link></li>
-                            
-                            {/* Log Out Button */}
-                            <li><Button onClick={handleLogOut}>Logout</Button></li>
-                        </ul>
-                    </div>
-                    // --- END: Profile Image with Dropdown ---
-                ) : (
-                    // Login Button (for Logged-out User)
-                    <Link className='btn' to="/login">Login</Link>
-                )}
-            </div>
+            <li><NavLink to="/about">About</NavLink></li>
+            {user && <li><NavLink to="/dashboard">Dashboard</NavLink></li>}
+            {user && (
+              <li>
+                <Button onClick={handleLogOut} className="text-left w-full">Logout</Button>
+              </li>
+            )}
+            {!user && <li><NavLink to="/login">Login</NavLink></li>}
+            {!user && <li><NavLink to="/register">Register</NavLink></li>}
+          </ul>
         </div>
-    );
+
+        {/* Logo */}
+        <Link to="/" className="btn btn-ghost text-xl">
+          <Logo />
+        </Link>
+      </div>
+
+      {/* CENTER DESKTOP */}
+      <div className="navbar-center hidden lg:flex">
+        <ul className="menu menu-horizontal px-1 items-center gap-2">
+          <li><NavLink to="/">Home</NavLink></li>
+          <li><NavLink to="/all-scholarships">All Scholarships</NavLink></li>
+
+          {/* Blog Dropdown Desktop */}
+          <li className="relative">
+            <div
+              className="flex items-center cursor-pointer"
+              onClick={() => setBlogOpen(!blogOpen)}
+            >
+              <span>Blog</span>
+              <FaChevronDown className={`ml-1 transition-transform ${blogOpen ? "rotate-180" : ""}`} />
+            </div>
+            {blogOpen && (
+              <ul className="absolute left-0 top-full mt-2 p-2 bg-base-100 dark:bg-gray-800 shadow rounded-box min-w-[200px] z-50">
+                {blogItems.map((item, idx) => (
+                  <li key={idx}>
+                    <Link to={item.link} onClick={handleItemClick}>{item.name}</Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+
+          <li><NavLink to="/about">About</NavLink></li>
+          {user && <li><NavLink to="/dashboard">Dashboard</NavLink></li>}
+        </ul>
+      </div>
+
+      {/* RIGHT */}
+      <div className="navbar-end flex items-center gap-2">
+        {/* DARK MODE BUTTON */}
+        <button
+          onClick={handleThemeToggle}
+          className="ml-2 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+        >
+          {darkMode ? <FaSun /> : <FaMoon />}
+        </button>
+
+        {user ? (
+          <div className="dropdown dropdown-end">
+            <div tabIndex={0} className="btn btn-ghost btn-circle avatar">
+              <div className="w-10 rounded-full border border-primary">
+                <img alt={user?.displayName} src={user?.photoURL || "https://i.ibb.co/4pDNDk1/avatar.png"} />
+              </div>
+            </div>
+            <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 dark:bg-gray-800 rounded-box w-52">
+              <li className="font-semibold px-2 py-1">{user?.displayName || user?.email}</li>
+              <li><Link to="/dashboard">Dashboard</Link></li>
+              <li>
+                <Button onClick={handleLogOut} className="text-left w-full">Logout</Button>
+              </li>
+            </ul>
+          </div>
+        ) : (
+          <div className="flex gap-2">
+            <Link className="btn btn-outline btn-secondary btn-sm md:btn-md" to="/login">Login</Link>
+            <Link className="btn btn-outline btn-secondary btn-sm md:btn-md" to="/register">Register</Link>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default Navbar;
-
-
