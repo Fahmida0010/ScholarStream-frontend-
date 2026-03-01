@@ -11,7 +11,9 @@ const useRole = () => {
     enabled: !loading && !!user?.email, 
     queryKey: ['role', user?.email],
     queryFn: async () => {
+      console.log(user)
       const { data } = await axiosSecure.get(`/user/role/${user?.email}`);
+      console.log(data)
       return data.role;
     },
     retry: false, // Unauthorized হলে বারবার রিকোয়েস্ট পাঠানো বন্ধ করবে

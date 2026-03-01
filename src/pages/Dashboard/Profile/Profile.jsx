@@ -1,18 +1,20 @@
 import useAuth from '../../../hooks/useAuth'
 import building from '../../../assets/images/building.jpg'
-import useRole from '../../../hooks/useRole'
+// import useRole from '../../../hooks/useRole'
 import Button from '../../../components/Shared/Button/Button'
 import { useNavigate } from 'react-router'
+import useRole from '../../../hooks/useRole'
 
 
 const Profile = () => {
-  const { user } = useAuth()
-    const {role} = useRole()
+ const { user } = useAuth()
+   const {role} = useRole()
+   console.log(role)
  const navigate = useNavigate();
 
   return (
     <div className='flex justify-center items-center h-screen'>
-      <div className='bg-red-200 shadow-lg rounded-2xl md:w-4/5 lg:w-3/5'>
+       <div className='bg-red-200 shadow-lg rounded-2xl md:w-4/5 lg:w-3/5'>
         <img
           alt='cover photo'
           src={building}

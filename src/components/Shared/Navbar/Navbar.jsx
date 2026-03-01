@@ -10,6 +10,7 @@ const Navbar = () => {
   const [blogOpen, setBlogOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
 
+  // Page load এ localStorage থেকে theme apply করা
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme === "dark") {
@@ -21,6 +22,7 @@ const Navbar = () => {
     }
   }, []);
 
+  // Manual dark/light toggle
   const handleThemeToggle = () => {
     if (darkMode) {
       document.documentElement.classList.remove("dark");
@@ -76,7 +78,7 @@ const Navbar = () => {
             {user && <li><NavLink to="/dashboard">Dashboard</NavLink></li>}
             {user && (
               <li>
-                <button onClick={handleLogOut} className="w-full text-left py-2 px-4 hover:bg-base-200">Logout</button>
+                <Button onClick={handleLogOut} className="w-full text-left py-2 px-4 hover:bg-base-200">Logout</Button>
               </li>
             )}
             {!user && <li><NavLink to="/login">Login</NavLink></li>}
@@ -113,7 +115,11 @@ const Navbar = () => {
 
       {/* RIGHT */}
       <div className="navbar-end flex items-center gap-2">
-        <button onClick={handleThemeToggle} className="ml-2 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition">
+        {/* Dark Mode Toggle */}
+        <button
+          onClick={handleThemeToggle}
+          className="ml-2 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+        >
           {darkMode ? <FaSun /> : <FaMoon />}
         </button>
 
@@ -128,7 +134,7 @@ const Navbar = () => {
               <li className="font-semibold px-4 py-2">{user?.displayName || user?.email}</li>
               <li><Link to="/dashboard">Dashboard</Link></li>
               <li>
-                <Button onClick={handleLogOut} className="w-full text-left py-2 px-4 hover:bg-base-200 text-red-500">Logout</Button>
+                <Button onClick={handleLogOut} className="w-full text-left py-2 px-4 hover:bg-pink-600-200 text-red-500">Logout</Button>
               </li>
             </ul>
           </div>

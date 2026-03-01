@@ -1,12 +1,18 @@
 import { useContext } from "react";
+import { 
+  updateProfile, 
+  updateEmail 
+} from "firebase/auth";
 
-import { updateProfile, updateEmail } from "firebase/auth";
 import { AuthContext } from "../contexts/AuthContext/AuthContext";
 import { auth } from "../firebase/firebase.init";
 
-
 const useAuth = () => {
+
   const authInfo = useContext(AuthContext);
+
+  // Debug (optional)
+  console.log("Auth Info:", authInfo);
 
   //  Update name & photo
   const updateUserProfile = (name, photo) => {
@@ -16,7 +22,7 @@ const useAuth = () => {
     });
   };
 
-  //  Update email
+  //Update email
   const updateUserEmail = (email) => {
     return updateEmail(auth.currentUser, email);
   };

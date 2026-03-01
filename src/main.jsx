@@ -22,6 +22,7 @@
 //   </StrictMode>,
 // )
  
+
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
@@ -33,10 +34,8 @@ import { Toaster } from 'react-hot-toast';
 
 const queryClient = new QueryClient();
 
-// ===== Early Dark Mode Setup =====
+// Initial theme from localStorage
 const savedTheme = localStorage.getItem("theme");
-
-// যদি savedTheme "dark" হয়, <html> এ dark class যোগ করো
 if (savedTheme === "dark") {
   document.documentElement.classList.add("dark");
 } else {

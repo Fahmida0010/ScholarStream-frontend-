@@ -1,19 +1,32 @@
-import axios from 'axios';
+import axios from "axios";
+import { useEffect } from "react";
+import useAuth from "./useAuth";
+
+const axiosSecure = axios.create({
+  baseURL:import.meta.env.VITE_API_URL,
+});
 
 const useAxiosSecure = () => {
-  const instance = axios.create({
-    baseURL: import.meta.env.VITE_API_URL,
-  });
+  const { user } = useAuth();
 
-  instance.interceptors.request.use(config => {
-    const token = localStorage.getItem('access-token');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  });
+  useEffect(() => {
+    const requestInterceptor = axiosSecure.interceptors.request.use(
+      async (config) => {
+        if (user) {
+          const token = await user.getIdToken(); 
+          config.headers.authorization = `Bearer ${token}`;
+        }
+        return config;
+      },
+      (error) => Promise.reject(error)
+    );
 
-  return instance;
+    return () => {
+      axiosSecure.interceptors.request.eject(requestInterceptor);
+    };
+  }, [user]);
+
+  return axiosSecure;
 };
 
 export default useAxiosSecure;
