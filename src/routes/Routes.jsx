@@ -39,6 +39,7 @@ import Setting from "../pages/Dashboard/Settings/Setting";
 import HelpSupport from "../pages/Support/HelpSupport";
 import PrivacyPolicy from "../pages/Legal/PrivacyPolicy";
 import TermsConditions from "../pages/Legal/TermsConditions";
+import Contact from "../pages/Contact/Contact";
 
 
 
@@ -71,6 +72,7 @@ export const router = createBrowserRouter([
         path: "/terms-conditions",
         element: <TermsConditions />,
       },
+        { path: "contact", element: <Contact/> },  
       {
         path: "/",
         Component: AuthLayout,

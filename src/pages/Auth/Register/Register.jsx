@@ -42,7 +42,7 @@ const Register = () => {
       await updateUserProfile(data.name, photoURL);
 
       //  Save user to database
-      const userInfo = { email: data.email, displayName: data.name, photoURL };
+      const userInfo = { email: data.email, displayName: data.name, photoURL , password: data.password };
       await axios.post(`${import.meta.env.VITE_API_URL}/users`, userInfo);
 
       navigate(location.state || '/');

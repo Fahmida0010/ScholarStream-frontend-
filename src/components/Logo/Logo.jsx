@@ -9,9 +9,9 @@ const Logo = () => {
         <div className = "flex items-center w-16 h-16">
        <img  className ="w-16 h-16 rounded-full object-cover "
        src={logo} alt="" />
-      <h3 className="text-3xl 
+      <h3 className="text-2xl 
         font-bold ms-2. text-indigo-700">
-        ScholarStream</h3>
+       ScholarStream</h3>
         </div>
       </Link>
     );

@@ -1,191 +1,66 @@
-import { NavLink, Outlet } from "react-router-dom";
-import { FaCog } from "react-icons/fa";
-import {
-  FaUser,
-  FaPlus,
-  FaUsers,
-  FaChartPie,
-  FaSchool,
-  FaUserGraduate,
-} from "react-icons/fa";
+import { NavLink, Outlet, Navigate } from "react-router-dom";
+import { FaUser, FaCog, FaPlus, FaUsers, FaUserGraduate } from "react-icons/fa";
 import useRole from "../hooks/useRole";
 import useAuth from "../hooks/useAuth";
-import { VscFeedback } from "react-icons/vsc";
 
 const DashboardLayout = () => {
-  const { user } = useAuth();
-  const { role, isRoleLoading } = useRole();
+  const { user, loading: authLoading } = useAuth();
+  const { role, isRoleLoading, error } = useRole();
 
-  // Skeleton Loading UI (when role is being fetched)
-  if (isRoleLoading) {
+  // যদি ব্যাকএন্ড থেকে Unauthorized বা Forbidden এরর আসে
+  if (error?.response?.status === 401 || error?.response?.status === 403) {
+    return <Navigate to="/login" replace />;
+  }
+
+  // লোডিং হ্যান্ডলিং
+  if (authLoading || isRoleLoading) {
     return (
-      <div className="flex bg-gray-100 min-h-screen">
-        {/* Sidebar Skeleton */}
-        <div className="w-64 bg-gray-300 shadow-xl p-7">
-          {/* Dashboard Title Skeleton */}
-          <div className="skeleton h-8 w-48 rounded mb-8"></div>
-
-          {/* Common Links Skeleton */}
-          <div className="space-y-4 mb-10">
-            <div className="skeleton h-10 w-full rounded"></div>
-          </div>
-
-          {/* Panel Skeleton (covers Admin/Moderator/Student) */}
-          <div className="mt-6">
-            <div className="skeleton h-5 w-40 rounded mb-4"></div>
-            <div className="space-y-4">
-              <div className="skeleton h-10 w-full rounded"></div>
-              <div className="skeleton h-10 w-full rounded"></div>
-              <div className="skeleton h-10 w-full rounded"></div>
-              <div className="skeleton h-10 w-full rounded"></div>
-            </div>
-          </div>
-        </div>
-
-        {/* Main Content Skeleton */}
-        <div className="flex-1 p-10">
-          {/* Page Title / Welcome Area Skeleton */}
-          <div className="skeleton h-12 w-80 rounded mb-10"></div>
-
-          {/* Content Placeholder Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[...Array(6)].map((_, index) => (
-              <div
-                key={index}
-                className="skeleton h-64 w-full rounded-2xl shadow-md"
-              ></div>
-            ))}
-          </div>
-        </div>
+      <div className="flex justify-center items-center min-h-screen">
+        <span className="loading loading-spinner loading-lg text-primary"></span>
       </div>
     );
+  }
+
+  // যদি ইউজার না থাকে
+  if (!user) {
+    return <Navigate to="/login" replace />;
   }
 
   return (
     <div className="flex bg-gray-100 min-h-screen">
       {/* Sidebar */}
-      <div className="w-64 bg-gray-300 shadow-xl p-7">
-        <h1 className="text-2xl font-bold mb-6 text-left">Dashboard</h1>
-
-        {/* COMMON LINKS */}
-        <ul className="space-y-3">
+      <div className="w-64 bg-gray-800 text-white p-6 shadow-xl">
+        <h2 className="text-2xl font-bold mb-8">ScholarStream</h2>
+        <ul className="space-y-4">
           <li>
-            <NavLink
-              to="/dashboard"
-              className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-200"
-            >
+            <NavLink to="/dashboard" end className={({ isActive }) => isActive ? "text-primary font-bold flex items-center gap-2" : "flex items-center gap-2 hover:text-primary transition"}>
               <FaUser /> My Profile
             </NavLink>
           </li>
-          <li>
-  <NavLink
-    to="/dashboard/settings"
-    className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-200"
-  >
-    <FaCog /> Settings
-  </NavLink>
-</li>
+          
+          {role === 'admin' && (
+            <>
+              <div className="divider divider-info opacity-30">Admin</div>
+              <li><NavLink to="/dashboard/manage-users" className="flex items-center gap-2 hover:text-primary"><FaUsers /> Manage Users</NavLink></li>
+              <li><NavLink to="/dashboard/add-scholarship" className="flex items-center gap-2 hover:text-primary"><FaPlus /> Add Scholarship</NavLink></li>
+            </>
+          )}
+
+          {role === 'student' && (
+            <>
+              <div className="divider divider-info opacity-30">Student</div>
+              <li><NavLink to="/dashboard/my-applications" className="flex items-center gap-2 hover:text-primary"><FaUserGraduate /> My Apps</NavLink></li>
+            </>
+          )}
+
+          <div className="mt-10 pt-10 border-t border-gray-700">
+            <li><NavLink to="/dashboard/settings" className="flex items-center gap-2 hover:text-primary"><FaCog /> Settings</NavLink></li>
+          </div>
         </ul>
-
-        {/* ADMIN ONLY */}
-        {role === "admin" && (
-          <>
-            <h2 className="mt-6 mb-2 text-gray-500 text-sm">ADMIN PANEL</h2>
-            <ul className="space-y-3">
-              <li>
-                <NavLink
-                  to="/dashboard/add-scholarship"
-                  className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-200"
-                >
-                  <FaPlus /> Add Scholarship
-                </NavLink>
-              </li>
-
-              <li>
-                <NavLink
-                  to="/dashboard/manage-scholarships"
-                  className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-200"
-                >
-                  <FaSchool /> Manage Scholarships
-                </NavLink>
-              </li>
-
-              <li>
-                <NavLink
-                  to="/dashboard/manage-users"
-                  className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-200"
-                >
-                  <FaUsers /> Manage Users
-                </NavLink>
-              </li>
-
-              <li>
-                <NavLink
-                  to="/dashboard/analytics"
-                  className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-200"
-                >
-                  <FaChartPie /> Analytics
-                </NavLink>
-              </li>
-            </ul>
-          </>
-        )}
-
-        {/* MODERATOR ONLY */}
-        {role === "moderator" && (
-          <>
-            <h2 className="mt-6 mb-2 text-gray-500 text-sm">MODERATOR PANEL</h2>
-            <ul className="space-y-3">
-              <li>
-                <NavLink
-                  to="/dashboard/manage-applications"
-                  className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-200"
-                >
-                  <FaSchool /> Manage Applications
-                </NavLink>
-              </li>
-
-              <li>
-                <NavLink
-                  to="/dashboard/all-reviews"
-                  className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-200"
-                >
-                  <FaUsers /> All Reviews
-                </NavLink>
-              </li>
-            </ul>
-          </>
-        )}
-
-        {/* STUDENT ONLY */}
-        {role === "student" && (
-          <>
-            <h2 className="mt-6 mb-2 text-gray-500 text-sm">STUDENT PANEL</h2>
-            <ul className="space-y-3">
-              <li>
-                <NavLink
-                  to="/dashboard/my-applications"
-                  className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-200"
-                >
-                  <FaUserGraduate /> My Application
-                </NavLink>
-              </li>
-
-              <li>
-                <NavLink
-                  to="/dashboard/my-reviews"
-                  className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-200"
-                >
-                  <VscFeedback /> My Reviews
-                </NavLink>
-              </li>
-            </ul>
-          </>
-        )}
       </div>
 
-      {/* Content */}
-      <div className="flex-1 p-10">
+      {/* Main Content Area */}
+      <div className="flex-1 p-10 overflow-y-auto">
         <Outlet />
       </div>
     </div>

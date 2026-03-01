@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaXTwitter, FaYoutube, FaFacebookF } from "react-icons/fa6";
+import { FaXTwitter, FaYoutube, FaFacebookF, FaEnvelope, FaPhone } from "react-icons/fa6";
 import Logo from '../../Logo/Logo';
 
 const Footer = () => {
@@ -42,19 +42,37 @@ const Footer = () => {
           <a href="/contact" className="hover:text-gray-800 hover:underline transition">Contact</a>
         </div>
 
-        {/* Terms & Social */}
+        {/* Terms, Contact & Social */}
         <div className="flex flex-col space-y-2">
-          <h3 className="font-bold text-lg mb-2">Terms & Social</h3>
-          <a href="/terms-conditions" 
-          className="hover:text-gray-800 hover:underline
-           transition">Terms & Conditions</a>
-          <a href="/privacy-policy" className="hover:text-gray-800
-           hover:underline transition">Privacy Policy</a>
-          <a href="/support" className="hover:text-gray-800
-           hover:underline transition">Help & Support</a>
-             <a href="/contact" className="hover:text-gray-800
-           hover:underline transition">Contact</a>
+          <h3 className="font-bold text-lg mb-2">Contact & Support</h3>
 
+          <a href="/terms-conditions" className="hover:text-gray-800 hover:underline transition">
+            Terms & Conditions
+          </a>
+          <a href="/privacy-policy" className="hover:text-gray-800 hover:underline transition">
+            Privacy Policy
+          </a>
+          <a href="/support" className="hover:text-gray-800 hover:underline transition">
+            Help & Support
+          </a>
+
+          {/* Email */}
+          <div className="flex items-center gap-2 mt-2 justify-center md:justify-start">
+            <FaEnvelope className="w-4 h-4" />
+            <a href="mailto:support@scholarstream.com" className="hover:underline">
+              support@scholarstream.com
+            </a>
+          </div>
+
+          {/* Phone */}
+          <div className="flex items-center gap-2 justify-center md:justify-start">
+            <FaPhone className="w-4 h-4" />
+            <a href="tel:+8801234567890" className="hover:underline">
+              +880 1234 567 890
+            </a>
+          </div>
+
+          {/* Social Icons */}
           <div className="flex items-center justify-center md:justify-start gap-3 mt-3">
             <a
               href="https://x.com/fahmida105623"
@@ -64,6 +82,7 @@ const Footer = () => {
             >
               <FaXTwitter className="w-5 h-5 text-black" />
             </a>
+
             <a
               href="https://www.youtube.com/channel/UCW_QSH-znO-5qn6q9r7dHFA"
               target="_blank"
@@ -72,6 +91,7 @@ const Footer = () => {
             >
               <FaYoutube className="w-5 h-5" />
             </a>
+
             <a
               href="https://www.facebook.com/nihsanga.cetana"
               target="_blank"
@@ -81,6 +101,7 @@ const Footer = () => {
               <FaFacebookF className="w-5 h-5" />
             </a>
           </div>
+
         </div>
 
       </div>
