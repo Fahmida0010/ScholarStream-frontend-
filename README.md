@@ -15,18 +15,6 @@ Students can explore scholarships, apply online, and track their applications. M
 
 ---
 
-# Project Screenshot
-
-*(Add a screenshot of your homepage or dashboard here)*
-
-Example:
-
-```
-![ScholarStream Screenshot](./screenshot.png)
-```
-
----
-
 # Live URL
 
 **Client:** https://cheerful-beijinho-1ae898.netlify.app
@@ -147,6 +135,10 @@ npm install
 ### Step 1: Clone the repository
 
 ```
+#For Frontend
+https://github.com/Fahmida0010/ScholarStream-frontend-.git
+
+#For Backend 
 git clone https://github.com/Fahmida0010/scholarStream-backend.git
 ```
 
@@ -179,17 +171,3 @@ For backend:
 ```
 node index.js
 ```
-
----
-
-# Relevant Links
-
-Client Live Site
-https://cheerful-beijinho-1ae898.netlify.app
-
-Server Live API
-https://scholar-stream-backend-two.vercel.app
-
-Backend Repository
-https://github.com/Fahmida0010/scholarStream-backend.git
-
