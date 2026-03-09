@@ -136,7 +136,7 @@ npm install
 
 ```
 #For Frontend
-https://github.com/Fahmida0010/ScholarStream-frontend-.git
+git clone https://github.com/Fahmida0010/ScholarStream-frontend-.git
 
 #For Backend 
 git clone https://github.com/Fahmida0010/scholarStream-backend.git
