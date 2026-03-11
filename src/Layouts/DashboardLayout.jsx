@@ -16,11 +16,11 @@ const DashboardLayout = () => {
   const { user } = useAuth();
   const { role, isRoleLoading } = useRole();
 
- 
   return (
-    <div className="flex bg-gray-100 min-h-screen">
-      {/* Sidebar */}
-      <div className="w-64 bg-gray-300 shadow-xl p-7">
+    /* bg-gray-100 এর জায়গায় bg-base-200 এবং টেক্সট কালার ফিক্স করা হয়েছে */
+    <div className="flex bg-base-200 min-h-screen text-base-content transition-colors duration-300">
+      {/* Sidebar - bg-gray-300 এর জায়গায় bg-base-300 করা হয়েছে */}
+      <div className="w-64 bg-base-300 shadow-xl p-7">
         <h1 className="text-2xl font-bold mb-6 text-left">Dashboard</h1>
 
         {/* COMMON LINKS */}
@@ -28,7 +28,8 @@ const DashboardLayout = () => {
           <li>
             <NavLink
               to="/dashboard"
-              className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-200"
+              /* hover:bg-gray-200 এর জায়গায় hover:bg-base-100 */
+              className="flex items-center gap-2 p-2 rounded-lg hover:bg-base-100 transition-colors"
             >
               <FaUser /> My Profile
             </NavLink>
@@ -36,7 +37,7 @@ const DashboardLayout = () => {
           <li>
             <NavLink
               to="/dashboard/settings"
-              className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-200"
+              className="flex items-center gap-2 p-2 rounded-lg hover:bg-base-100 transition-colors"
             >
               <FaCog /> Settings
             </NavLink>
@@ -46,12 +47,13 @@ const DashboardLayout = () => {
         {/* ADMIN ONLY */}
         {role === "admin" && (
           <>
-            <h2 className="mt-6 mb-2 text-gray-500 text-sm">ADMIN PANEL</h2>
+            {/* text-gray-500 এর জায়গায় text-base-content/50 (opacity) ব্যবহার করা হয়েছে */}
+            <h2 className="mt-6 mb-2 text-base-content/50 text-sm">ADMIN PANEL</h2>
             <ul className="space-y-3">
               <li>
                 <NavLink
                   to="/dashboard/add-scholarship"
-                  className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-200"
+                  className="flex items-center gap-2 p-2 rounded-lg hover:bg-base-100"
                 >
                   <FaPlus /> Add Scholarship
                 </NavLink>
@@ -60,7 +62,7 @@ const DashboardLayout = () => {
               <li>
                 <NavLink
                   to="/dashboard/manage-scholarships"
-                  className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-200"
+                  className="flex items-center gap-2 p-2 rounded-lg hover:bg-base-100"
                 >
                   <FaSchool /> Manage Scholarships
                 </NavLink>
@@ -69,7 +71,7 @@ const DashboardLayout = () => {
               <li>
                 <NavLink
                   to="/dashboard/manage-users"
-                  className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-200"
+                  className="flex items-center gap-2 p-2 rounded-lg hover:bg-base-100"
                 >
                   <FaUsers /> Manage Users
                 </NavLink>
@@ -78,7 +80,7 @@ const DashboardLayout = () => {
               <li>
                 <NavLink
                   to="/dashboard/analytics"
-                  className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-200"
+                  className="flex items-center gap-2 p-2 rounded-lg hover:bg-base-100"
                 >
                   <FaChartPie /> Analytics
                 </NavLink>
@@ -90,12 +92,12 @@ const DashboardLayout = () => {
         {/* MODERATOR ONLY */}
         {role === "moderator" && (
           <>
-            <h2 className="mt-6 mb-2 text-gray-500 text-sm">MODERATOR PANEL</h2>
+            <h2 className="mt-6 mb-2 text-base-content/50 text-sm">MODERATOR PANEL</h2>
             <ul className="space-y-3">
               <li>
                 <NavLink
                   to="/dashboard/manage-applications"
-                  className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-200"
+                  className="flex items-center gap-2 p-2 rounded-lg hover:bg-base-100"
                 >
                   <FaSchool /> Manage Applications
                 </NavLink>
@@ -104,7 +106,7 @@ const DashboardLayout = () => {
               <li>
                 <NavLink
                   to="/dashboard/all-reviews"
-                  className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-200"
+                  className="flex items-center gap-2 p-2 rounded-lg hover:bg-base-100"
                 >
                   <FaUsers /> All Reviews
                 </NavLink>
@@ -116,12 +118,12 @@ const DashboardLayout = () => {
         {/* STUDENT ONLY */}
         {role === "student" && (
           <>
-            <h2 className="mt-6 mb-2 text-gray-500 text-sm">STUDENT PANEL</h2>
+            <h2 className="mt-6 mb-2 text-base-content/50 text-sm">STUDENT PANEL</h2>
             <ul className="space-y-3">
               <li>
                 <NavLink
                   to="/dashboard/my-applications"
-                  className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-200"
+                  className="flex items-center gap-2 p-2 rounded-lg hover:bg-base-100"
                 >
                   <FaUserGraduate /> My Application
                 </NavLink>
@@ -130,7 +132,7 @@ const DashboardLayout = () => {
               <li>
                 <NavLink
                   to="/dashboard/my-reviews"
-                  className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-200"
+                  className="flex items-center gap-2 p-2 rounded-lg hover:bg-base-100"
                 >
                   <VscFeedback /> My Reviews
                 </NavLink>
@@ -141,7 +143,7 @@ const DashboardLayout = () => {
       </div>
 
       {/* Content */}
-      <div className="flex-1 p-10">
+      <div className="flex-1 p-10 bg-base-100 transition-colors duration-300">
         <Outlet />
       </div>
     </div>

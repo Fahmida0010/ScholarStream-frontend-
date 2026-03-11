@@ -21,45 +21,47 @@ const ManageDetails = () => {
 
   if (loading) return <LoadingSpinner />;
 
-
-
   return (
-    <div className="max-w-3xl mx-auto bg-white p-6 rounded shadow">
+    <div className="max-w-3xl mx-auto bg-base-100 
+    p-6 rounded shadow border border-base-300">
+      
+      <h2 className="text-2xl font-bold mb-6 text-base-content border-b border-base-300 pb-2">
+        Manage Application Details
+      </h2>
 
-
-      <h2 className="text-2xl font-bold mb-4">Manage Application Details</h2>
-
-      <div className="space-y-2">
-        <p><b>Applicant Name:</b> {application.userName}</p>
-        <p><b>Email:</b> {application.userEmail}</p>
-        <p><b>University:</b> {application.universityName}</p>
-        <p><b>Scholarship Category:</b> {application.scholarshipCategory}</p>
-        <p><b>Degree:</b> {application.degree}</p>
-
+      <div className="space-y-3 text-base-content">
+        <p><b className="text-primary font-semibold">Applicant Name:</b> {application?.userName}</p>
+        <p><b className="text-primary font-semibold">Email:</b> {application?.userEmail}</p>
+        <p><b className="text-primary font-semibold">University:</b> {application?.universityName}</p>
         <p>
-          <b>Application Status:</b>
-          <span className="badge badge-info ml-2">
-            {application.applicationStatus}
+          <b className="text-primary font-semibold">Application Status:</b>
+          <span className="badge badge-info ml-2 font-bold uppercase text-[10px]">
+            {application?.applicationStatus}
           </span>
         </p>
 
         <p>
-          <b>Payment Status:</b>
-          <span className="badge badge-success ml-2">
-            {application.paymentStatus}
+          <b className="text-primary font-semibold">Payment Status:</b>
+          <span className="badge badge-success ml-2 font-bold uppercase text-[10px]">
+            {application?.paymentStatus}
           </span>
         </p>
 
-        <p>
-          <b>Feedback:</b><br />
-          {application.feedback || "No feedback given"}
+        <p className="mt-4">
+          <b className="text-primary font-semibold">Feedback:</b><br />
+          <span className="opacity-80 block p-3 bg-base-200 rounded-lg mt-2 italic border border-base-300">
+            {application?.feedback || "No feedback given"}
+          </span>
         </p>
-        <Button
-        onClick={() => navigate(-1)}
-        className="btn btn-sm btn-outline mb-4"
-      >
-        ← Back
-      </Button>
+
+        <div className="pt-4">
+          <Button
+            onClick={() => navigate(-1)}
+            className="btn btn-sm btn-outline border-base-300 hover:bg-base-300"
+          >
+            ← Back
+          </Button>
+        </div>
       </div>
     </div>
   );

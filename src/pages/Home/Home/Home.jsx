@@ -7,6 +7,9 @@ import Services from './Services';
 import Partners from './Partners';
 import Statistics from './Statistics';
 import HowItWorks from './HowItWorks';
+import ApplicationSelect from './ApplicationSelect';
+import ScholarshipAmenities from './ScholarshipAmenities';
+import StudentAchievement from './studentAchievement';
 
 
  const Home = () => {
@@ -19,6 +22,9 @@ import HowItWorks from './HowItWorks';
     <SuccessStories></SuccessStories>
    <Services></Services>
    <HowItWorks></HowItWorks>
+   <ApplicationSelect></ApplicationSelect>
+   <ScholarshipAmenities></ScholarshipAmenities>
+   <StudentAchievement></StudentAchievement>
   <FAQ></FAQ>
  
      </div>

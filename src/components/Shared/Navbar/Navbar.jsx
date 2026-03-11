@@ -10,14 +10,14 @@ const Navbar = () => {
   const [blogOpen, setBlogOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
 
-  // Page load এ localStorage থেকে theme apply করা
+  
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme === "dark") {
-      document.documentElement.classList.add("dark");
+      document.documentElement.setAttribute('data-theme', 'dark');
       setDarkMode(true);
     } else {
-      document.documentElement.classList.remove("dark");
+       document.documentElement.setAttribute('data-theme', 'light');
       setDarkMode(false);
     }
   }, []);
@@ -25,10 +25,10 @@ const Navbar = () => {
   // Manual dark/light toggle
   const handleThemeToggle = () => {
     if (darkMode) {
-      document.documentElement.classList.remove("dark");
+       document.documentElement.setAttribute('data-theme', 'light');
       localStorage.setItem("theme", "light");
     } else {
-      document.documentElement.classList.add("dark");
+       document.documentElement.setAttribute('data-theme', 'dark');
       localStorage.setItem("theme", "dark");
     }
     setDarkMode(!darkMode);
@@ -141,7 +141,6 @@ const Navbar = () => {
         ) : (
           <div className="flex gap-2">
             <Link className="btn btn-outline btn-secondary btn-sm md:btn-md" to="/login">Login</Link>
-            <Link className="btn btn-outline btn-secondary btn-sm md:btn-md" to="/register">Register</Link>
           </div>
         )}
       </div>

@@ -90,7 +90,7 @@ const About = () => {
 
         <div className="max-w-5xl mx-auto space-y-12">
           <div className="flex flex-col md:flex-row items-center gap-8">
-            <div className="w-24 h-24 rounded-full bg-primary text-white flex items-center justify-center text-3xl font-bold shrink-0">
+            <div className="w-24 h-24 rounded-full bg-blue-500 text-white flex items-center justify-center text-3xl font-bold shrink-0">
               2024
             </div>
             <div className="bg-base-100 p-8 rounded-2xl shadow-lg border border-primary/20 flex-1">
@@ -133,7 +133,7 @@ const About = () => {
     <p className="text-2xl mb-10 text-green-500">
       Join thousands of students already using ScholarStream.
     </p>
-    <Link to="/all-scholarships" className="btn btn-primary btn-lg text-xl px-12">
+    <Link to="/all-scholarships" className="btn bg-blue-400 btn-lg text-xl px-12">
       Get Started — It's Free
     </Link>
   </div>

@@ -49,43 +49,50 @@ const ManageApplications = () => {
   if (loading) return <LoadingSpinner />;
 
   return (
-    <div className="p-4 sm:p-6 md:p-8 lg:p-10 max-w-full mx-auto">
+    <div className="p-4 sm:p-6 md:p-8 lg:p-10 max-w-full mx-auto text-base-content">
       <h2 className="text-2xl font-bold mb-6 text-center sm:text-left">
         Manage Applications
       </h2>
 
       {/* DESKTOP & TABLET TABLE */}
-      <div className="hidden sm:block overflow-x-auto bg-purple-200">
-        <table className="min-w-full  border-gray-400 text-sm sm:text-base">
-          <thead className="bg-blue-400">
+      <div className="hidden sm:block overflow-x-auto rounded-xl shadow-lg border border-base-300 bg-base-100">
+        <table className="min-w-full text-sm sm:text-base">
+          <thead className="bg-blue-500 text-white">
             <tr className="text-left">
-              <th className="p-2">Name</th>
-              <th className="p-2">Email</th>
-              <th className="p-2">University</th>
-              <th className="p-2">Status</th>
-              <th className="p-2">Payment</th>
-              <th className="p-2">Actions</th>
+              <th className="p-3">Name</th>
+              <th className="p-3">Email</th>
+              <th className="p-3">University</th>
+              <th className="p-3">Status</th>
+              <th className="p-3">Payment</th>
+              <th className="p-3 text-center">Actions</th>
             </tr>
           </thead>
           <tbody>
             {applications.map((app) => (
-              <tr key={app._id} className="border-t">
-                <td className="p-2">{app.userName}</td>
-                <td className="p-2">{app.userEmail}</td>
-                <td className="p-2">{app.universityName}</td>
-                <td className="p-2 capitalize">{app.status}</td>
-                <td className="p-2">
+              <tr key={app._id} className="border-t border-base-300 hover:bg-base-200 transition-colors">
+                <td className="p-3">{app.userName}</td>
+                <td className="p-3">{app.userEmail}</td>
+                <td className="p-3">{app.universityName}</td>
+                <td className="p-3 capitalize">
+                  <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                    app.status === 'completed' ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-700'
+                  }`}>
+                    {app.status}
+                  </span>
+                </td>
+                <td className="p-3">
                   {app.paymentStatus === "paid" ? (
-                    <span className="text-green-600 font-semibold">Paid</span>
+                    <span className="text-green-500 font-semibold">Paid</span>
                   ) : (
-                    <span className="text-red-600 font-semibold">Unpaid</span>
+                    <span className="text-red-500 font-semibold">Unpaid</span>
                   )}
                 </td>
-                <td className="p-2 flex flex-wrap gap-2">
+                <td className="p-3 flex items-center justify-center gap-2">
                   <Button
                     onClick={() =>
                       navigate(`/dashboard/manage-details/${app._id}`)
                     }
+                    className="btn-sm"
                   >
                     Details
                   </Button>
@@ -93,12 +100,12 @@ const ManageApplications = () => {
                     onClick={() =>
                       navigate(`/dashboard/feedback/${app._id}`)
                     }
-                    className="bg-green-600"
+                    className="bg-green-600 btn-sm text-white border-none"
                   >
                     Feedback
                   </Button>
                   <select
-                    className="border p-1 rounded w-28 capitalize "
+                    className="border border-base-300 bg-base-100 p-1 rounded w-28 capitalize text-sm outline-none"
                     value={app.status}
                     onChange={(e) => updateStatus(app._id, e.target.value)}
                   >
@@ -107,7 +114,7 @@ const ManageApplications = () => {
                   </select>
                   <Button
                     onClick={() => updateStatus(app._id, "rejected")}
-                    className="bg-red-600 text-white px-3 py-1 rounded w-28"
+                    className="bg-red-600 text-white btn-sm border-none"
                   >
                     Cancel
                   </Button>
@@ -123,7 +130,7 @@ const ManageApplications = () => {
         {applications.map((app) => (
           <div
             key={app._id}
-            className="border p-4 rounded-lg shadow-sm bg-white"
+            className="border border-base-300 p-4 rounded-lg shadow-sm bg-base-100"
           >
             <p>
               <strong>Name:</strong> {app.userName}
@@ -136,18 +143,18 @@ const ManageApplications = () => {
             </p>
             <p>
               <strong>Status:</strong>{" "}
-              <span className="capitalize">{app.status}</span>
+              <span className="capitalize font-medium text-blue-500">{app.status}</span>
             </p>
             <p>
               <strong>Payment:</strong>{" "}
               {app.paymentStatus === "paid" ? (
-                <span className="text-green-600 font-semibold">Paid</span>
+                <span className="text-green-500 font-semibold">Paid</span>
               ) : (
-                <span className="text-red-600 font-semibold">Unpaid</span>
+                <span className="text-red-500 font-semibold">Unpaid</span>
               )}
             </p>
 
-            <div className="flex flex-col gap-2 mt-2">
+            <div className="flex flex-col gap-2 mt-3">
               <Button
                 onClick={() =>
                   navigate(`/dashboard/manage-details/${app._id}`)
@@ -158,12 +165,12 @@ const ManageApplications = () => {
               </Button>
               <Button
                 onClick={() => navigate(`/dashboard/feedback/${app._id}`)}
-                className="bg-green-600 w-full"
+                className="bg-green-600 w-full text-white border-none"
               >
                 Feedback
               </Button>
               <select
-                className="border p-1 rounded w-full capitalize"
+                className="border border-base-300 bg-base-100 p-2 rounded w-full capitalize outline-none"
                 value={app.status}
                 onChange={(e) => updateStatus(app._id, e.target.value)}
               >
@@ -172,7 +179,7 @@ const ManageApplications = () => {
               </select>
               <Button
                 onClick={() => updateStatus(app._id, "rejected")}
-                className="bg-red-600 text-white w-full"
+                className="bg-red-600 text-white w-full border-none"
               >
                 Cancel
               </Button>

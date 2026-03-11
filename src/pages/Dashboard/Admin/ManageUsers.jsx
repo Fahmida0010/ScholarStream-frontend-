@@ -5,7 +5,7 @@ import Button from "../../../components/Shared/Button/Button";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const ManageUsers = () => {
-    const axiosSecure = useAxiosSecure()
+  const axiosSecure = useAxiosSecure();
   const [users, setUsers] = useState([]);
   const [filterRole, setFilterRole] = useState("all");
 
@@ -47,7 +47,7 @@ const ManageUsers = () => {
       : users.filter((u) => u.role === filterRole);
 
   return (
-    <div className="p-4">
+    <div className="p-4 text-base-content">
       <h1 className="text-2xl font-bold mb-4 text-center md:text-left">
         Manage Users
       </h1>
@@ -55,10 +55,10 @@ const ManageUsers = () => {
       {/* Filter */}
       <div className="mb-4 flex justify-center md:justify-start">
         <select
-          className="p-2 border rounded w-full max-w-xs"
+          className="p-2 border border-base-300 rounded w-full max-w-xs bg-base-100 text-base-content focus:outline-none"
           onChange={(e) => setFilterRole(e.target.value)}
         >
-          <option value="all">All</option>
+          <option value="all">All Roles</option>
           <option value="student">Student</option>
           <option value="moderator">Moderator</option>
           <option value="admin">Admin</option>
@@ -70,22 +70,23 @@ const ManageUsers = () => {
         {filtered.map((u) => (
           <div
             key={u._id}
-            className="bg-green-100 p-4 rounded-xl shadow"
+            /* bg-green-100 বদলে bg-base-100 ও বর্ডার যোগ করা হয়েছে */
+            className="bg-base-100 border border-base-300 p-4 rounded-xl shadow transition-colors duration-300"
           >
-            <p className="font-semibold">Name: {u.displayName}</p>
-            <p className="text-sm break-all">Email: {u.email}</p>
+            <p className="font-semibold text-indigo-400">Name: {u.displayName}</p>
+            <p className="text-sm break-all opacity-80">Email: {u.email}</p>
             <p className="mt-1">
-              Role: <span className="font-medium">{u.role}</span>
+              Role: <span className="font-medium px-2 py-0.5 rounded bg-base-200">{u.role}</span>
             </p>
 
             <div className="mt-3 space-y-2">
               <select
-                className="p-2 border rounded w-full bg-green-400"
+                className="p-2 border border-base-300 rounded w-full bg-base-200 text-base-content"
                 onChange={(e) =>
                   handleRoleChange(u._id, e.target.value)
                 }
               >
-                <option>Select Role</option>
+                <option>Change Role</option>
                 <option value="student">Student</option>
                 <option value="moderator">Moderator</option>
                 <option value="admin">Admin</option>
@@ -93,7 +94,7 @@ const ManageUsers = () => {
 
               <Button
                 onClick={() => handleDeleteUser(u._id)}
-                className="w-full bg-red-500 text-white"
+                className="w-full bg-red-500 text-white border-none"
               >
                 Delete
               </Button>
@@ -103,28 +104,31 @@ const ManageUsers = () => {
       </div>
 
       {/* ================= DESKTOP TABLE VIEW ================= */}
-      <div className="hidden md:block overflow-x-auto p-6">
-        <table className="w-full bg-green-100 shadow rounded-xl text-left">
+      <div className="hidden md:block overflow-x-auto p-2">
+        <table className="w-full bg-base-100 border border-base-300 shadow rounded-xl text-left overflow-hidden transition-colors duration-300">
           <thead>
-            <tr className="bg-gray-300">
-              <th className="p-3">Name</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Promote</th>
-              <th>Delete</th>
+            {/* bg-gray-300 বদলে ডার্ক মোড ফ্রেন্ডলি কালার */}
+            <tr className="bg-base-200 text-base-content border-b border-base-300">
+              <th className="p-4">Name</th>
+              <th className="p-4">Email</th>
+              <th className="p-4">Role</th>
+              <th className="p-4">Promote</th>
+              <th className="p-4">Delete</th>
             </tr>
           </thead>
 
-          <tbody>
+          <tbody className="divide-y divide-base-300">
             {filtered.map((u) => (
-              <tr key={u._id} className="border-b">
-                <td className="p-3">{u.displayName}</td>
-                <td className="break-all">{u.email}</td>
-                <td>{u.role}</td>
+              <tr key={u._id} className="hover:bg-base-200 transition-colors">
+                <td className="p-4 font-medium">{u.displayName}</td>
+                <td className="p-4 break-all opacity-80">{u.email}</td>
+                <td className="p-4">
+                    <span className="capitalize">{u.role}</span>
+                </td>
 
-                <td>
+                <td className="p-4">
                   <select
-                    className="p-2 border rounded bg-green-400"
+                    className="p-2 border border-base-300 rounded bg-base-100 text-base-content cursor-pointer focus:ring-1 focus:ring-indigo-500"
                     onChange={(e) =>
                       handleRoleChange(u._id, e.target.value)
                     }
@@ -136,10 +140,10 @@ const ManageUsers = () => {
                   </select>
                 </td>
 
-                <td>
+                <td className="p-4">
                   <Button
                     onClick={() => handleDeleteUser(u._id)}
-                    className="bg-red-500 text-white m-3"
+                    className="bg-red-500 text-white hover:bg-red-600 transition-colors border-none"
                   >
                     Delete
                   </Button>

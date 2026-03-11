@@ -24,7 +24,8 @@ const logos = [
 
 const Partners = () => {
   return (
-    <div className="bg-gray-50 py-8 overflow-hidden">
+    /* bg-gray-50 বদলে bg-base-100 করা হয়েছে ডার্ক মোড ফিক্সের জন্য */
+    <div className="bg-base-100 py-8 overflow-hidden transition-colors duration-300">
       <div className="relative w-full overflow-hidden">
         <div className="flex animate-scroll whitespace-nowrap gap-8">
           {logos.concat(logos).map((logo, idx) => (
@@ -35,14 +36,14 @@ const Partners = () => {
               <img
                 src={logo}
                 alt={`University Logo ${idx}`}
-                className="object-contain h-16 w-auto filter hover:grayscale transition-all duration-300"
+                /* লোগো যাতে ডার্ক মোডেও স্পষ্ট থাকে তাই হালকা brightness এড করা হয়েছে */
+                className="object-contain h-16 w-auto filter hover:grayscale transition-all duration-300 dark:brightness-110"
               />
             </div>
           ))}
         </div>
       </div>
 
-      {/* Tailwind animation */}
       <style>{`
         @keyframes scroll {
           0% { transform: translateX(0); }

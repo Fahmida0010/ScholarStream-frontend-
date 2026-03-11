@@ -27,13 +27,14 @@ const FAQ = () => {
   ];
 
   return (
-    <section className="py-10 px-10 rounded-2xl bg-purple-200">
+    /* Changed bg-purple-200 to bg-base-200 or primary-content for dark mode support */
+    <section className="py-10 px-10 rounded-2xl bg-primary-content/10 text-base-content transition-colors duration-300">
       <motion.h2
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
-        className="text-3xl text-center font-bold
-         text-purple-700 mb-8"
+        /* Changed text-purple-700 to text-primary to support theme switching */
+        className="text-3xl text-center font-bold text-primary mb-8"
       >
         Frequently Asked Questions (FAQ)
       </motion.h2>

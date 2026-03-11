@@ -16,9 +16,8 @@ const AddScholarship = () => {
 
     const form = e.target;
     const imageFile = form.image.files[0];
-  // console.log(form)
+
     try {
-      // SAME RULE AS AddPlantForm
       const imageUrl = await imageUpload(imageFile);
 
       const scholarshipData = {
@@ -38,8 +37,7 @@ const AddScholarship = () => {
         postDate: new Date(),
         userEmail: form.userEmail.value,
       };
-  console.log(scholarshipData)
-  
+
       const res = await axiosSecure.post("/scholarships", scholarshipData);
 
       if (res.data.insertedId) {
@@ -58,21 +56,24 @@ const AddScholarship = () => {
   if (loading) return <LoadingSpinner />;
 
   return (
-    <div>
+    /* text-base-content নিশ্চিত করে ডার্ক মোডে লেখা সাদা হবে */
+    <div className="text-base-content">
       <h1 className="text-2xl font-bold mb-5">Add Scholarship</h1>
 
       <form
         onSubmit={handleAddScholarship}
-        className="grid grid-cols-2 gap-5 bg-white p-6 rounded-xl shadow"
+        /* bg-white বদলে bg-base-100 এবং বর্ডার যোগ করা হয়েছে */
+        className="grid grid-cols-2 gap-5 bg-base-100 border border-base-300 p-6 rounded-xl shadow-lg transition-colors duration-300"
       >
-        <input name="scholarshipName" placeholder="Scholarship Name" className="input" required />
-        <input name="universityName" placeholder="University Name" className="input" required />
+        {/* daisyUI input ক্লাসের সাথে border-base-300 ব্যবহার করলে ডার্ক মোডে বর্ডার ক্লিয়ার থাকে */}
+        <input name="scholarshipName" placeholder="Scholarship Name" className="input input-bordered border-base-300 bg-base-100" required />
+        <input name="universityName" placeholder="University Name" className="input input-bordered border-base-300 bg-base-100" required />
 
-        {/* IMAGE (same behavior, just cleaner) */}
+        {/* IMAGE */}
         <input
           type="file"
           name="image"
-          className="file-input"
+          className="file-input file-input-bordered border-base-300 bg-base-100"
           accept="image/*"
           required
           onChange={(e) => {
@@ -87,27 +88,28 @@ const AddScholarship = () => {
           <img
             src={preview}
             alt="Preview"
-            className="w-32 h-32 object-cover rounded-lg border"
+            className="w-32 h-32 object-cover rounded-lg border border-base-300"
           />
         )}
 
-        <input name="country" placeholder="location" className="input" required />
-        <input name="city" placeholder="City" className="input" required />
-        <input name="worldRank" placeholder="World Rank" className="input" required />
-        <input name="subjectCategory" placeholder="Subject Category" className="input" required />
-        <input name="scholarshipCategory" placeholder="Scholarship Category" className="input" required />
-        <input name="degree" placeholder="Degree" className="input" required />
-        <input name="tuitionFees" placeholder="Tuition Fees (Optional)" className="input" />
-        <input name="applicationFees" placeholder="Application Fees" className="input" required />
-        <input name="serviceCharge" placeholder="Service Charge" className="input" required />
-        <input type="date" name="deadline" className="input" required />
-        <input name="userEmail" placeholder="Admin Email" className="input" required />
+        <input name="country" placeholder="Location" className="input input-bordered border-base-300 bg-base-100" required />
+        <input name="city" placeholder="City" className="input input-bordered border-base-300 bg-base-100" required />
+        <input name="worldRank" placeholder="World Rank" className="input input-bordered border-base-300 bg-base-100" required />
+        <input name="subjectCategory" placeholder="Subject Category" className="input input-bordered border-base-300 bg-base-100" required />
+        <input name="scholarshipCategory" placeholder="Scholarship Category" className="input input-bordered border-base-300 bg-base-100" required />
+        <input name="degree" placeholder="Degree" className="input input-bordered border-base-300 bg-base-100" required />
+        <input name="tuitionFees" placeholder="Tuition Fees (Optional)" className="input input-bordered border-base-300 bg-base-100" />
+        <input name="applicationFees" placeholder="Application Fees" className="input input-bordered border-base-300 bg-base-100" required />
+        <input name="serviceCharge" placeholder="Service Charge" className="input input-bordered border-base-300 bg-base-100" required />
+        <input type="date" name="deadline" className="input input-bordered border-base-300 bg-base-100 text-base-content" required />
+        <input name="userEmail" placeholder="Admin Email" className="input input-bordered border-base-300 bg-base-100" required />
 
-        <Button>Add Scholarship</Button>
+        <div className="col-span-2">
+           <Button className="w-full">Add Scholarship</Button>
+        </div>
       </form>
     </div>
   );
 };
 
 export default AddScholarship;
-

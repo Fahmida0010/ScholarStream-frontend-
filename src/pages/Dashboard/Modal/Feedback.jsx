@@ -45,12 +45,14 @@ const Feedback = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto bg-white p-6 rounded shadow">
-      <h2 className="text-xl font-bold mb-4">Give Feedback</h2>
+    /* bg-white বদলে bg-base-100 এবং শ্যাডোর জন্য shadow-xl ব্যবহার করা হয়েছে */
+    <div className="max-w-xl mx-auto bg-base-100 p-8 rounded-2xl shadow-xl border border-base-300">
+      <h2 className="text-2xl font-bold mb-6 text-base-content">Give Feedback</h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <textarea
-          className="w-full border p-2 rounded"
+          /* border বদলে textarea এবং textarea-bordered ব্যবহার করা হয়েছে dark mode এর জন্য */
+          className="textarea textarea-bordered w-full p-3 rounded-lg bg-base-200 text-base-content focus:textarea-primary"
           rows="5"
           placeholder="Write feedback..."
           value={feedbackText}
@@ -63,7 +65,11 @@ const Feedback = () => {
           disabled={loading}
           className="btn btn-primary w-full"
         >
-          {loading ? "Submitting..." : "Submit Feedback"}
+          {loading ? (
+            <span className="loading loading-spinner"></span>
+          ) : (
+            "Submit Feedback"
+          )}
         </button>
       </form>
     </div>

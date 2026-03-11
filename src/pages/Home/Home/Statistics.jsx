@@ -27,38 +27,40 @@ const Statistics = () => {
     {
       name: "Users",
       count: stats.users,
-      color: "bg-blue-500",
+      color: "bg-blue-500", // Original color kept
       icon: <FaUsers size={36} className="text-white" />,
-      iconColor: "text-blue-200",
+      iconColor: "text-blue-100",
     },
     {
       name: "Scholarships",
       count: stats.scholarships,
-      color: "bg-yellow-500",
+      color: "bg-yellow-500", // Original color kept
       icon: <FaGraduationCap size={36} className="text-white" />,
-      iconColor: "text-yellow-200",
+      iconColor: "text-yellow-100",
     },
     {
       name: "Reviews",
       count: stats.reviews,
-      color: "bg-green-500",
+      color: "bg-green-500", // Original color kept
       icon: <FaStar size={36} className="text-white" />,
-      iconColor: "text-green-200",
+      iconColor: "text-green-100",
     },
     {
       name: "Applications",
       count: stats.applications,
-      color: "bg-purple-500",
+      color: "bg-purple-500", // Original color kept
       icon: <FaClipboardList size={36} className="text-white" />,
-      iconColor: "text-purple-200",
+      iconColor: "text-purple-100",
     },
   ];
 
   return (
-    <section className="bg-gray-50 py-12 px-4">
+    /* Changed bg-gray-50 to bg-base-200 for Dark Mode */
+    <section className="bg-base-200 py-12 px-4 transition-colors duration-300">
       <div className="max-w-7xl mx-auto">
         
-        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-8 text-gray-800">
+        {/* Changed text-gray-800 to text-base-content */}
+        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-8 text-base-content">
           Statistics
         </h2>
 

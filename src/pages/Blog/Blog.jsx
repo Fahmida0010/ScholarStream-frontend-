@@ -139,34 +139,34 @@ const Blog = () => {
           ))}
         </div>
       ) : (
-        // Tips: Simple Heading + Paragraph + Button
+        
         <div className="max-w-4xl mx-auto space-y-16">
-          {blogs.map((blog) => (
-            <section
-              key={blog._id}
-              className="bg-white/70 backdrop-blur-sm p-8
-               md:p-10 rounded-2xl border border-indigo-100 
-               shadow-sm hover:shadow-md transition-shadow"
-            >
-              <h2 className="text-2xl md:text-3xl font-bold
-               text-indigo-800 mb-5 
-                border-indigo-200 pb-3">
-                {blog.title}
-              </h2>
+  {blogs.map((blog) => (
+    <section
+      key={blog._id}
+      className="bg-base-100/70 backdrop-blur-sm p-8
+        md:p-10 rounded-2xl border border-base-300 
+        shadow-sm hover:shadow-md transition-shadow"
+    >
+      <h2 className="text-2xl md:text-3xl font-bold
+        text-primary mb-5 
+        border-b border-base-300 pb-3">
+        {blog.title}
+      </h2>
 
-              <p className="text-base-content/90 leading-relaxed mb-6 text-lg">
-                {blog.content?.substring(0, 350) + "..." || "No content available"}
-              </p>
+      <p className="text-base-content/90 leading-relaxed mb-6 text-lg">
+        {blog.content?.substring(0, 350) + "..." || "No content available"}
+      </p>
 
-              <button
-                className="btn btn-outline btn-info btn-md"
-                onClick={() => setSelectedPost(blog)}
-              >
-                Explore Full Tip →
-              </button>
-            </section>
-          ))}
-        </div>
+      <button
+        className="btn btn-outline btn-info btn-md"
+        onClick={() => setSelectedPost(blog)}
+      >
+        Explore Full Tip →
+      </button>
+    </section>
+  ))}
+</div>
       )}
 
       {/* No posts found */}
