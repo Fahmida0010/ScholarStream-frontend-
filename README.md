@@ -170,4 +170,6 @@ For backend:
 
 ```
 node index.js
+
+✨Thanks for visiting this  project!💜
 ```
