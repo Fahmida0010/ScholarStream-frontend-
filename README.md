@@ -17,7 +17,7 @@ Students can explore scholarships, apply online, and track their applications. M
 
 # Live URL
 
-**Client:** https://cheerful-beijinho-1ae898.netlify.app
+**Client:** https://scholarstreamfrontend.vercel.app
 **Server:** https://scholar-stream-backend-two.vercel.app
 
 Backend Repository Link : https://github.com/Fahmida0010/scholarStream-backend.git
