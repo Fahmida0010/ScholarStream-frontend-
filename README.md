@@ -171,5 +171,26 @@ For backend:
 ```
 node index.js
 
+
+---
+
+# Support This Project ⭐
+
+If you found **ScholarStream** helpful or interesting, please consider giving this repository a ⭐ on GitHub.
+
+Your support motivates me to continue building and improving open-source projects.
+
+⭐ Star the repository if you like it
+
+🍴 Fork it if you'd like to contribute
+
+🐛 Open an issue if you find any bugs
+
+💡 Share suggestions for future improvements
+
+Thank you for visiting and supporting **ScholarStream**! 💜
+
+---
+
 ✨Thanks for visiting this  project!💜
 ```
