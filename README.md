@@ -170,9 +170,8 @@ For backend:
 
 ```
 node index.js
----
 
-# Support This Project ⭐
+### Support This Project ⭐
 
 If you found **ScholarStream** helpful or interesting, please consider giving this repository a ⭐ on GitHub.
 
