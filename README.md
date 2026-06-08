@@ -170,8 +170,6 @@ For backend:
 
 ```
 node index.js
-
-
 ---
 
 # Support This Project ⭐
@@ -188,9 +186,5 @@ Your support motivates me to continue building and improving open-source project
 
 💡 Share suggestions for future improvements
 
-Thank you for visiting and supporting **ScholarStream**! 💜
+✨Thank you for visiting and supporting **ScholarStream**! 💜
 
----
-
-✨Thanks for visiting this  project!💜
-```
